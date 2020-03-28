@@ -1,0 +1,8 @@
+{
+    "author" : ["Kortexia (FrozenNinja#1337)"],
+    "install_msg" : "This repository is built for 10KI's KorTech, packages contained within may not function for you",
+    "name" : "KorTech",
+    "short" : "KorTech Packages for 10KI",
+    "description" : "KorTech Packages written for 10000 Islands Discord server by Kortexia",
+    "tags" : ["List of search tags on red portal for your repo."]
+}
