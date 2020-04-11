@@ -59,8 +59,8 @@ class KorTechPrime(commands.Cog):
                         try:
                                 await ctx.member.remove_roles(role_upd)
                         except discord.errors.Forbidden:
-                                await self.bot.say("%s: Failed to unmask - I don't have permissions to do that." % ctx.member.name)
+                                await ctx.send("%s: Failed to unmask - I don't have permissions to do that." % ctx.member.name)
                         except AttributeError:  # role_to_add is NoneType
-                                await self.bot.say("%s: Failed to unmask - That role isn't user settable." % ctx.member.name)
+                                await ctx.send("%s: Failed to unmask - That role isn't user settable." % ctx.member.name)
                         else:
-                                await self.bot.say("%s: Unmasked." % ctx.member.mention)
+                                await ctx.send("%s: Unmasked." % ctx.member.mention)
