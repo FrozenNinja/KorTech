@@ -1,0 +1,52 @@
+        @commands.group(no_pm=True, pass_context=True, invoke_without_command=True)
+        async def radio_silence(self, ctx):
+                """Silence peeps."""
+                server = ctx.message.server
+                ss = self._get_server_settings(server.id)
+
+                role_mute = get(user.server.roles, name="Muted")
+                role_upd = self._get_updating_role(server)
+                role_cmd = self._get_commander_role(server)
+                if not role_cmd in ctx.message.author.roles:
+                        await self.bot.say("Not authorized to use this command.")
+                        return
+
+                for member in server.members:
+                        if not role_upd in member.roles:
+                                continue
+
+                        try:
+                                await self.bot.add_roles(member, role_mute)
+                        except discord.errors.Forbidden:
+                                await self.bot.say("%s: Failed to mask - I don't have permissions to do that." % member.name)
+                        except AttributeError:  # role_to_add is NoneType
+                                await self.bot.say("%s: Failed to mask - That role isn't user settable." % member.name)
+                        else:
+                                await self.bot.say("%s: Muted." % member.mention)
+
+        @commands.group(no_pm=True, pass_context=True, invoke_without_command=True)
+        async def silence_over(self, ctx):
+                """Silence is over."""
+                server = ctx.message.server
+                ss = self._get_server_settings(server.id)
+
+                role_mute = get(user.server.roles, name="Muted")
+                role_upd = self._get_updating_role(server)
+                role_cmd = self._get_commander_role(server)
+                if not role_cmd in ctx.message.author.roles:
+                        await self.bot.say("Not authorized to use this command.")
+                        return
+
+                for member in server.members:
+                        if not role_mute in member.roles:
+                                continue
+
+                        try:
+                                await self.bot.remove_roles(member, role_mutew)
+                        except discord.errors.Forbidden:
+                                await self.bot.say("%s: Failed to unmask - I don't have permissions to do that." % member.name)
+                        except AttributeError:  # role_to_add is NoneType
+                                await self.bot.say("%s: Failed to unmask - That role isn't user settable." % member.name)
+                        else:
+                                await self.bot.say("%s: Unmuted." % member.mention)
+
