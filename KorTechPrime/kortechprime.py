@@ -57,8 +57,8 @@ class KorTechPrime(commands.Cog):
                                 continue
 
                         try:
-                                await ctx.Member.remove_roles(role_upd)
+                                await Member.remove_roles(role_upd)
                         except discord.errors.Forbidden:
                                 await ctx.send("Failed to unmask - I don't have permissions to do that.")
                         else:
-                                await ctx.send("%s: Unmasked." % ctx.Member.mention)
+                                await ctx.send("%s: Unmasked." % Member.mention)
