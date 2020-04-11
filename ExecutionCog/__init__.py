@@ -1,4 +1,4 @@
-from .ExecutionCog import ExecutionCog
+from .executioncog import ExecutionCog
 
 
 def setup(bot):
