@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class ExecutionCog(commands.cog):
+class ExecutionCog(commands.Cog):
     """Written for Hame"""
 
     @commands.command(pass_context=True, no_pm=True)
