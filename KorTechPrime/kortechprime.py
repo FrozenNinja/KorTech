@@ -20,6 +20,6 @@ class KorTechPrime(commands.Cog):
                 if role_memb or role_ally in ctx.author.roles:
                     await ctx.author.add_roles(role_upd)
                     emoji = '<:tito:351110740259897349>'
-                    await message.add_reaction(emoji)
+                    await ctx.message.add_reaction(emoji)
                 else:
                         await ctx.send("You are not masked as TITO Member or Allied Military")
