@@ -43,6 +43,3 @@ class ExecutionCog:
             await self.bot.say("*" + author.mention + " needs to let Kort know what he wants as a command" + "*")
         else:
             await self.bot.say("You aren't Häme!")
-			
-def setup(bot):
-    bot.add_cog(ExecutionCog(bot))
