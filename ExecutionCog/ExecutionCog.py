@@ -4,9 +4,12 @@ from redbot.core import commands
 class ExecutionCog(commands.Cog):
     """Written for Hame"""
 
+    def __init__(self, bot):
+        self.bot = bot
+
     @commands.command(pass_context=True, no_pm=True)
     async def execute(self, ctx, user: discord.Member):
-	
+
         author = ctx.message.author	
         #Text
         if author.id == "277453509018779648":
