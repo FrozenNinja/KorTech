@@ -15,7 +15,7 @@ class KorTechPrime(commands.Cog):
 
                 role_upd = 354105758159339541
 
-                if (discord.Role != 323631110997147659):
+                if (author.discord.Role != 323631110997147659):
                         await ctx.send("You are not masked as a TITO Member")
                         return
 
