@@ -93,7 +93,7 @@ class LogsFrom(commands.Cog):
         async with ctx.typing():
             kwargs = {"oldest_first": False}
             if not after and not before:
-                kwargs["limit"] = 100
+                kwargs["limit"] = 9999999
             elif not before:
                 kwargs.update(after=discord.Object(id=after), limit=after)
             elif not after:
