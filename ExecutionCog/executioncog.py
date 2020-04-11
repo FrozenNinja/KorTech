@@ -7,7 +7,7 @@ class ExecutionCog(commands.Cog):
     @commands.command(pass_context=True, no_pm=True)
     async def execute(ctx, user: discord.Member):
 
-        author = ctx.message.author	
+        author = ctx.author	
         #Text
         if author.id == "277453509018779648":
             if user.id == "116329127732051974":
