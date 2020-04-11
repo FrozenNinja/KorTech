@@ -23,3 +23,22 @@ class KorTechPrime(commands.Cog):
                     await ctx.message.add_reaction(emoji)
                 else:
                         await ctx.send("You are not masked as TITO Member or Allied Military")
+
+    @commands.command()
+    async def not_here(self, ctx: commands.Context):
+                """Mark that the user is not present for update."""
+
+                guild = ctx.message.guild
+                author = ctx.message.author
+
+                role_memb = discord.utils.get(ctx.guild.roles, name="TITO Member")
+                role_ally = discord.utils.get(ctx.guild.roles, name="Allied Military")
+                role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
+
+                try:
+                    await ctx.authot.remove_roles(role_upd)
+                except discord.errors.Forbidden as err:
+                    await self.bot.say("I don't have permissions to unmark you"
+                else:
+                    emoji = '<:oof:549276828158918656>'
+                    await ctx.message.add_reaction(emoji)
