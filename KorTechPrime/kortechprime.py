@@ -25,7 +25,7 @@ class KorTechPrime(commands.Cog):
                         await ctx.send("You are not masked as TITO Member or Allied Military")
 
     @commands.command()
-    async def not_here(self, ctx: commands.Context):
+    async def nohere(self, ctx: commands.Context):
                 """Mark that the user is not present for update."""
 
                 guild = ctx.message.guild
@@ -38,14 +38,12 @@ class KorTechPrime(commands.Cog):
                 await ctx.message.add_reaction(emoji)
 
     @commands.command()
-    async def update_over(self, ctx: commands.Context):
+    async def rampage(self, ctx: commands.Context):
                 """Mark that update is finished."""
 
                 guild = ctx.message.guild
 
                 role_cmd = discord.utils.get(ctx.guild.roles, name="KPCmd")
-                role_memb = discord.utils.get(ctx.guild.roles, name="TITO Member")
-                role_ally = discord.utils.get(ctx.guild.roles, name="Allied Military")
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 				
                 if not role_cmd in ctx.author.roles:
@@ -62,3 +60,53 @@ class KorTechPrime(commands.Cog):
                                 await ctx.send("Failed to unmask - I don't have permissions to do that.")
                         else:
                                 await ctx.send("%s: Unmasked." % Member.mention)
+
+    @commands.command()
+    async def radio_silence(self, ctx: commands.Context):
+                """Silence peeps."""
+
+                guild = ctx.message.guild
+
+                role_cmd = discord.utils.get(ctx.guild.roles, name="KPCmd")
+                role_mute = discord.utils.get(ctx.guild.roles, name="Muted")
+                role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
+				
+                if not role_cmd in ctx.author.roles:
+                        await ctx.send("Not authorized to use this command.")
+                        return
+
+                for Member in guild.members:
+                        if not role_upd in Member.roles:
+                                continue
+
+                        try:
+                                await Member.add_roles(role_mute)
+                        except discord.errors.Forbidden:
+                                await ctx.send("Failed to unmask - I don't have permissions to do that.")
+                        else:
+                                await ctx.send("%s: Muted." % Member.mention)
+
+    @commands.command()
+    async def silence_over(self, ctx: commands.Context):
+                """Un-Silence peeps."""
+
+                guild = ctx.message.guild
+
+                role_cmd = discord.utils.get(ctx.guild.roles, name="KPCmd")
+                role_mute = discord.utils.get(ctx.guild.roles, name="Muted")
+                role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
+				
+                if not role_cmd in ctx.author.roles:
+                        await ctx.send("Not authorized to use this command.")
+                        return
+
+                for Member in guild.members:
+                        if not role_mute in Member.roles:
+                                continue
+
+                        try:
+                                await Member.remove_roles(role_mute)
+                        except discord.errors.Forbidden:
+                                await ctx.send("Failed to unmask - I don't have permissions to do that.")
+                        else:
+                                await ctx.send("%s: Unmuted." % Member.mention)
