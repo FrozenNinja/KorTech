@@ -5,7 +5,7 @@ class ExecutionCog(commands.Cog):
     """Written for Hame"""
 
     @commands.command(pass_context=True, no_pm=True)
-    async def execute(ctx, user: discord.Member):
+    async def execute(ctx: commands.Context):
 
         author = ctx.author	
         #Text
