@@ -52,15 +52,13 @@ class KorTechPrime(commands.Cog):
                         await ctx.send("Not authorized to use this command.")
                         return
 
-                for member in guild.members:
-                        if not role_upd in member.roles:
+                for Member in guild.members:
+                        if not role_upd in Member.roles:
                                 continue
 
                         try:
-                                await ctx.member.remove_roles(role_upd)
+                                await ctx.Member.remove_roles(role_upd)
                         except discord.errors.Forbidden:
-                                await ctx.send("%s: Failed to unmask - I don't have permissions to do that." % ctx.member.name)
-                        except AttributeError:  # role_to_add is NoneType
-                                await ctx.send("%s: Failed to unmask - That role isn't user settable." % ctx.member.name)
+                                await ctx.send("Failed to unmask - I don't have permissions to do that.")
                         else:
-                                await ctx.send("%s: Unmasked." % ctx.member.mention)
+                                await ctx.send("%s: Unmasked." % ctx.Member.mention)
