@@ -17,7 +17,7 @@ class KorTechPrime(commands.Cog):
                 role_ally = discord.utils.get(ctx.guild.roles, name="Allied Military")
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 
-                if role_memb or role_ally not in ctx.author.roles:
+                if not (role_memb or role_ally) in ctx.author.roles:
                         await ctx.send("You are not masked as a TITO Member or Allied Military")
                         return
 
