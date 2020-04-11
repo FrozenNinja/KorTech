@@ -7,7 +7,7 @@ class KorTechPrime(commands.Cog):
     """10KI Cog to facilitate Update Management"""
 
     @commands.command()
-    async def im_here(self, ctx: commands.Context):
+    async def here(self, ctx: commands.Context):
                 """Mark that the user is present for update."""
 
                 guild = ctx.message.guild
@@ -17,15 +17,9 @@ class KorTechPrime(commands.Cog):
                 role_ally = discord.utils.get(ctx.guild.roles, name="Allied Military")
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 
-                if not (role_memb or role_ally) in ctx.author.roles:
-                        await ctx.send("You are not masked as a TITO Member or Allied Military")
-                        return
-
-                try:
-                        await ctx.author.add_roles(role_upd)
-                except discord.errors.Forbidden as err:
-                        await ctx.send("I don't have permissions to mark you, {}: {}.".format(author.mention, err))
-                except AttributeError:  # role_to_add is NoneType
-                        await ctx.send("That role isn't user settable, {}.".format(author.mention))
+                if role_memb or role_ally in ctx.author.roles):
+                    await ctx.author.add_roles(role_upd)
+					emoji = '<:tito:351110740259897349>'
+					await message.add_reaction(emoji)
                 else:
-                        await ctx.send("Marked {} as present for this update.".format(author.mention))
+                        await ctx.send("You are not masked as TITO Member or Allied Military")
