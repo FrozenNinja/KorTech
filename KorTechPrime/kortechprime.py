@@ -31,14 +31,8 @@ class KorTechPrime(commands.Cog):
                 guild = ctx.message.guild
                 author = ctx.message.author
 
-                role_memb = discord.utils.get(ctx.guild.roles, name="TITO Member")
-                role_ally = discord.utils.get(ctx.guild.roles, name="Allied Military")
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 
-                try:
-                    await ctx.authot.remove_roles(role_upd)
-                except discord.errors.Forbidden as err:
-                    await self.bot.say("I don't have permissions to unmark you"
-                else:
-                    emoji = '<:oof:549276828158918656>'
-                    await ctx.message.add_reaction(emoji)
+                await ctx.authot.remove_roles(role_upd)
+                emoji = '<:oof:549276828158918656>'
+                await ctx.message.add_reaction(emoji)
