@@ -33,6 +33,6 @@ class KorTechPrime(commands.Cog):
 
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 
-                await ctx.authot.remove_roles(role_upd)
+                await ctx.author.remove_roles(role_upd)
                 emoji = '<:oof:549276828158918656>'
                 await ctx.message.add_reaction(emoji)
