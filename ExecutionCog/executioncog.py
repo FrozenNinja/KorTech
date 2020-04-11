@@ -4,8 +4,8 @@ from redbot.core import commands
 class ExecutionCog(commands.Cog):
     """Written for Hame"""
 
-    @commands.command(pass_context=True, no_pm=True)
-    async def execute(ctx: commands.Context, user: discord.Member):
+    @commands.command()
+    async def execute(self, ctx: commands.Context, user: discord.Member):
 
         author = ctx.message.author	
         #Text
