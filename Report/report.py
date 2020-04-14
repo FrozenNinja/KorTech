@@ -180,9 +180,9 @@ Endorsements Received: {} -- {}
         root = await request
         pretty = pretty_string(root)
         x = pretty.partition("<ENDORSEMENTS>")
-        y = await convertTuple(x[2]) 
+        y = ''.join(x[2]) 
         z = y.rpartition("</ENDORSEMENTS>")
-        end = await convertTuple(z[0])
+        end = ''.join(z[0])
 
     async def _nec(self, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
@@ -196,9 +196,9 @@ Endorsements Received: {} -- {}
         root = await request
         pretty = pretty_string(root)
         x = pretty.partition("<ENDORSEMENTS>")
-        y = await convertTuple(x[2]) 
+        y = await ''.join(x[2]) 
         z = y.rpartition("</ENDORSEMENTS>")
-        end = await convertTuple(z[0])
+        end = ''.join(z[0])
 
     async def _checkwa(self, wanation):
         """Check if Nation is in the WA"""
@@ -210,7 +210,3 @@ Endorsements Received: {} -- {}
         root = await request
         pretty = pretty_string(root)
         return pretty
-
-    async def convertTuple(tup): 
-        str = ''.join(tup) 
-        return str
