@@ -15,23 +15,12 @@ class Report(commands.Cog):
         self.delim = ', '
         self.locks = {"_ne": Lock(), "_nne": Lock()}
         Api.agent = "Kortexia"
-        summary = None
-        raidlead = None
-        rleadcount = None
-        raidmembers = None
-        defenderlead = None
-        dleadcount = None
-        defendermembers = None
-        membercount = None 
-        members = None
-        cwe = None
-        final = None
 
     @commands.command()
     async def startreport(self, ctx, user : discord.User=None):
-
         #Mission Summary
         await ctx.send("Mission Summary?")
+        summary = ""
 
         while True:
             try:
@@ -48,6 +37,9 @@ class Report(commands.Cog):
 
         #RaidLead
         await ctx.send("Who was the raid lead?")
+        raidlead = ""
+        rleadcount = 0
+        raidmembers = ""
 
         while True:
             try:
@@ -70,6 +62,9 @@ class Report(commands.Cog):
 
         #DefenderLead
         await ctx.send("Who was the Defender lead?")
+        defenderlead = ""
+        dleadcount = 0
+        defendermembers = ""
 
         while True:
             try:
@@ -92,6 +87,7 @@ class Report(commands.Cog):
 
         #TITO Nations Count
         await ctx.send("How many TITO Members were involved?")
+        membercount = 0
 
         while True:
             try:
