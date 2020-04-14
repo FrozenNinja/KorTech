@@ -21,7 +21,7 @@ class Report(commands.Cog):
 
         while True:
             try:
-                message = await self.bot.wait_for(author=author, timeout=30)
+                message = await client.wait_for(author=author, timeout=30)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -36,7 +36,7 @@ class Report(commands.Cog):
 
         while True:
             try:
-                message = await self.bot.wait_for(author=author, timeout=30)
+                message = await client.wait_for(author=author, timeout=30)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -57,7 +57,7 @@ class Report(commands.Cog):
 
         while True:
             try:
-                message = await self.bot.wait_for(author=author, timeout=30)
+                message = await client.wait_for(author=author, timeout=30)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -78,7 +78,7 @@ class Report(commands.Cog):
 
         while True:
             try:
-                message = await self.bot.wait_for(author=author, timeout=30)
+                message = await client.wait_for(author=author, timeout=30)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -93,7 +93,7 @@ class Report(commands.Cog):
 
         while True:
             try:
-                message = await self.bot.wait_for(author=author, timeout=30)
+                message = await client.wait_for(author=author, timeout=30)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -108,7 +108,7 @@ class Report(commands.Cog):
 
         while True:
             try:
-                message = await self.bot.wait_for(author=author, timeout=30)
+                message = await client.wait_for(author=author, timeout=30)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -118,7 +118,7 @@ class Report(commands.Cog):
                     break
                 elif "yes" in message.content.lower():
                     await ctx.send("Who earned the CWE?")
-                    message = await self.bot.wait_for(author=author, timeout=30)
+                    message = await client.wait_for(author=author, timeout=30)
 
                     cwe = message.content
 
@@ -136,7 +136,7 @@ class Report(commands.Cog):
 
         while True:
             try:
-                message = await self.bot.wait_for(author=author, timeout=30)
+                message = await client.wait_for(author=author, timeout=30)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
