@@ -4,4 +4,6 @@ from .report import Report
 
 
 def setup(bot):
-    bot.add_cog(Report(bot))
+    cog = Report(bot)
+    await cog.startup()
+    bot.add_cog(cog)

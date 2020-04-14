@@ -15,6 +15,23 @@ class Report(commands.Cog):
         self.bot = bot
         self.delim = ', '
         self.locks = {"_ne": Lock(), "_nne": Lock()}
+        self.config = Config.get_conf(self, identifier=5_236_472_857, force_registration=True)
+        self.config.register_global(agent=None)
+        self.db_cache = None
+        self.config.init_custom("NATION", 1)
+        self.config.register_custom("NATION", dbid=None)
+
+    async def startup(self):
+        agent = await self.config.agent()
+        if not agent:
+            if not self.bot.owner_id:
+                # always False but forces owner_id to be filled
+                await self.bot.is_owner(discord.Object(id=None))
+            owner_id = self.bot.owner_id
+            # only make the user_info request if necessary
+            agent = str(self.bot.get_user(owner_id) or await self.bot.fetch_user(owner_id))
+        Api.agent = f"{agent} Red-DiscordBot/{red_version}"
+        self.db_cache = await self.config.custom("NATION").all()
 
     @commands.command()
     async def startreport(self, ctx, user : discord.User=None):
@@ -176,7 +193,6 @@ Endorsements Received: {} -- {}
 
     async def _ne(self, ctx, *, wanation):
         """Nations Endorsing the specified WA nation"""
-        Api.agent = "Kortexia"
         root = await Api("wa", nation=wanation)
         if root.UNSTATUS.pyval.lower() == "non-member":
             return ctx.send("bleh")
@@ -186,7 +202,6 @@ Endorsements Received: {} -- {}
 
     async def _nec(self, ctx, *, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
-        Api.agent = "Kortexia"
         root = await Api("wa", nation=wanation)
         if root.UNSTATUS.pyval.lower() == "non-member":
             return False
