@@ -212,5 +212,5 @@ Endorsements Received: {} -- {}
         return pretty
 
     async def convertTuple(tup): 
-	    str = ''.join(tup) 
-	    return str
+        str = ''.join(tup) 
+        return str
