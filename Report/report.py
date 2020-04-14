@@ -194,7 +194,7 @@ Endorsements Received: {} -- {}
         root = await Api("endorsements fullname wa", nation=wa_nation)
         if root.UNSTATUS.pyval.lower() == "non-member":
             return False
-        origne = (await Api("endorsements wa", nation=wanation)["endorsements"].replace(",", self.delim))
+        origne = await Api("endorsements wa", nation=wanation)["endorsements"].replace(",", self.delim)
         ne = origne.replace("_", " ")
         return ne
 
@@ -203,5 +203,5 @@ Endorsements Received: {} -- {}
         root = await Api("endorsements fullname wa", nation=wa_nation)
         if root.UNSTATUS.pyval.lower() == "non-member":
             return False
-        nec = await Api("census wa", nation=wanation, scale="66", mode="score")["censusscore"]["text"])
+        nec = await Api("census wa", nation=wanation, scale="66", mode="score")["censusscore"]["text"]
         return nec
