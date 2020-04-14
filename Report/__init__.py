@@ -4,4 +4,4 @@ from .report import Report
 
 
 def setup(bot):
-    bot.add_cog(Report())
+    bot.add_cog(Report(bot))
