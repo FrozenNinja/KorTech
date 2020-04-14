@@ -10,6 +10,7 @@ from redbot.core.utils.chat_formatting import pagify, escape, box
 class Report(commands.Cog):
 
     def __init__(self, bot):
+        Api.loop = bot.loop
         self.bot = bot
         self.delim = ', '
         self.locks = {"_ne": Lock(), "_nne": Lock()}
