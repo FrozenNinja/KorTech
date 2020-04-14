@@ -175,7 +175,7 @@ Endorsements Received: {} -- {}
         except:
             await ctx.send("An error occured, please try again")
 
-    async def _ne(self, ctx, *, wanation):
+    async def _ne(self, wanation):
         """Nations Endorsing the specified WA nation"""
         Api.agent = "Kortexia"
         request = API(
@@ -186,7 +186,7 @@ Endorsements Received: {} -- {}
         pretty = pretty_string(root)
         return pretty
 
-    async def _nec(self, ctx, *, wanation):
+    async def _nec(self, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
         Api.agent = "Kortexia"
         request = Api(
@@ -199,7 +199,7 @@ Endorsements Received: {} -- {}
         pretty = pretty_string(root)
         return pretty
 
-    async def _checkwa(self, ctx, *, wanation):
+    async def _checkwa(self, wanation):
         """Check if Nation is in the WA"""
         Api.agent = "Kortexia"
         request = API(
