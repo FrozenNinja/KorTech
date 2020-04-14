@@ -106,6 +106,7 @@ class Report(commands.Cog):
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
+                
 
                 members = message.content
                 break
@@ -121,6 +122,7 @@ class Report(commands.Cog):
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
+                    break
 
                 if "no" in message.content.lower():
                     cwe = "No CWE"
@@ -185,7 +187,7 @@ Endorsements Received: {} -- {}
         """Nations Endorsing the specified WA nation"""
         Api.agent = "Kortexia"
         root = await Api("wa", nation=wanation)
-		await ctx.send(root)
+        await ctx.send(root)
         #if root.UNSTATUS.pyval.lower() == "non-member":
             #return False
         origne = await Api("endorsements wa", nation=wanation)["endorsements"].replace(",", self.delim)
