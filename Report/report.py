@@ -132,8 +132,8 @@ class Report(commands.Cog):
 
                     cwe = message.content
 
-            except asyncio.TimeoutError:
-                return await ctx.send("You took too long to reply.")
+                except asyncio.TimeoutError:
+                    return await ctx.send("You took too long to reply.")
 
                 else:
                     await ctx.send("Please answer yes or no")
