@@ -183,8 +183,7 @@ Endorsements Received: {} -- {}
             nation=wanation,
         )
         root = await request
-        pretty = pretty_string(root)
-        return pretty
+        return root
 
     async def _nec(self, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
@@ -196,8 +195,7 @@ Endorsements Received: {} -- {}
             scale="66",
         )
         root = await request
-        pretty = pretty_string(root)
-        return pretty
+        return root
 
     async def _checkwa(self, wanation):
         """Check if Nation is in the WA"""
@@ -207,5 +205,4 @@ Endorsements Received: {} -- {}
             nation=wanation,
         )
         root = await request
-        pretty = pretty_string(root)
-        return pretty
+        return root
