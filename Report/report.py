@@ -45,16 +45,17 @@ class Report(commands.Cog):
                 answer = message.content
                 raidlead = answer
                 raidwa = await self._checkwa(wanation=answer)
-                raidmembers = await self._ne(wanation=answer)
-                rleadcount = await self._nec(wanation=answer)
-                await ctx.send(raidwa)
-                #await ctx.send(raidmembers)
-                #await ctx.send(rleadcount)
-                break
+				if "wa member" in raidwa.lower():
+                    raidmembers = await self._ne(wanation=answer)
+                    rleadcount = await self._nec(wanation=answer)
+                    await ctx.send(raidmembers)
+                    #await ctx.send(rleadcount)
+					break
+				else:
+				    await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
+
             except asyncio.TimeoutError:
                 return await ctx.send("You took too long to reply.")
-            #except:
-               # await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
 
         #DefenderLead
         await ctx.send("Who was the Defender lead?")
