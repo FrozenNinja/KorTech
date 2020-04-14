@@ -25,7 +25,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await bot.wait_for('message', check=check, timeout=30.0)
+                message = await self.bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
