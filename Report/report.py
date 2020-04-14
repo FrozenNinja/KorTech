@@ -178,7 +178,7 @@ Endorsements Received: {} -- {}
             nation=wanation,
         )
         root = await request
-        pretty = root[0].text
+        pretty = pretty_string(root)
         x = pretty.partition("<ENDORSEMENTS>")
         y = await convertTuple(x[2]) 
         z = y.rpartition("</ENDORSEMENTS>")
