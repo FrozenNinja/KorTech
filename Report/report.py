@@ -7,7 +7,7 @@ from sans.utils import pretty_string
 from redbot.core import checks, commands
 from redbot.core.utils.chat_formatting import pagify, escape, box
 
-class Report:
+class Report(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -16,7 +16,7 @@ class Report:
         self.locks = {"_ne": Lock(), "_nne": Lock()}
         Api.agent = "Kortexia"
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def report(self, ctx, user : discord.User=None):
         author = ctx.author
 
