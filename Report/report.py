@@ -180,18 +180,18 @@ Endorsements Received: {} -- {}
         request = API("endorsements", nation=wanation)
         root = await request
         pretty = pretty_string(root)
-        await ctx.send(pretty)
+        return await ctx.send(pretty)
 
     async def _nec(self, ctx, *, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
         request = Api("census", nation=wanation, scale="66", mode="score")
         root = await request
         pretty = pretty_string(root)
-        await ctx.send(pretty)
+        return await ctx.send(pretty)
 
     async def _checkwa(self, ctx, *, wanation):
         """Check if Nation is in the WA"""
         request = API("wa", nation=wanation)
         root = await request
         pretty = pretty_string(root)
-        await ctx.send(pretty)
+        return await ctx.send(pretty)
