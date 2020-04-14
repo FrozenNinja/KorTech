@@ -169,8 +169,8 @@ Endorsements Received: {} -- {}
 [font color="aqua"]{}[/font]""".format(summary, raidlead, int(float(rleadcount)), raidmembers, defenderlead, int(float(dleadcount)), defendermembers, int(membercount), members, cwe, final)
 
         try:
-            pagifiedfinal = await pagify(finalmsg)
-            await ctx.send(pagifiedfinal)
+            for page in pagify(finalmsg)
+                await ctx.send(page)
         except:
             await ctx.send("An error occured, please try again")
 
