@@ -181,19 +181,19 @@ Endorsements Received: {} -- {}
         except:
             await ctx.send("An error occured, please try again")
 
-    async def _ne(self, *, wanation: str):
+    async def _ne(self, ctx, *, wanation: str):
         """Nations Endorsing the specified WA nation"""
         origne = (self._endocheck(await Api(
             "endorsements wa", nation=wanation))["endorsements"].replace(",", self.delim))
         ne = origne.replace("_", " ")
         return ne
 
-    async def _nec(self, *, wanation: str):
+    async def _nec(self, ctx, *, wanation: str):
         """Number of Nations Endorsing (Count) the specified WA nation"""
         nec = (self._endocheck(await Api("census wa", nation=wanation, scale="66", mode="score"))["censusscore"]["text"])
         return nec
 
-    def _endocheck(self, data):
+    def _endocheck(self, ctx, data):
         if data["unstatus"] == "Non-member":
             raise commands.BadArgument("Nation {} is not in the WA.".format(data["id"]))
         return data
