@@ -7,6 +7,7 @@ from sans.errors import HTTPException, NotFound
 from sans.utils import pretty_string
 from redbot.core import checks, commands
 from redbot.core.utils.chat_formatting import pagify, escape, box
+from lxml import etree as ET
 
 class Report(commands.Cog):
 
@@ -118,16 +119,8 @@ class Report(commands.Cog):
                     break
                 elif "yes" in message.content.lower():
                     await ctx.send("Who earned the CWE?")
-                    while True:
-                        try:
-                            message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
-
-                            cwe = message.content
-                            break
-
-                        except asyncio.TimeoutError:
-                            return await ctx.send("You took too long to reply.")
-
+                    message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
+                    cwe = message.content
                 else:
                     await ctx.send("Please answer yes or no")
 
@@ -184,7 +177,7 @@ Endorsements Received: {} -- {}
             nation=wanation,
         )
         root = await request
-        pretty = pretty_string(root)
+        pretty = root.findall("./NATION/ENDORSEMENTS")
         return pretty
 
     async def _nec(self, wanation):
