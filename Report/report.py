@@ -196,7 +196,7 @@ Endorsements Received: {} -- {}
         root = await request
         pretty = pretty_string(root)
         x = pretty.partition("<ENDORSEMENTS>")
-        y = await ''.join(x[2]) 
+        y = ''.join(x[2]) 
         z = y.rpartition("</ENDORSEMENTS>")
         end = ''.join(z[0])
 
