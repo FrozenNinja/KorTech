@@ -43,8 +43,8 @@ class Report(commands.Cog):
             try:
                 message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                if message is None:
-                    return await ctx.send("You took too long to reply.")
+            except asyncio.TimeoutError:
+                return await ctx.send("You took too long to reply.")
 
                 answer = message.content
 
@@ -67,8 +67,8 @@ class Report(commands.Cog):
             try:
                 message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                if message is None:
-                    return await ctx.send("You took too long to reply.")
+            except asyncio.TimeoutError:
+                return await ctx.send("You took too long to reply.")
 
                 answer = message.content
 
@@ -89,8 +89,8 @@ class Report(commands.Cog):
             try:
                 message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                if message is None:
-                    return await ctx.send("You took too long to reply.")
+            except asyncio.TimeoutError:
+                return await ctx.send("You took too long to reply.")
 
                 membercount = float(message.content)
                 break
@@ -104,8 +104,8 @@ class Report(commands.Cog):
             try:
                 message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                if message is None:
-                    return await ctx.send("You took too long to reply.")
+            except asyncio.TimeoutError:
+                return await ctx.send("You took too long to reply.")
                 
 
                 members = message.content
@@ -120,9 +120,8 @@ class Report(commands.Cog):
             try:
                 message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                if message is None:
-                    return await ctx.send("You took too long to reply.")
-                    break
+            except asyncio.TimeoutError:
+                return await ctx.send("You took too long to reply.")
 
                 if "no" in message.content.lower():
                     cwe = "No CWE"
@@ -133,9 +132,9 @@ class Report(commands.Cog):
 
                     cwe = message.content
 
-                    if cwe is None:
-                        return await ctx.send("You took too long to reply.")
-                    break
+            except asyncio.TimeoutError:
+                return await ctx.send("You took too long to reply.")
+
                 else:
                     await ctx.send("Please answer yes or no")
 
@@ -149,8 +148,8 @@ class Report(commands.Cog):
             try:
                 message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                if message is None:
-                    return await ctx.send("You took too long to reply.")
+            except asyncio.TimeoutError:
+                return await ctx.send("You took too long to reply.")
 
                 if "yes" in message.content.lower():
                     final = "Final"
@@ -183,18 +182,17 @@ Endorsements Received: {} -- {}
         except:
             await ctx.send("An error occured, please try again")
 
-    async def _ne(self, ctx, *, wanation: str):
+    async def _ne(self, ctx, *, wanation):
         """Nations Endorsing the specified WA nation"""
         Api.agent = "Kortexia"
         root = await Api("wa", nation=wanation)
-        await ctx.send(root)
-        #if root.UNSTATUS.pyval.lower() == "non-member":
-            #return False
+        if root.UNSTATUS.pyval.lower() == "non-member":
+            return False
         origne = await Api("endorsements wa", nation=wanation)["endorsements"].replace(",", self.delim)
         ne = origne.replace("_", " ")
         return ne
 
-    async def _nec(self, ctx, *, wanation: str):
+    async def _nec(self, ctx, *, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
         Api.agent = "Kortexia"
         root = await Api("wa", nation=wanation)
