@@ -29,7 +29,7 @@ class Report(commands.Cog):
                 break
             except:
                 await ctx.send("Stop breaking things, try again")
-				break
+                break
 
         #RaidLead
         await ctx.send("Who was the raid lead?")
@@ -51,7 +51,7 @@ class Report(commands.Cog):
                 break
             except:
                 await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
-				break
+                break
 
         #DefenderLead
         await ctx.send("Who was the Defender lead?")
@@ -73,7 +73,7 @@ class Report(commands.Cog):
                 break
             except:
                 await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
-				break
+                break
 
         #TITO Nations Count
         await ctx.send("How many TITO Members were involved?")
@@ -89,7 +89,7 @@ class Report(commands.Cog):
                 break
             except ValueError:
                 await ctx.send("Please enter a number")
-				break
+                break
 
         #TITO Nations
         await ctx.send("Which TITO Members were involved?")
@@ -105,7 +105,7 @@ class Report(commands.Cog):
                 break
             except:
                 await ctx.send("How did you mess that up? Try again")
-				break
+                break
 
         #Coast Watching Eagle
         await ctx.send("Did anybody earn a Coast Watching Eagle?")
@@ -134,7 +134,7 @@ class Report(commands.Cog):
 
             except:
                 await ctx.send("Idk how you messed that up, try again")
-				break
+                break
 
         #Finalization
         await ctx.send("Mission Finalized?")
@@ -156,7 +156,7 @@ class Report(commands.Cog):
                     await ctx.send("Please answer yes or no")
             except:
                 await ctx.send("Stop breaking the command, try again")
-				break
+                break
 
         finalmsg = """{}
 
