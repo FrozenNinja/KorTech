@@ -14,7 +14,6 @@ class Report(commands.Cog):
         self.bot = bot
         self.delim = ', '
         self.locks = {"_ne": Lock(), "_nne": Lock()}
-        Api.agent = "Kortexia"
 
     @commands.command()
     async def startreport(self, ctx, user : discord.User=None):
@@ -191,6 +190,7 @@ Endorsements Received: {} -- {}
 
     async def _ne(self, ctx, *, wanation: str):
         """Nations Endorsing the specified WA nation"""
+        Api.agent = "Kortexia"
         root = await Api("endorsements fullname wa", nation=wa_nation)
         if root.UNSTATUS.pyval.lower() == "non-member":
             return False
@@ -200,6 +200,7 @@ Endorsements Received: {} -- {}
 
     async def _nec(self, ctx, *, wanation: str):
         """Number of Nations Endorsing (Count) the specified WA nation"""
+        Api.agent = "Kortexia"
         root = await Api("endorsements fullname wa", nation=wa_nation)
         if root.UNSTATUS.pyval.lower() == "non-member":
             return False
