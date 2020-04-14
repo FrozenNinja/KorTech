@@ -54,7 +54,7 @@ class Report(commands.Cog):
                     await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
 
             except NotFound:
-                return await ctx.send("Nation does not exist, try again")
+                await ctx.send("Nation does not exist, try again")
             except asyncio.TimeoutError:
                 return await ctx.send("You took too long to reply.")
 
