@@ -184,9 +184,10 @@ Endorsements Received: {} -- {}
     async def _ne(self, ctx, *, wanation: str):
         """Nations Endorsing the specified WA nation"""
         Api.agent = "Kortexia"
-        root = await Api("endorsements fullname wa", nation=wanation)
-        if root.UNSTATUS.pyval.lower() == "non-member":
-            return False
+        root = await Api("wa", nation=wanation)
+		await ctx.send(root)
+        #if root.UNSTATUS.pyval.lower() == "non-member":
+            #return False
         origne = await Api("endorsements wa", nation=wanation)["endorsements"].replace(",", self.delim)
         ne = origne.replace("_", " ")
         return ne
@@ -194,7 +195,7 @@ Endorsements Received: {} -- {}
     async def _nec(self, ctx, *, wanation: str):
         """Number of Nations Endorsing (Count) the specified WA nation"""
         Api.agent = "Kortexia"
-        root = await Api("endorsements fullname wa", nation=wanation)
+        root = await Api("wa", nation=wanation)
         if root.UNSTATUS.pyval.lower() == "non-member":
             return False
         nec = await Api("census wa", nation=wanation, scale="66", mode="score")["censusscore"]["text"]
