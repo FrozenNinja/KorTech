@@ -3,7 +3,7 @@
 from .report import Report
 
 
-def setup(bot):
+async def setup(bot):
     cog = Report(bot)
     await cog.startup()
     bot.add_cog(cog)
