@@ -9,17 +9,13 @@ from redbot.core.utils.chat_formatting import pagify, escape, box
 
 class Report(commands.Cog):
 
-    def __init__(self, bot):
-        self.bot = bot
+    @commands.command()
+    async def report(self, ctx, user : discord.User=None):
+        author = ctx.author
         Api.loop = bot.loop
         self.delim = ', '
         self.locks = {"_ne": Lock(), "_nne": Lock()}
         Api.agent = "Kortexia"
-
-    @commands.command()
-    async def report(self, ctx, user : discord.User=None):
-        author = ctx.author
-
 
         #Mission Summary
         await ctx.send("Mission Summary?")
