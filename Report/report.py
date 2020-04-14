@@ -128,12 +128,13 @@ class Report(commands.Cog):
                     break
                 elif "yes" in message.content.lower():
                     await ctx.send("Who earned the CWE?")
-                    message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
+                    try:
+                        message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                    cwe = message.content
+                        cwe = message.content
 
-                except asyncio.TimeoutError:
-                    return await ctx.send("You took too long to reply.")
+                    except asyncio.TimeoutError:
+                        return await ctx.send("You took too long to reply.")
 
                 else:
                     await ctx.send("Please answer yes or no")
