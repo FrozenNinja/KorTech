@@ -183,6 +183,7 @@ Endorsements Received: {} -- {}
         y = ''.join(x[2]) 
         z = y.rpartition("</ENDORSEMENTS>")
         end = ''.join(z[0])
+        return end
 
     async def _nec(self, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
@@ -199,6 +200,7 @@ Endorsements Received: {} -- {}
         y = ''.join(x[2]) 
         z = y.rpartition("</ENDORSEMENTS>")
         end = ''.join(z[0])
+        return end
 
     async def _checkwa(self, wanation):
         """Check if Nation is in the WA"""
