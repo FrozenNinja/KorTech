@@ -12,7 +12,6 @@ class Report(commands.Cog):
     @commands.command()
     async def startreport(self, ctx, user : discord.User=None):
         author = ctx.author
-        Api.loop = bot.loop
         self.delim = ', '
         self.locks = {"_ne": Lock(), "_nne": Lock()}
         Api.agent = "Kortexia"
