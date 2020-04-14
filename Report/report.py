@@ -178,7 +178,10 @@ Endorsements Received: {} -- {}
     async def _ne(self, ctx, *, wanation):
         """Nations Endorsing the specified WA nation"""
         Api.agent = "Kortexia"
-        request = API("endorsements", nation=wanation)
+        request = API(
+            "endorsements",
+            nation=wanation,
+        )
         root = await request
         pretty = pretty_string(root)
         return pretty
@@ -186,7 +189,12 @@ Endorsements Received: {} -- {}
     async def _nec(self, ctx, *, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
         Api.agent = "Kortexia"
-        request = Api("census", nation=wanation, scale="66", mode="score")
+        request = Api(
+            "census",
+            nation=wanation,
+            mode="score",
+            scale="66",
+        )
         root = await request
         pretty = pretty_string(root)
         return pretty
@@ -194,7 +202,10 @@ Endorsements Received: {} -- {}
     async def _checkwa(self, ctx, *, wanation):
         """Check if Nation is in the WA"""
         Api.agent = "Kortexia"
-        request = API("wa", nation=wanation)
+        request = API(
+            "wa",
+            nation=wanation,
+        )
         root = await request
         pretty = pretty_string(root)
         return pretty
