@@ -49,8 +49,7 @@ class Report(commands.Cog):
                 if "wa member" in raidwa.lower():
                     raidmembers = await self._ne(wanation=answer)
                     rleadcount = await self._nec(wanation=answer)
-                    await ctx.send(raidmembers)
-                    #await ctx.send(rleadcount)
+                    await ctx.send(rleadcount)
                     break
                 else:
                     await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
