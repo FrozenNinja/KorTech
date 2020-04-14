@@ -178,8 +178,8 @@ Endorsements Received: {} -- {}
             nation=wanation,
         )
         forest = await request
-		tree = ET.parse(forest)
-		root = tree.getroot()
+        tree = ET.parse(forest)
+        root = tree.getroot()
         pretty = root.findall("./NATION/ENDORSEMENTS")
         return pretty
 
