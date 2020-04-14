@@ -25,8 +25,8 @@ class Report(commands.Cog):
             try:
                 message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                if message is None:
-                    return await ctx.send("You took too long to reply.")
+            except asyncio.TimeoutError:
+                return await ctx.send("You took too long to reply.")
 
                 summary = message.content
                 break
@@ -188,7 +188,7 @@ Endorsements Received: {} -- {}
         Api.agent = "Kortexia"
         root = await Api("wa", nation=wanation)
         if root.UNSTATUS.pyval.lower() == "non-member":
-            return False
+            return ctx.send("bleh")
         origne = await Api("endorsements wa", nation=wanation)["endorsements"].replace(",", self.delim)
         ne = origne.replace("_", " ")
         return ne
