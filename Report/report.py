@@ -11,6 +11,7 @@ class Report(commands.Cog):
 
     @commands.command()
     async def startreport(self, ctx, user : discord.User=None):
+        bot = commands.Bot()
         self.delim = ', '
         self.locks = {"_ne": Lock(), "_nne": Lock()}
         Api.agent = "Kortexia"
@@ -22,7 +23,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await self.bot.wait_for('message', check=check, timeout=30.0)
+                message = await bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -40,7 +41,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await self.bot.wait_for('message', check=check, timeout=30.0)
+                message = await bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -64,7 +65,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await self.bot.wait_for('message', check=check, timeout=30.0)
+                message = await bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -88,7 +89,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await self.bot.wait_for('message', check=check, timeout=30.0)
+                message = await bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -106,7 +107,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await self.bot.wait_for('message', check=check, timeout=30.0)
+                message = await bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -124,7 +125,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await self.bot.wait_for('message', check=check, timeout=30.0)
+                message = await bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -136,7 +137,7 @@ class Report(commands.Cog):
                     await ctx.send("Who earned the CWE?")
                     def check(user):
                         return user == message.author
-                    message = await self.bot.wait_for('message', check=check, timeout=30.0)
+                    message = await bot.wait_for('message', check=check, timeout=30.0)
 
                     cwe = message.content
 
@@ -157,7 +158,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await self.bot.wait_for('message', check=check, timeout=30.0)
+                message = await bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
