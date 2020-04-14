@@ -116,7 +116,7 @@ class Report(commands.Cog):
                 elif "yes" in message.content.lower():
                     await ctx.send("Who earned the CWE?")
                     while True:
-					    try:
+                        try:
                             message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
                             cwe = message.content
