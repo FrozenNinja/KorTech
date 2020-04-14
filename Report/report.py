@@ -121,6 +121,7 @@ class Report(commands.Cog):
                     await ctx.send("Who earned the CWE?")
                     message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
                     cwe = message.content
+                    break
                 else:
                     await ctx.send("Please answer yes or no")
 
@@ -176,7 +177,9 @@ Endorsements Received: {} -- {}
             "endorsements",
             nation=wanation,
         )
-        root = await request
+        forest = await request
+		tree = ET.parse(forest)
+		root = tree.getroot()
         pretty = root.findall("./NATION/ENDORSEMENTS")
         return pretty
 
