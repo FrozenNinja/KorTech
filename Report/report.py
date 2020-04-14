@@ -14,7 +14,6 @@ class Report(commands.Cog):
         Api.loop = bot.loop
         self.bot = bot
         self.delim = ', '
-        self.locks = {"_ne": Lock(), "_nne": Lock()}
         self.config = Config.get_conf(self, identifier=5_236_472_857, force_registration=True)
         self.config.register_global(agent=None)
         self.db_cache = None
@@ -202,8 +201,8 @@ Endorsements Received: {} -- {}
 
     async def _nec(self, ctx, *, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
-        root = await Api("wa", nation=wanation)
+        root = Api("wa", nation=wanation)
         if root.UNSTATUS.pyval.lower() == "non-member":
             return False
-        nec = await Api("census wa", nation=wanation, scale="66", mode="score")["censusscore"]["text"]
+        nec = Api("census wa", nation=wanation, scale="66", mode="score")["censusscore"]["text"]
         return nec
