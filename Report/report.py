@@ -44,12 +44,12 @@ class Report(commands.Cog):
 
                 answer = message.content
                 raidlead = answer
-                #raidwa = self._checkwa(wanation=answer)
-                #raidmembers = self._ne(wanation=answer)
-                #rleadcount = self._nec(wanation=answer)
-                await ctx.send(self._checkwa(wanation=answer))
-                await ctx.send(self._ne(wanation=answer))
-                await ctx.send(self._nec(wanation=answer))
+                raidwa = await self._checkwa(wanation=answer)
+                raidmembers = await self._ne(wanation=answer)
+                rleadcount = await self._nec(wanation=answer)
+                await ctx.send(raidwa)
+                await ctx.send(raidmembers)
+                await ctx.send(rleadcount)
                 break
             except asyncio.TimeoutError:
                 return await ctx.send("You took too long to reply.")
