@@ -199,7 +199,7 @@ Endorsements Received: {} -- {}
         y = ''.join(x[2]) 
         z = y.rpartition("</ENDORSEMENTS>")
         end = ''.join(z[0])
-        return end
+        return pretty
 
     async def _checkwa(self, wanation):
         """Check if Nation is in the WA"""
