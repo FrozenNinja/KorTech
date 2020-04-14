@@ -177,10 +177,8 @@ Endorsements Received: {} -- {}
             "endorsements",
             nation=wanation,
         )
-        forest = await request
-        tree = ET.parse(forest)
-        root = tree.getroot()
-        pretty = root.findall("./NATION/ENDORSEMENTS")
+        root = await request
+        pretty = root[0].txt
         return pretty
 
     async def _nec(self, wanation):
