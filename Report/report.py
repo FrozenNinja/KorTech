@@ -10,7 +10,7 @@ from redbot.core.utils.chat_formatting import pagify, escape, box
 class Report(commands.Cog):
 
     @commands.command()
-    async def report(self, ctx, user : discord.User=None):
+    async def startreport(self, ctx, user : discord.User=None):
         author = ctx.author
         Api.loop = bot.loop
         self.delim = ', '
