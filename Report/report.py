@@ -49,7 +49,6 @@ class Report(commands.Cog):
                 if "wa member" in raidwa.lower():
                     raidmembers = await self._ne(wanation=answer)
                     rleadcount = await self._nec(wanation=answer)
-                    await ctx.send(rleadcount)
                     break
                 else:
                     await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
@@ -69,15 +68,16 @@ class Report(commands.Cog):
 
                 answer = message.content
                 defenderlead = answer
-                qdefendermembers = self._ne(wanation=answer)
-                defendermembers = await qdefendermembers
-                qdleadcount = self._nec(wanation=answer)
-                dleadcount = await qdleadcount
-                break
+                defendwa = await self._checkwa(wanation=answer)
+                if "wa member" in defendwa.lower():
+                    defendermembers = await self._ne(wanation=answer)
+                    dleadcount = await self._nec(wanation=answer)
+                    break
+                else:
+                    await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
+
             except asyncio.TimeoutError:
                 return await ctx.send("You took too long to reply.")
-            except:
-                await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
 
         #TITO Nations Count
         await ctx.send("How many TITO Members were involved?")
@@ -195,11 +195,11 @@ Endorsements Received: {} -- {}
         )
         root = await request
         pretty = pretty_string(root)
-        x = pretty.partition("<ENDORSEMENTS>")
+        x = pretty.partition("<SCORE>")
         y = ''.join(x[2]) 
-        z = y.rpartition("</ENDORSEMENTS>")
+        z = y.rpartition("</SCORE>")
         end = ''.join(z[0])
-        return pretty
+        return end
 
     async def _checkwa(self, wanation):
         """Check if Nation is in the WA"""
