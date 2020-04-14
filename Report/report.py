@@ -15,6 +15,17 @@ class Report(commands.Cog):
         self.delim = ', '
         self.locks = {"_ne": Lock(), "_nne": Lock()}
         Api.agent = "Kortexia"
+        summary = None
+        raidlead = None
+        rleadcount = None
+        raidmembers = None
+        defenderlead = None
+        dleadcount = None
+        defendermembers = None
+        membercount = None 
+        members = None
+        cwe = None
+        final = None
 
     @commands.command()
     async def startreport(self, ctx, user : discord.User=None):
