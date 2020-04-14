@@ -47,9 +47,9 @@ class Report(commands.Cog):
                 #raidwa = self._checkwa(wanation=answer)
                 #raidmembers = self._ne(wanation=answer)
                 #rleadcount = self._nec(wanation=answer)
-                await self._checkwa(wanation=answer)
-                await self._ne(wanation=answer)
-                await self._nec(wanation=answer)
+                await ctx.send(self._checkwa(wanation=answer))
+                await ctx.send(self._ne(wanation=answer))
+                await ctx.send(self._nec(wanation=answer))
                 break
             except asyncio.TimeoutError:
                 return await ctx.send("You took too long to reply.")
@@ -180,18 +180,18 @@ Endorsements Received: {} -- {}
         request = API("endorsements", nation=wanation)
         root = await request
         pretty = pretty_string(root)
-        return await ctx.send(pretty)
+        return pretty
 
     async def _nec(self, ctx, *, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
         request = Api("census", nation=wanation, scale="66", mode="score")
         root = await request
         pretty = pretty_string(root)
-        return await ctx.send(pretty)
+        return pretty
 
     async def _checkwa(self, ctx, *, wanation):
         """Check if Nation is in the WA"""
         request = API("wa", nation=wanation)
         root = await request
         pretty = pretty_string(root)
-        return await ctx.send(pretty)
+        return pretty
