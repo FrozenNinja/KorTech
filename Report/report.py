@@ -5,7 +5,7 @@ import sans
 from sans.api import Api
 from sans.errors import HTTPException, NotFound
 from sans.utils import pretty_string
-from redbot.core import checks, commands, Config
+from redbot.core import checks, commands, Config, version_info as red_version
 from redbot.core.utils.chat_formatting import pagify, escape, box
 
 class Report(commands.Cog):
