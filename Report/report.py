@@ -46,7 +46,7 @@ class Report(commands.Cog):
                 answer = message.content
                 raidlead = answer
                 raidwa = await self._checkwa(wanation=answer)
-                if "wa member" in raidwa.lower():
+                if "non-member" not in raidwa.lower():
                     raidmembers = await self._ne(wanation=answer)
                     rleadcount = await self._nec(wanation=answer)
                     break
@@ -71,7 +71,7 @@ class Report(commands.Cog):
                 answer = message.content
                 defenderlead = answer
                 defendwa = await self._checkwa(wanation=answer)
-                if "wa member" in defendwa.lower():
+                if "non-member" not in defendwa.lower():
                     defendermembers = await self._ne(wanation=answer)
                     dleadcount = await self._nec(wanation=answer)
                     break
