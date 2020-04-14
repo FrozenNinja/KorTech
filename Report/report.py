@@ -53,8 +53,8 @@ class Report(commands.Cog):
                 break
             except asyncio.TimeoutError:
                 return await ctx.send("You took too long to reply.")
-            except:
-                await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
+            #except:
+               # await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
 
         #DefenderLead
         await ctx.send("Who was the Defender lead?")
