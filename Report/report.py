@@ -178,7 +178,7 @@ Endorsements Received: {} -- {}
             nation=wanation,
         )
         root = await request
-        pretty = root[0].txt
+        pretty = root[0].text
         return pretty
 
     async def _nec(self, wanation):
