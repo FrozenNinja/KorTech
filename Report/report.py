@@ -4,7 +4,7 @@ from asyncio import Lock
 import sans
 from sans.api import Api
 from sans.utils import pretty_string
-from redbot.core import checks, commands
+from redself.bot.core import checks, commands
 from redbot.core.utils.chat_formatting import pagify, escape, box
 
 class Report(commands.Cog):
@@ -43,7 +43,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await bot.wait_for('message', check=check, timeout=30.0)
+                message = await self.bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -67,7 +67,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await bot.wait_for('message', check=check, timeout=30.0)
+                message = await self.bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -91,7 +91,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await bot.wait_for('message', check=check, timeout=30.0)
+                message = await self.bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -109,7 +109,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await bot.wait_for('message', check=check, timeout=30.0)
+                message = await self.bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -127,7 +127,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await bot.wait_for('message', check=check, timeout=30.0)
+                message = await self.bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
@@ -139,7 +139,7 @@ class Report(commands.Cog):
                     await ctx.send("Who earned the CWE?")
                     def check(user):
                         return user == message.author
-                    message = await bot.wait_for('message', check=check, timeout=30.0)
+                    message = await self.bot.wait_for('message', check=check, timeout=30.0)
 
                     cwe = message.content
 
@@ -160,7 +160,7 @@ class Report(commands.Cog):
             try:
                 def check(user):
                     return user == message.author
-                message = await bot.wait_for('message', check=check, timeout=30.0)
+                message = await self.bot.wait_for('message', check=check, timeout=30.0)
 
                 if message is None:
                     return await ctx.send("You took too long to reply.")
