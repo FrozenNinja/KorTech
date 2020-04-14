@@ -4,7 +4,7 @@ from asyncio import Lock
 import sans
 from sans.api import Api
 from sans.utils import pretty_string
-from redself.bot.core import checks, commands
+from red.bot.core import checks, commands
 from redbot.core.utils.chat_formatting import pagify, escape, box
 
 class Report(commands.Cog):
