@@ -178,7 +178,7 @@ Endorsements Received: {} -- {}
     async def _ne(self, wanation):
         """Nations Endorsing the specified WA nation"""
         Api.agent = "Kortexia"
-        request = API(
+        request = Api(
             "endorsements",
             nation=wanation,
         )
@@ -202,7 +202,7 @@ Endorsements Received: {} -- {}
     async def _checkwa(self, wanation):
         """Check if Nation is in the WA"""
         Api.agent = "Kortexia"
-        request = API(
+        request = Api(
             "wa",
             nation=wanation,
         )
