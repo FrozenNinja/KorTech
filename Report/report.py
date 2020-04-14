@@ -5,7 +5,7 @@ import sans
 from sans.api import Api
 from sans.errors import HTTPException, NotFound
 from sans.utils import pretty_string
-from redbot.core import checks, commands, Config, version_info as red_version
+from redbot.core import checks, commands
 from redbot.core.utils.chat_formatting import pagify, escape, box
 
 class Report(commands.Cog):
@@ -14,23 +14,6 @@ class Report(commands.Cog):
         Api.loop = bot.loop
         self.bot = bot
         self.delim = ', '
-        self.config = Config.get_conf(self, identifier=5_236_472_857, force_registration=True)
-        self.config.register_global(agent=None)
-        self.db_cache = None
-        self.config.init_custom("NATION", 1)
-        self.config.register_custom("NATION", dbid=None)
-
-    async def startup(self):
-        agent = await self.config.agent()
-        if not agent:
-            if not self.bot.owner_id:
-                # always False but forces owner_id to be filled
-                await self.bot.is_owner(discord.Object(id=None))
-            owner_id = self.bot.owner_id
-            # only make the user_info request if necessary
-            agent = str(self.bot.get_user(owner_id) or await self.bot.fetch_user(owner_id))
-        Api.agent = f"{agent} Red-DiscordBot/{red_version}"
-        self.db_cache = await self.config.custom("NATION").all()
 
     @commands.command()
     async def startreport(self, ctx, user : discord.User=None):
@@ -61,10 +44,12 @@ class Report(commands.Cog):
 
                 answer = message.content
                 raidlead = answer
-                qraidmembers = self._ne(wanation=answer)
-                raidmembers = await qraidmembers
-                qrleadcount = self._nec(wanation=answer)
-                rleadcount = await qrleadcount
+				#raidwa = self._checkwa(wanation=answer)
+                #raidmembers = self._ne(wanation=answer)
+                #rleadcount = self._nec(wanation=answer)
+		        await self._checkwa(wanation=answer)
+                await self._ne(wanation=answer)
+                await self._nec(wanation=answer)
                 break
             except asyncio.TimeoutError:
                 return await ctx.send("You took too long to reply.")
@@ -192,17 +177,21 @@ Endorsements Received: {} -- {}
 
     async def _ne(self, ctx, *, wanation):
         """Nations Endorsing the specified WA nation"""
-        root = await Api("wa", nation=wanation)
-        if root.UNSTATUS.pyval.lower() == "non-member":
-            return ctx.send("bleh")
-        origne = await Api("endorsements wa", nation=wanation)["endorsements"].replace(",", self.delim)
-        ne = origne.replace("_", " ")
-        return ne
+		request = API("endorsements", nation=wanation)
+		root = await request
+		pretty = pretty_string(root)
+	    await ctx.send(pretty)
 
     async def _nec(self, ctx, *, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
-        root = Api("wa", nation=wanation)
-        if root.UNSTATUS.pyval.lower() == "non-member":
-            return False
-        nec = Api("census wa", nation=wanation, scale="66", mode="score")["censusscore"]["text"]
-        return nec
+        request = Api("census", nation=wanation, scale="66", mode="score")
+		root = await request
+		pretty = pretty_string(root)
+	    await ctx.send(pretty)
+
+    async def _checkwa(self, ctx, *, wanation):
+        """Check if Nation is in the WA"""
+		request = API("wa", nation=wanation)
+		root = await request
+		pretty = pretty_string(root)
+	    await ctx.send(pretty)
