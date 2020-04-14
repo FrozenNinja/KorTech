@@ -44,10 +44,10 @@ class Report(commands.Cog):
 
                 answer = message.content
                 raidlead = answer
-				#raidwa = self._checkwa(wanation=answer)
+                #raidwa = self._checkwa(wanation=answer)
                 #raidmembers = self._ne(wanation=answer)
                 #rleadcount = self._nec(wanation=answer)
-		        await self._checkwa(wanation=answer)
+                await self._checkwa(wanation=answer)
                 await self._ne(wanation=answer)
                 await self._nec(wanation=answer)
                 break
@@ -177,21 +177,21 @@ Endorsements Received: {} -- {}
 
     async def _ne(self, ctx, *, wanation):
         """Nations Endorsing the specified WA nation"""
-		request = API("endorsements", nation=wanation)
-		root = await request
-		pretty = pretty_string(root)
-	    await ctx.send(pretty)
+        request = API("endorsements", nation=wanation)
+        root = await request
+        pretty = pretty_string(root)
+        await ctx.send(pretty)
 
     async def _nec(self, ctx, *, wanation):
         """Number of Nations Endorsing (Count) the specified WA nation"""
         request = Api("census", nation=wanation, scale="66", mode="score")
-		root = await request
-		pretty = pretty_string(root)
-	    await ctx.send(pretty)
+        root = await request
+        pretty = pretty_string(root)
+        await ctx.send(pretty)
 
     async def _checkwa(self, ctx, *, wanation):
         """Check if Nation is in the WA"""
-		request = API("wa", nation=wanation)
-		root = await request
-		pretty = pretty_string(root)
-	    await ctx.send(pretty)
+        request = API("wa", nation=wanation)
+        root = await request
+        pretty = pretty_string(root)
+        await ctx.send(pretty)
