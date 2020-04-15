@@ -101,7 +101,7 @@ class Report(commands.Cog):
 
         while True:
             try:
-                message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
+                message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=60.0)
 
                 members = message.content
                 break
