@@ -1,26 +1,28 @@
-from discord.ext import commands
 import discord
 import os
-from .utils import checks
+from redbot.core import commands
+from redbot.core import checks
 
 
-class Update:
+class Update(commands.Cog):
     """Written for Hame"""
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @commands.command(pass_context=True, no_pm=True)
+    @commands.command()
+    @commands.guild_only()
     @checks.admin_or_permissions(administrator=True)
-    async def update(self, ctx):
+    async def update(self, ctx: commands.Context):
 	
-        await self.bot.say("All available <@&323631110997147659> type !here to report in for Update! :bell:")
+        await ctx.send("All available <@&323631110997147659> type !here to report in for Update! :bell:")
 
-    @commands.command(pass_context=True, no_pm=True)
+    @commands.command()
+    @commands.guild_only()
     @checks.admin_or_permissions(administrator=True)
-    async def updoot(self, ctx):
+    async def updoot(self, ctx: commands.Context):
 	
-        await self.bot.say("Whurrr iss youu attt <@&323631110997147659> ??? UPDOOT!")
+        await ctx.send("Whurrr iss youu attt <@&323631110997147659> ??? UPDOOT!")
 
 
 def setup(bot):

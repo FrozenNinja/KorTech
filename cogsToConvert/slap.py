@@ -1,18 +1,19 @@
 import discord
-from discord.ext import commands
+from redbot.core import commands
 
-class Slap:
+class Slap(commands.Cog):
     """Slaps a user"""
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @commands.command(pass_context=True, no_pm=True)
-    async def slap(self, ctx, user: discord.Member):
+    @commands.command()
+    @commands.guild_only()
+    async def slap(self, ctx: commands.Context, user: discord.Member):
 	
         author = ctx.message.author	
         #Text
-        await self.bot.say(author.mention + " *slaps* " + user.mention)
+        await ctx.send(author.mention + " *slaps* " + user.mention)
         
 def setup(bot):
     bot.add_cog(Slap(bot))

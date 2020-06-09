@@ -1,6 +1,6 @@
 import discord
-from discord.ext import commands
-from .utils.chat_formatting import escape_mass_mentions, italics, pagify
+from redbot.core import commands
+from redbot.core.utils.chat_formatting import italics, pagify
 from random import randint
 from random import choice
 from enum import Enum
@@ -11,7 +11,7 @@ import aiohttp
 import asyncio
 import re
 
-class B:
+class B(commands.Cog):
   
     def __init__(self, bot):
         self.bot = bot
@@ -22,8 +22,8 @@ class B:
         regex = re.compile('|'.join(map(re.escape, substrings)))
         return regex.sub(lambda match: substitutions[match.group(0)], string)
 
-    @commands.command(pass_context=True)
-    async def B(self, ctx, arg):
+    @commands.command()
+    async def B(self, ctx: commands.Context, arg):
         #Flips text to B
 
         string = arg
@@ -59,7 +59,7 @@ class B:
         stringlower = string.lower()
         output = self.replace(stringlower, substitutions)
 		
-        await self.bot.say(output)
+        await ctx.send(output)
 			
 def setup(bot):
     bot.add_cog(B(bot))
