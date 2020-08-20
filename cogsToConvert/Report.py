@@ -41,7 +41,7 @@ class Report:
                 await self.bot.say("Stop breaking things, try again")
 
         #RaidLead
-        await self.bot.say("Who was the raid lead?")
+		await self.bot.say("Is the raid leader in the WA?")
 
         while True:
             try:
@@ -50,16 +50,45 @@ class Report:
                 if message is None:
                     return await self.bot.say("You took too long to reply.")
 
-                answer = message.content
+                if "yes" in message.content.lower():
+				    await self.bot.say("Who was the raid lead?")
+					    while True:
+                                   try:
+                                       message = await self.bot.wait_for_message(author=author, timeout=30)
 
-                raidlead = answer
-                qraidmembers = self._ne(wanation=answer)
-                raidmembers = await qraidmembers
-                qrleadcount = self._nec(wanation=answer)
-                rleadcount = await qrleadcount
-                break
+                                       if message is None:
+                                           return await self.bot.say("You took too long to reply.")
+
+                                       raidlead = message.content
+									   raidmembers = "N/A"
+									   rleadcount = 0
+                                       break
+                                    except:
+                                        await self.bot.say("Stop breaking things, try again")
+                elif "no" in message.content.lower():
+                    await self.bot.say("Who was the raid lead?")
+
+                    while True:
+                        try:
+                            message = await self.bot.wait_for_message(author=author, timeout=30)
+
+                            if message is None:
+                                return await self.bot.say("You took too long to reply.")
+
+                            answer = message.content
+
+                            raidlead = answer
+                            qraidmembers = self._ne(wanation=answer)
+                            raidmembers = await qraidmembers
+                            qrleadcount = self._nec(wanation=answer)
+                            rleadcount = await qrleadcount
+                            break
+                        except:
+                            await self.bot.say("Please make sure the nation is spelled correctly and is currently in the WA")
+                else:
+                    await self.bot.say("Please answer yes or no")
             except:
-                await self.bot.say("Please make sure the nation is spelled correctly and is currently in the WA")
+                await self.bot.say("Stop breaking the command, try again")
 
         #DefenderLead
         await self.bot.say("Who was the Defender lead?")
