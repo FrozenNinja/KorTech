@@ -6,11 +6,11 @@ from redbot.core.config import Config
 class KorTechPrime(commands.Cog):
     """10KI Cog to facilitate Update Management"""
 
-    updatetime == False
-
     @commands.command()
     async def updatetime(self, ctx, arg):
                 """Designate whether its UpdateTime or not, please use Yes or No"""
+
+                updatetime = False
 
                 if arg.lower() == "yes":
                     updatetime == True
