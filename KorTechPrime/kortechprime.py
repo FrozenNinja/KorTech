@@ -6,16 +6,16 @@ from redbot.core.config import Config
 class KorTechPrime(commands.Cog):
     """10KI Cog to facilitate Update Management"""
 
-    updatetime = False
+    global updatetime = False
 
     @commands.command()
     async def updatetime(self, ctx, arg):
                 """Designate whether its UpdateTime or not, please use Yes or No"""
 
                 if arg.lower() == "yes":
-                    updatetime = True
+                   global updatetime = True
                 elif arg.lower() == "no":
-                    updatetime = False
+                   global updatetime = False
                 else:
                     await ctx.send("Please answer Yes or No")
 
@@ -30,7 +30,7 @@ class KorTechPrime(commands.Cog):
                 role_ally = discord.utils.get(ctx.guild.roles, name="Allied Military")
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 
-                if updatetime == True:
+                if global updatetime == True:
                     if (role_memb in ctx.author.roles) or (role_ally in ctx.author.roles):
                         await ctx.author.add_roles(role_upd)
                         emoji = '<:tito:351110740259897349>'
