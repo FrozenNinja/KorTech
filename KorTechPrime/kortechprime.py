@@ -14,9 +14,9 @@ class KorTechPrime(commands.Cog):
                 """Designate whether its UpdateTime or not, please use Yes or No"""
 
                 if arg.lower() == "yes":
-                   global updatetime = True
+                   updatetime = True
                 elif arg.lower() == "no":
-                   global updatetime = False
+                   updatetime = False
                 else:
                     await ctx.send("Please answer Yes or No")
 
@@ -31,7 +31,7 @@ class KorTechPrime(commands.Cog):
                 role_ally = discord.utils.get(ctx.guild.roles, name="Allied Military")
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 
-                if global updatetime == True:
+                if updatetime == True:
                     if (role_memb in ctx.author.roles) or (role_ally in ctx.author.roles):
                         await ctx.author.add_roles(role_upd)
                         emoji = '<:tito:351110740259897349>'
