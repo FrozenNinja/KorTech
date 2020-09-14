@@ -7,7 +7,7 @@ class KorTechPrime(commands.Cog):
     """10KI Cog to facilitate Update Management"""
 
     @commands.command()
-    async def here(self, ctx: commands.Context):
+    async def imhere(self, ctx: commands.Context):
                 """Mark that the user is present for update."""
 
                 guild = ctx.message.guild
