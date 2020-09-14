@@ -6,7 +6,8 @@ from redbot.core.config import Config
 class KorTechPrime(commands.Cog):
     """10KI Cog to facilitate Update Management"""
 
-    global updatetime = False
+    global updatetime
+    updatetime = False
 
     @commands.command()
     async def updatetime(self, ctx, arg):
