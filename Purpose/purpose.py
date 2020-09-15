@@ -10,9 +10,9 @@ class Purpose(commands.Cog):
         self.bot = bot
         
     @commands.Cog.listener()
-    async def on_message(message):
+    async def on_message(self, message):
     
         #reply = "test"
     
-        await ctx.send("test")
+        await ctx.send(message.content)
         #asyncio.sleep(10)
