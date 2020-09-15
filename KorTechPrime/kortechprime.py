@@ -9,6 +9,18 @@ class KorTechPrime(commands.Cog):
     global updatetime
     updatetime = False
 
+    @commands.command()
+    async def updatetime(self, ctx: commands.Context, arg):
+                """Designate whether its UpdateTime or not, please use Yes or No"""
+
+                if arg == "yes":
+                   updatetime = True
+                   await ctx.send("Update is running!")
+                elif arg == "no":
+                   updatetime = False
+                   await ctx.send("It's no longer time for Update")
+                else:
+                    await ctx.send("Please answer Yes or No")
 
     @commands.command()
     async def imhere(self, ctx: commands.Context):
@@ -30,19 +42,6 @@ class KorTechPrime(commands.Cog):
                         await ctx.send("You are not masked as TITO Member or Allied Military")
                 else:
                     await ctx.send("Try again when its time for Update!")
-					
-    @commands.command()
-    async def updatetime(self, ctx: commands.Context, arg):
-                """Designate whether its UpdateTime or not, please use Yes or No"""
-
-                if reply == "yes":
-                   updatetime = True
-                   await ctx.send("Update is running!")
-                elif reply == "no":
-                   updatetime = False
-                   await ctx.send("It's no longer time for Update")
-                else:
-                    await ctx.send("Please answer Yes or No")
 
     @commands.command()
     async def nohere(self, ctx: commands.Context):
