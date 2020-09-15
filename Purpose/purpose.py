@@ -14,5 +14,5 @@ class Purpose(commands.Cog):
     
         reply = "test"
     
-        await ctx.send(reply)
+        await ctx.send("test")
         asyncio.sleep(10)
