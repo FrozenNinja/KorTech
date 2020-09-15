@@ -15,8 +15,6 @@ class Purpose(commands.Cog):
         
     @commands.Cog.listener()
     async def on_command(self, ctx):
-    
-        #reply = "test"
-    
+
         await ctx.send("test")
-        #asyncio.sleep(10)
+        asyncio.sleep(10)
