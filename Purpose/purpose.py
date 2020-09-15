@@ -13,10 +13,10 @@ class Purpose(commands.Cog):
     async def testthis(self, ctx):
         await ctx.send("test successful")
         
-    @client.event
-    async def on_message(self, message):
+    @commands.Cog.listener()
+    async def on_mcommand(self, ctx):
     
         #reply = "test"
     
-        await ctx.send(message.content)
+        await ctx.send("test")
         #asyncio.sleep(10)
