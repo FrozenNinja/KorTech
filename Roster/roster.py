@@ -28,12 +28,11 @@ class Roster(commands.Cog):
 
     @commands.command()
     async def setwa(self, ctx, newnation):
-        user = ctx.message.author
-        test = "poop"
+        users = ctx.message.author
         self.nsapi = self.bot.get_cog('NSApi')
         
         #Checks that previous nation is no longer WA
-        oldnation = await self.config.user(user).userwa()
+        oldnation = await self.config.user(users).userwa()
         if oldnation != "Null":
             wa = await self._isinwa(wanation=oldnation)
             if "non-member" in wa.lower():
@@ -41,9 +40,9 @@ class Roster(commands.Cog):
                 newwa = await self._isinwa(wanation=newnation)
                 if "non-member" not in newwa.lower():
                     #Saves new WA in Roster
-                    await self.config.user(user).userwa.set(newnation)
+                    await self.config.user(users).userwa.set(newnation)
                     async with self.config.roster() as user:
-                        user.update(user = newnation)
+                        user.update(users = newnation)
                 else:
                     await ctx.send("Make sure Nation given is in the WA")
             else:
@@ -53,9 +52,9 @@ class Roster(commands.Cog):
             newwa = await self._isinwa(wanation=newnation)
             if "non-member" not in newwa.lower():
                 #Saves new WA in Roster
-                await self.config.user(user).userwa.set(newnation)
+                await self.config.user(users).userwa.set(newnation)
                 async with self.config.roster() as user:
-                   user[user] = newnation
+                   user[users] = newnation
             else:
                 await ctx.send("Make sure Nation given is in the WA")
 				
