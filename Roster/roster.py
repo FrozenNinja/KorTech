@@ -54,7 +54,7 @@ class Roster(commands.Cog):
                 #Saves new WA in Roster
                 await self.config.user(user).userwa.set(newnation)
                 async with self.config.roster() as user:
-                   user.update(user = newnation)
+                   user.update(test = newnation)
             else:
                 await ctx.send("Make sure Nation given is in the WA")
 				
