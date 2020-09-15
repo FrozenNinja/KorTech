@@ -64,7 +64,7 @@ class Roster(commands.Cog):
         #Display current WA roster in flippable format
         
     @commands.command()
-	async def _isinwa(self, wanation):
+    async def _isinwa(self, wanation):
         """Check if Nation is in the WA"""
         Api.agent = "Kortexia"
         request = Api(
