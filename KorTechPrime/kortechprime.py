@@ -22,6 +22,7 @@ class KorTechPrime(commands.Cog):
                    await ctx.send("It's no longer time for Update")
                 else:
                     await ctx.send("Please answer Yes or No")
+        pass
 
     @commands.command()
     async def imhere(self, ctx: commands.Context):
