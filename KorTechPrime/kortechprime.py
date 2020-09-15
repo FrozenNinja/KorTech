@@ -13,9 +13,7 @@ class KorTechPrime(commands.Cog):
     async def updatetime(ctx, arg):
                 """Designate whether its UpdateTime or not, please use Yes or No"""
 
-                reply = arg
-
-                if reply.lower() == "yes":
+                if reply == "yes":
                    updatetime = True
                    await ctx.send("Update is running!")
                 elif reply == "no":
