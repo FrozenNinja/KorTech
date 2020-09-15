@@ -61,7 +61,7 @@ class Roster(commands.Cog):
     @commands.command()
     async def removewa(self, ctx):
         user = ctx.message.author
-        await self.config.user(user).userwa().clear()
+        await self.config.user(user).clear()
 
     @commands.command()            
     async def checkwa(self, ctx):
