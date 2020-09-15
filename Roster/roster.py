@@ -42,7 +42,7 @@ class Roster(commands.Cog):
                     #Saves new WA in Roster
                     await self.config.user(user).userwa.set(newnation)
                     async with self.config.roster() as user:
-                        user.append(newnation)
+                        user.update(newnation)
                 else:
                     await ctx.send("Make sure Nation given is in the WA")
             else:
@@ -54,7 +54,7 @@ class Roster(commands.Cog):
                 #Saves new WA in Roster
                 await self.config.user(user).userwa.set(newnation)
                 async with self.config.roster() as user:
-                   user.append(newnation)
+                   user.update(newnation)
             else:
                 await ctx.send("Make sure Nation given is in the WA")
 				
