@@ -57,6 +57,11 @@ class Roster(commands.Cog):
                     roster.append(newnation)
             else:
                 await ctx.send("Make sure Nation given is in the WA")
+				
+    @commands.command()
+	async def removewa(self, ctx):
+        user = ctx.message.author
+        await self.config.user(user).userwa().clear()
 
     @commands.command()            
     async def checkwa(self, ctx):
