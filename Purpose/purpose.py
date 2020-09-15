@@ -17,7 +17,7 @@ class Purpose(commands.Cog):
 
         n = random.randint(2,5)
         
-        if global messages >= n:
+        if messages >= n:
             await ctx.send("test")
             global messages = 0
         else:
