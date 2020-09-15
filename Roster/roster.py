@@ -16,9 +16,7 @@ class Roster(commands.Cog):
         self.delim = ', '
         self.config = Config.get_conf(self, identifier=31415926535)
         default_global = {
-            "roster": {
-                "Member": "Nation"
-            }
+            "roster": {}
         }
         default_user = {
             "userwa": "Null"
@@ -42,7 +40,7 @@ class Roster(commands.Cog):
                     #Saves new WA in Roster
                     await self.config.user(users).userwa.set(newnation)
                     async with self.config.roster() as user:
-                        user.update(users = newnation)
+                        user[users.display_name] = newnation
                 else:
                     await ctx.send("Make sure Nation given is in the WA")
             else:
