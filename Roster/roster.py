@@ -23,7 +23,7 @@ class Roster(commands.Cog):
         )
 
     @commands.command()
-    async def setwa(self, ctx, user : discord.User=None, newnation):
+    async def setwa(self, ctx, newnation, user : discord.User=None):
         user = ctx.message.author
         self.nsapi = self.bot.get_cog('NSApi')
         self.nsapi.check_agent()
