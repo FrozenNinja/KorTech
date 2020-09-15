@@ -9,7 +9,7 @@ class KorTechPrime(commands.Cog):
     global updatetime
     updatetime = False
 
-    @commands.command()
+    @bot.command()
     async def updatetime(self, ctx: commands.Context, arg):
                 """Designate whether its UpdateTime or not, please use Yes or No"""
 
