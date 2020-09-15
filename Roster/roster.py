@@ -15,12 +15,14 @@ class Roster(commands.Cog):
         self.bot = bot
         self.delim = ', '
         self.config = Config.get_conf(self, identifier=31415926535)
-        self.config.register_global(
+        default_global = {
             roster ={}
-        )
-        self.config.register_user(
+        }
+        default_user(
             userwa=""
         )
+        self.config.register_global(**default_global)
+        self.config.register_user(**default_user)
 
     @commands.command()
     async def setwa(self, ctx, newnation, user : discord.User=None):
