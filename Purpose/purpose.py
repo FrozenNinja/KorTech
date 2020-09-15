@@ -9,8 +9,7 @@ class Purpose(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        
-    self.messages = 0
+        self.messages = 0
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
