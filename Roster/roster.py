@@ -29,6 +29,7 @@ class Roster(commands.Cog):
     @commands.command()
     async def setwa(self, ctx, newnation):
         user = ctx.message.author
+        test = "poop"
         self.nsapi = self.bot.get_cog('NSApi')
         
         #Checks that previous nation is no longer WA
