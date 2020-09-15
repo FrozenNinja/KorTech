@@ -50,7 +50,8 @@ class Roster(commands.Cog):
                 await self.config.user.userwa.set(newnation)    
             else:
                 await ctx.send("Make sure Nation given is in the WA")
-                
+
+    @commands.command()            
     async def checkwa(self, ctx, user : discord.User=None):
         user = ctx.message.author
         
@@ -62,7 +63,8 @@ class Roster(commands.Cog):
     
         #Display current WA roster in flippable format
         
-    async def _isinwa(self, wanation):
+    @commands.command()
+	async def _isinwa(self, wanation):
         """Check if Nation is in the WA"""
         Api.agent = "Kortexia"
         request = Api(
