@@ -19,7 +19,7 @@ class Roster(commands.Cog):
             "roster": {}
         }
         default_user(
-            "userwa" = ""
+            "userwa": Null
         )
         self.config.register_global(**default_global)
         self.config.register_user(**default_user)
@@ -31,7 +31,7 @@ class Roster(commands.Cog):
         
         #Checks that previous nation is no longer WA
         oldnation = await self.config.user.userwa()
-        if oldnation != "":
+        if oldnation != Null:
             wa = await self._isinwa(wanation=oldnation)
             if "non-member" in wa.lower():
                 #Checks that new nation is WA
