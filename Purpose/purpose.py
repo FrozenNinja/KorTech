@@ -13,7 +13,7 @@ class Purpose(commands.Cog):
     async def testthis(self, ctx):
         await ctx.send("test successful")
         
-    @commands.Cog.listener()
+    @commands.listener()
     async def on_message(self, message):
     
         #reply = "test"
