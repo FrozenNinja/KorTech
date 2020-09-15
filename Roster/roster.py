@@ -25,12 +25,12 @@ class Roster(commands.Cog):
         self.config.register_user(**default_user)
 
     @commands.command()
-    async def setwa(self, ctx, newnation, user : discord.User=None):
+    async def setwa(self, ctx, newnation):
         user = ctx.message.author
         self.nsapi = self.bot.get_cog('NSApi')
         
         #Checks that previous nation is no longer WA
-        oldnation = await self.config.user.userwa()
+        oldnation = await self.config.user(ctx.user).userwa()
         if oldnation != "Null":
             wa = await self._isinwa(wanation=oldnation)
             if "non-member" in wa.lower():
@@ -38,7 +38,7 @@ class Roster(commands.Cog):
                 newwa = await self._isinwa(wanation=newnation)
                 if "non-member" not in newwa.lower():
                     #Saves new WA in Roster
-                    await self.config.user.userwa.set(newnation)
+                    await self.config.user(ctx.user).userwa.set(newnation)
                 else:
                     await ctx.send("Make sure Nation given is in the WA")
             else:
@@ -48,16 +48,16 @@ class Roster(commands.Cog):
             newwa = await self._isinwa(wanation=newnation)
             if "non-member" not in newwa.lower():
                 #Saves new WA in Roster
-                await self.config.user.userwa.set(newnation)    
+                await self.config.user(ctx.user).userwa.set(newnation)    
             else:
                 await ctx.send("Make sure Nation given is in the WA")
 
     @commands.command()            
-    async def checkwa(self, ctx, user : discord.User=None):
+    async def checkwa(self, ctx):
         user = ctx.message.author
         
         #Lists current WA nation for self
-        currentwa = await self.config.user.userwa()
+        currentwa = await self.config.user(ctx.user).userwa()
         await ctx.send(currentwa)
     
     #async def roster(self, ctx):
