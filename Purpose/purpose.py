@@ -1,4 +1,5 @@
 import discord
+import random
 from redbot.core import commands
 from redbot.core.config import Config
 
@@ -9,12 +10,15 @@ class Purpose(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
-    @commands.command()
-    async def testthis(self, ctx):
-        await ctx.send("test successful")
-        
+    messages = 0
+
     @commands.Cog.listener()
-    @commands.cooldown(1, 10, commands.BucketType.guild)
     async def on_command(self, ctx):
 
-        await ctx.send("test")
+        n = random.randint(2,5)
+        
+        if global messages >= n:
+            await ctx.send("test")
+            global messages = 0
+        else:
+            global messages +=1
