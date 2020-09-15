@@ -6,11 +6,10 @@ from redbot.core.config import Config
 class KorTechPrime(commands.Cog):
     """10KI Cog to facilitate Update Management"""
 
-    bot = commands.Bot(command_prefix='!')
     global updatetime
     updatetime = False
 
-    @bot.command()
+    @commands.command()
     async def updatetime(self, ctx: commands.Context, arg):
                 """Designate whether its UpdateTime or not, please use Yes or No"""
 
@@ -22,7 +21,6 @@ class KorTechPrime(commands.Cog):
                    await ctx.send("It's no longer time for Update")
                 else:
                     await ctx.send("Please answer Yes or No")
-        pass
 
     @commands.command()
     async def imhere(self, ctx: commands.Context):
