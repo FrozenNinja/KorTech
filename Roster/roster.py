@@ -15,7 +15,7 @@ class Roster(commands.Cog):
         self.bot = bot
         self.delim = ', '
         self.config = Config.get_conf(self, identifier=31415926535)
-		default_global = {
+        default_global = {
             "roster": {
                 "Member": "Nation"
             }
@@ -41,7 +41,7 @@ class Roster(commands.Cog):
                 if "non-member" not in newwa.lower():
                     #Saves new WA in Roster
                     await self.config.user(user).userwa.set(newnation)
-				    async with self.config.roster() as user:
+                    async with self.config.roster() as user:
                         roster.append(newnation)
                 else:
                     await ctx.send("Make sure Nation given is in the WA")
