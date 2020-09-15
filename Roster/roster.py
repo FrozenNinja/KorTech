@@ -26,7 +26,6 @@ class Roster(commands.Cog):
     async def setwa(self, ctx, newnation, user : discord.User=None):
         user = ctx.message.author
         self.nsapi = self.bot.get_cog('NSApi')
-        self.nsapi.check_agent()
         
         #Checks that previous nation is no longer WA
         oldnation = await self.config.user.userwa()
@@ -63,7 +62,6 @@ class Roster(commands.Cog):
     
         #Display current WA roster in flippable format
         
-    @commands.command()
     async def _isinwa(self, wanation):
         """Check if Nation is in the WA"""
         Api.agent = "Kortexia"
