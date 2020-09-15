@@ -9,6 +9,10 @@ class Purpose(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
+    @commands.command()
+    async def testthis(self, ctx):
+        await ctx.send("test successful")
+        
     @commands.Cog.listener()
     async def on_message(self, message):
     
