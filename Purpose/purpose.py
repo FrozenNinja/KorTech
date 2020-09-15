@@ -14,10 +14,10 @@ class Purpose(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
-        n = random.randint(2,5)
+        n = random.randint(5,10)
         
         if self.messages >= n:
-            await message.channel.send("test")
+            await message.channel.send("Why was I created?")
             self.messages = 0
         else:
             self.messages +=1
