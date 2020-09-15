@@ -59,7 +59,7 @@ class Roster(commands.Cog):
                 await ctx.send("Make sure Nation given is in the WA")
 				
     @commands.command()
-	async def removewa(self, ctx):
+    async def removewa(self, ctx):
         user = ctx.message.author
         await self.config.user(user).userwa().clear()
 
