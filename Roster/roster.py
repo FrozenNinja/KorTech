@@ -61,7 +61,7 @@ class Roster(commands.Cog):
         #Display current WA roster in flippable format
 
         dict = await self.config.user(user).userwa()
-        embed=discord.Embed(title=TITO WA Roster, description=Current WAs for TITO Members)
+        embed=discord.Embed(title="TITO WA Roster", description="Current WAs for TITO Members")
         for x, y in dict.items():
             embed.add_field(name=x, value=y, inline=False)
         await self.bot.say(embed=embed)
