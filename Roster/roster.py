@@ -67,7 +67,7 @@ class Roster(commands.Cog):
         await ctx.send(currentwa)
     
     @commands.command()
-    async def roster(self, ctx, user : discord.User):
+    async def roster(self, ctx):
         #Display current WA roster in flippable format
 
         rosterdict = await self.config.roster()
@@ -75,7 +75,7 @@ class Roster(commands.Cog):
         embed=discord.Embed(title="TITO WA Roster", description="Current WAs for TITO Members")
         for x, y in rosterdict.items():
             embed.add_field(name=x, value=y, inline=False)
-        await self.bot.say(embed=embed)
+        await ctx.send(embed=embed)
 
     async def _isinwa(self, wanation):
         """Check if Nation is in the WA"""
