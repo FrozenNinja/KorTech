@@ -15,9 +15,15 @@ class Roster(commands.Cog):
         self.bot = bot
         self.delim = ', '
         self.config = Config.get_conf(self, identifier=31415926535)
+		default_global = {
+            "roster": {
+                "Member": "Nation"
+            }
+        }
         default_user = {
             "userwa": "Null"
         }
+        self.config.register_global(**default_global)
         self.config.register_user(**default_user)
 
     @commands.command()
@@ -35,6 +41,8 @@ class Roster(commands.Cog):
                 if "non-member" not in newwa.lower():
                     #Saves new WA in Roster
                     await self.config.user(user).userwa.set(newnation)
+				    async with self.config.roster() as user:
+                        roster.append(newnation)
                 else:
                     await ctx.send("Make sure Nation given is in the WA")
             else:
@@ -44,7 +52,9 @@ class Roster(commands.Cog):
             newwa = await self._isinwa(wanation=newnation)
             if "non-member" not in newwa.lower():
                 #Saves new WA in Roster
-                await self.config.user(user).userwa.set(newnation)    
+                await self.config.user(user).userwa.set(newnation)
+                async with self.config.roster() as user:
+                    roster.append(newnation)
             else:
                 await ctx.send("Make sure Nation given is in the WA")
 
@@ -60,8 +70,10 @@ class Roster(commands.Cog):
     async def roster(self, ctx, user : discord.User):
         #Display current WA roster in flippable format
 
+        rosterdict = await self.config.roster()
+
         embed=discord.Embed(title="TITO WA Roster", description="Current WAs for TITO Members")
-        for x, y in await self.config.user(user).userwa().items():
+        for x, y in rosterdict.items():
             embed.add_field(name=x, value=y, inline=False)
         await self.bot.say(embed=embed)
 
