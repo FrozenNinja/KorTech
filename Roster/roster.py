@@ -8,7 +8,7 @@ from redbot.core import checks, commands, Config
 from redbot.core.utils.chat_formatting import pagify, escape, box
 from lxml import etree as ET
 
-class Roster
+class Roster(commands.Cog):
 
     def __init__(self, bot):
         Api.loop = bot.loop
