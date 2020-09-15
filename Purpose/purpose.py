@@ -12,7 +12,7 @@ class Purpose(commands.Cog):
         self.messages = 0
 
     @commands.Cog.listener()
-    async def on_message(self, ctx):
+    async def on_message(self, message):
 
         n = random.randint(2,5)
         
