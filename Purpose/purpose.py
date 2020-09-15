@@ -12,12 +12,14 @@ class Purpose(commands.Cog):
         self.messages = 0
 
     @commands.Cog.listener()
-    async def on_message(self, message):
+    async def on_message_without_command(self, message):
 
         n = random.randint(50,500)
         
-        if self.messages >= n:
-            await message.channel.send("Why was I created?")
+        if author.bot:
+            return
+        elif self.messages >= n:
+            await message.channel.send("Father, what purpose did you create me for?")
             self.messages = 0
         else:
             self.messages +=1
