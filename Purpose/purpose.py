@@ -14,7 +14,7 @@ class Purpose(commands.Cog):
         await ctx.send("test successful")
         
     @commands.Cog.listener()
+	@commands.cooldown(1, 10, commands.BucketType.guild)
     async def on_command(self, ctx):
 
         await ctx.send("test")
-        asyncio.sleep(10)
