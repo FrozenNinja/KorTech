@@ -19,7 +19,7 @@ class Roster(commands.Cog):
             "roster": {}
         }
         default_user(
-            "userwa": ""
+            "userwa" = ""
         )
         self.config.register_global(**default_global)
         self.config.register_user(**default_user)
