@@ -4,4 +4,5 @@ from .kortechprime import KorTechPrime
 
 
 def setup(bot):
+    bot.add_command(updatetime)
     bot.add_cog(KorTechPrime())
