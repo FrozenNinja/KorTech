@@ -82,7 +82,7 @@ class Roster(commands.Cog):
 
     async def _isinwa(self, wanation):
         """Check if Nation is in the WA"""
-        Api.agent = "Kortexia"
+        Api.agent = "10000 Islands Discord Bot contact Kortexia"
         request = Api(
             "wa",
             nation=wanation,
