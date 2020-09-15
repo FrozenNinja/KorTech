@@ -17,7 +17,7 @@ class Purpose(commands.Cog):
         n = random.randint(2,5)
         
         if self.messages >= n:
-            await ctx.send("test")
+            await message.channel("test")
             self.messages = 0
         else:
             self.messages +=1
