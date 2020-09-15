@@ -14,7 +14,7 @@ class Purpose(commands.Cog):
         await ctx.send("test successful")
         
     @commands.Cog.listener()
-    async def on_mcommand(self, ctx):
+    async def on_command(self, ctx):
     
         #reply = "test"
     
