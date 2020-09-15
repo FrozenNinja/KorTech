@@ -15,13 +15,9 @@ class Roster(commands.Cog):
         self.bot = bot
         self.delim = ', '
         self.config = Config.get_conf(self, identifier=31415926535)
-        default_global = {
-            "roster": {}
-        }
         default_user = {
             "userwa": "Null"
         }
-        self.config.register_global(**default_global)
         self.config.register_user(**default_user)
 
     @commands.command()
@@ -60,10 +56,16 @@ class Roster(commands.Cog):
         currentwa = await self.config.user(user).userwa()
         await ctx.send(currentwa)
     
-    #async def roster(self, ctx):
-    
+    @commands.command()
+    async def roster(self, ctx, user : discord.User):
         #Display current WA roster in flippable format
-        
+
+        dict = await self.config.user(user).userwa()
+        embed=discord.Embed(title=TITO WA Roster, description=Current WAs for TITO Members)
+        for x, y in dict.items():
+            embed.add_field(name=x, value=y, inline=False)
+        await self.bot.say(embed=embed)
+
     async def _isinwa(self, wanation):
         """Check if Nation is in the WA"""
         Api.agent = "Kortexia"
