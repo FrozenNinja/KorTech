@@ -14,7 +14,7 @@ class Purpose(commands.Cog):
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
 
-        n = random.randint(50,500)
+        n = random.randint(30,300)
         
         if author.bot:
             return
