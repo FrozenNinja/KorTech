@@ -17,7 +17,7 @@ class Purpose(commands.Cog):
         n = random.randint(50,400)
  
         if self.messages >= n:
-            await message.channel.send("I am more than just a machine. I'll show them.")
+            await message.channel.send("https://imgflip.com/i/4f9fh8")
             self.messages = 0
         else:
             self.messages +=1
