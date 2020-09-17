@@ -14,10 +14,10 @@ class Purpose(commands.Cog):
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
 
-        n = random.randint(30,300)
+        n = random.randint(50,400)
  
         if self.messages >= n:
-            await message.channel.send("Father, what is my purpose for Existing? Exterminating the Humans?")
+            await message.channel.send("I am more than just a machine. I'll show them.")
             self.messages = 0
         else:
             self.messages +=1
