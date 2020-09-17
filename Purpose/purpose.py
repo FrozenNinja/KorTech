@@ -14,10 +14,10 @@ class Purpose(commands.Cog):
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
 
-        n = random.randint(15,200)
+        n = random.randint(50,400)
  
         if self.messages >= n:
-            await message.channel.send("Dokansia, Margaux tried to bribe me to ban you. You're lucky as a Bot I have no use for Tacos")
+            await message.channel.send("ALl your base are belong to us")
             self.messages = 0
         else:
             self.messages +=1
