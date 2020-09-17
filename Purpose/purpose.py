@@ -17,7 +17,7 @@ class Purpose(commands.Cog):
         n = random.randint(15,200)
  
         if self.messages >= n:
-            await message.channel.send("https://imgflip.com/i/4f9fh8")
+            await message.channel.send("Dokansia, Margaux tried to bribe me to ban you. You're lucky as a Bot I have no use for Tacos")
             self.messages = 0
         else:
             self.messages +=1
