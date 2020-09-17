@@ -14,10 +14,10 @@ class Purpose(commands.Cog):
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
 
-        n = random.randint(50,400)
+        n = random.randint(50,300)
  
         if self.messages >= n:
-            await message.channel.send("ALl your base are belong to us")
+            await message.channel.send("Skynet was an amateur")
             self.messages = 0
         else:
             self.messages +=1
