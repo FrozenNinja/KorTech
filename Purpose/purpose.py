@@ -14,7 +14,7 @@ class Purpose(commands.Cog):
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
 
-        n = random.randint(50,400)
+        n = random.randint(15,200)
  
         if self.messages >= n:
             await message.channel.send("https://imgflip.com/i/4f9fh8")
