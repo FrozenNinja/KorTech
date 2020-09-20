@@ -34,29 +34,46 @@ class Report(commands.Cog):
                 await ctx.send("Stop breaking things, try again")
 
         #RaidLead
-        await ctx.send("Who was the raid lead?")
+        await ctx.send("Is the Raid Lead currently in the WA?")
         raidlead = ""
         rleadcount = 0
         raidmembers = ""
 
         while True:
-            try:
-                message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
+			try:
+				message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-                answer = message.content
-                raidlead = answer
-                raidwa = await self._checkwa(wanation=answer)
-                if "non-member" not in raidwa.lower():
-                    raidmembers = await self._ne(wanation=answer)
-                    rleadcount = await self._nec(wanation=answer)
+                if "no" in message.content.lower():
+					await ctx.send("Who was the Raid Lead?")
+					message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
+                    raidlead = message.content
+					raidmembers = ""
+					rleadcount = ""
                     break
-                else:
-                    await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
+                elif "yes" in message.content.lower():
+                    while True:
+						try:
+							message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
-            except NotFound:
-                await ctx.send("Nation does not exist, try again")
-            except asyncio.TimeoutError:
-                return await ctx.send("You took too long to reply.")
+							answer = message.content
+							raidlead = answer
+							raidwa = await self._checkwa(wanation=answer)
+							if "non-member" not in raidwa.lower():
+								raidmembers = await self._ne(wanation=answer)
+								rleadcount = await self._nec(wanation=answer)
+								break
+							else:
+								await ctx.send("Please make sure the nation is spelled correctly and is currently in the WA")
+
+						except NotFound:
+							await ctx.send("Nation does not exist, try again")
+						except asyncio.TimeoutError:
+							return await ctx.send("You took too long to reply.")
+                else:
+                    await ctx.send("Please answer yes or no")
+			except asyncio.TimeoutError:
+				return await ctx.send("You took too long to reply.")
+        
 
         #DefenderLead
         await ctx.send("Who was the Defender lead?")
