@@ -51,6 +51,7 @@ class Report(commands.Cog):
                 elif "yes" in message.content.lower():
                     while True:
                         try:
+                            await ctx.send("Who was the Raid Lead?")
                             message = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=30.0)
 
                             answer = message.content
