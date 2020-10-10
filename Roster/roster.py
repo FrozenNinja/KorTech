@@ -79,7 +79,7 @@ class Roster(commands.Cog):
         #Display current WA roster in flippable format
 
         rosterdict = await self.config.roster()
-        tostring = json.dumps(rosterdict, sort_keys=True)
+        tostring = json.dumps(rosterdict, sort_keys=True, indent=4)
 
         nav = pag.EmbedNavigatorFactory(max_lines=10)
 
