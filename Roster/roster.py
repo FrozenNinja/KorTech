@@ -79,11 +79,11 @@ class Roster(commands.Cog):
         #Display current WA roster in flippable format
 
         rosterdict = await self.config.roster()
-        tostring = json.dumps(rosterdict, sort_keys=True, indent=0)
+        tostring = json.dumps(rosterdict, sort_keys=True)
 
-        nav = pag.EmbedNavigatorFactory(max_lines=10)
+        nav = pag.EmbedNavigatorFactory(max_lines=10, prefix="TITO Roster", enable_truncation)
 
-        nav += tostring.strip('}').strip('{')
+        nav += tostring.strip('}').strip('{').replace('"',"")
 
         nav.start(ctx)
 
