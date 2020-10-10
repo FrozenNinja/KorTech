@@ -1,12 +1,14 @@
 import discord
 import asyncio
 import sans
+import json
 from sans.api import Api
 from sans.errors import HTTPException, NotFound
 from sans.utils import pretty_string
 from redbot.core import checks, commands, Config
 from redbot.core.utils.chat_formatting import pagify, escape, box
 from lxml import etree as ET
+from disputils import BotEmbedPaginator
 
 class Roster(commands.Cog):
 
@@ -77,11 +79,13 @@ class Roster(commands.Cog):
         #Display current WA roster in flippable format
 
         rosterdict = await self.config.roster()
+        tostring = json.dumps(rosterdict)
 
-        embed=discord.Embed(title="TITO WA Roster", description="Current WAs for TITO Members")
-        for x, y in rosterdict.items():
-            embed.add_field(name=x, value=y, inline=False)
-        await ctx.send(embed=embed)
+        nav = pag.EmbedNavigatorFactory(max_lines=10)
+
+        nav += tostring
+
+        nav.start(ctx)
 
     async def _isinwa(self, wanation):
         """Check if Nation is in the WA"""
