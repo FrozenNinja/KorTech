@@ -8,7 +8,7 @@ from sans.utils import pretty_string
 from redbot.core import checks, commands, Config
 from redbot.core.utils.chat_formatting import pagify, escape, box
 from lxml import etree as ET
-from disputils import BotEmbedPaginator
+from libneko import pag
 
 class Roster(commands.Cog):
 
