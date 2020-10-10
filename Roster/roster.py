@@ -41,6 +41,7 @@ class Roster(commands.Cog):
                     await self.config.user(users).userwa.set(newnation)
                     async with self.config.roster() as user:
                         user[users.display_name] = newnation
+                        await ctx.send("Your WA Nation has been set!")
                 else:
                     await ctx.send("Make sure Nation given is in the WA")
             else:
@@ -55,7 +56,7 @@ class Roster(commands.Cog):
                    user[users.display_name] = newnation
             else:
                 await ctx.send("Make sure Nation given is in the WA")
-				
+                
     @commands.command()
     async def removewa(self, ctx):
         user = ctx.message.author
