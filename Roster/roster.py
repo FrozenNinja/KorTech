@@ -81,7 +81,7 @@ class Roster(commands.Cog):
         rosterdict = await self.config.roster()
         tostring = json.dumps(rosterdict, sort_keys=True)
 
-        nav = pag.EmbedNavigatorFactory(enable_truncation, max_lines=10, prefix="TITO Roster")
+        nav = pag.EmbedNavigatorFactory(max_lines=10, prefix="TITO Roster").enable_truncation()
 
         nav += tostring.strip('}').strip('{').replace('"',"")
 
