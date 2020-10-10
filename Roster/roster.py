@@ -25,6 +25,7 @@ class Roster(commands.Cog):
         self.config.register_user(**default_user)
 
     @commands.command()
+    @commands.has_role("TITO Member")
     async def setwa(self, ctx, newnation):
         users = ctx.message.author
         self.nsapi = self.bot.get_cog('NSApi')
@@ -71,6 +72,7 @@ class Roster(commands.Cog):
         await ctx.send(currentwa)
     
     @commands.command()
+    @commands.has_role("KPCmd")
     async def roster(self, ctx):
         #Display current WA roster in flippable format
 
