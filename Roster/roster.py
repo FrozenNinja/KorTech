@@ -82,7 +82,7 @@ class Roster(commands.Cog):
         tostring = json.dumps(rosterdict, sort_keys=True)
 
         nav = pag.EmbedNavigatorFactory(max_lines=10, prefix="__**TITO Roster**__", enable_truncation=False)
-        nav += tostring.strip('}').strip('{').replace('":',\n).replace('",',"").replace('"',"**")
+        nav += tostring.strip('}').strip('{').replace('":',"\n").replace('",',"").replace('"',"**")
 
         nav.start(ctx)
 
