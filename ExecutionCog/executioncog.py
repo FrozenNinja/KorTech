@@ -41,6 +41,6 @@ class ExecutionCog(commands.Cog):
         elif author.id == 143549673947398145:
             await ctx.send("*" + author.mention + " crushes " + user.mention + " beneath the treads of his tank for failing the Mother Islands" + "*")
         elif author.id == 198544671469731840:
-            await ctx.send("*" + author.mention + " sics and army of cats on " + user.mention + " who is promptly mauled to death!" + "*")
+            await ctx.send("*" + author.mention + " sics an army of cats on " + user.mention + " who is promptly mauled to death!" + "*")
         else:
             await ctx.send("You aren't Häme!")
