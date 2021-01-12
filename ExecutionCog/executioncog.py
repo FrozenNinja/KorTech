@@ -34,8 +34,8 @@ class ExecutionCog(commands.Cog):
             await ctx.send("*" + author.mention + " has a haiku for " + user.mention + "*" + "```My blade slices forth\nExecution comes at last\nDo not fail next time```")
         elif author.id == 304481265233559554:
             await ctx.send("*" + user.mention + " has failed our Glorious Leader " + author.mention + " and has thus forfeit their life." + "*")
-        elif author.id == 286367887168634882:
-            await ctx.send("*" + author.mention + " needs to let Kort know what she wants as a command" + "*")
+        elif author.id == 184369090150793216:
+            await ctx.send("*" + author.mention + " stares at " + user.mention + " with withering disapproval until they combust from shame" + "*")
         elif author.id == 200525863060635649:
             await ctx.send("*" + author.mention + " needs to let Kort know what he wants as a command" + "*")
         elif author.id == 143549673947398145:
