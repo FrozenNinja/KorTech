@@ -30,7 +30,7 @@ class ExecutionCog(commands.Cog):
         elif author.id == 185944398217871360: #HN
             await ctx.send("*" + author.mention + " needs to let Kort know what he wants as a command" + "*")
         elif author.id == 679023417315426344: #Sul
-            await ctx.send("*" + author.mention + " stalks silently from shadows. " + user.mention + " unaware they made their last mistake" + "*")
+            await ctx.send("*" + author.mention + " stalks silently in shadows. " + user.mention + " has failed for the last time..." + "*")
         elif author.id == 143549673947398145: #Control
             await ctx.send("*" + author.mention + " crushes " + user.mention + " beneath the treads of his tank for failing the Mother Islands" + "*")
         elif author.id == 198544671469731840: #Wisch
