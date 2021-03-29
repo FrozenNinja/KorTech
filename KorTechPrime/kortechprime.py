@@ -11,9 +11,17 @@ class KorTechPrime(commands.Cog):
         self.updatetime = False
 
     @commands.command()
-    async def isupdate(self, ctx, arg):
+    async def isupdate(self, ctx: commands.Context, arg):
                 """Designate whether its UpdateTime or not, please use Yes or No"""
 
+                guild = ctx.message.guild
+
+                role_cmd = discord.utils.get(ctx.guild.roles, name="KPCmd")
+				
+                if not role_cmd in ctx.author.roles:
+                        await ctx.send("Not authorized to use this command.")
+                        return
+						
                 if arg.lower() == "yes":
                    self.updatetime = True
                    await ctx.send("Update is running!")
