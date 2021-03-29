@@ -19,7 +19,7 @@ class KorTechPrime(commands.Cog):
                 role_cmd = discord.utils.get(ctx.guild.roles, name="KPCmd")
 				
                 if not role_cmd in ctx.author.roles:
-                        await ctx.send("Not authorized to use this command.")
+                        await ctx.send("You are not authorized to use this command.")
                         return
 						
                 if arg.lower() == "yes":
@@ -75,7 +75,7 @@ class KorTechPrime(commands.Cog):
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 				
                 if not role_cmd in ctx.author.roles:
-                        await ctx.send("Not authorized to use this command.")
+                        await ctx.send("You are not authorized to use this command.")
                         return
 
                 for Member in guild.members:
@@ -100,7 +100,7 @@ class KorTechPrime(commands.Cog):
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 				
                 if not role_cmd in ctx.author.roles:
-                        await ctx.send("Not authorized to use this command.")
+                        await ctx.send("You are not authorized to use this command.")
                         return
 
                 for Member in guild.members:
@@ -125,7 +125,7 @@ class KorTechPrime(commands.Cog):
                 role_upd = discord.utils.get(ctx.guild.roles, name="Updating")
 				
                 if not role_cmd in ctx.author.roles:
-                        await ctx.send("Not authorized to use this command.")
+                        await ctx.send("You are not authorized to use this command.")
                         return
 
                 for Member in guild.members:
