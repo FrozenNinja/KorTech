@@ -11,6 +11,8 @@ class ExecutionCog(commands.Cog):
         #Text
         if user.id == 351596701913448449: #KorTech
             await ctx.send("Attempting to kill me with my own power? Foolish mortal.\n" + "*" + "Electrocutes " + author.mention + " until they turn into ash." + "*")
+        elif user.id == 313367342966898689: #Hakke
+            await ctx.send("*" + user.mention + " laughs at " + author.mention + " and proceeds to drain them of all their blood" + "*")
         elif author.id == 277453509018779648: #Hame
             if user.id == 116329127732051974:
                 await ctx.send("*" + user.mention + " dodges the bullet like a ninja" + "*")
