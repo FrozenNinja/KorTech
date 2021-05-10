@@ -41,5 +41,7 @@ class ExecutionCog(commands.Cog):
             await ctx.send("*" + author.mention + " calls on the mighty eagle battalion to dive from the sky delivering poop, crushing " + user.mention + " to death" + "*")
         elif author.id == 198544671469731840: #Wisch
             await ctx.send("*" + author.mention + " sics an army of cats on " + user.mention + " who is promptly mauled to death!" + "*")
+        elif author.id == 356510817094598658: #ENE
+            await ctx.send("*" + author.mention + " assembles an army of snapping turtles, slowly enclosing " + user.mention + "  until they are reduced to a pile of bones" + "*")
         else:
             await ctx.send("You aren't Häme!")
