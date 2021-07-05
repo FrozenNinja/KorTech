@@ -1,3 +1,4 @@
+import dataclasses
 import discord
 import asyncio
 import sans
@@ -9,6 +10,13 @@ from redbot.core import checks, commands, Config
 from redbot.core.utils.chat_formatting import pagify, escape, box
 from lxml import etree as ET
 from libneko import pag
+
+@dataclasses.dataclass
+class RosterEntry:
+    """One entry of the roster."""
+
+    name: str
+    wa: str
 
 class Roster(commands.Cog):
 
@@ -47,7 +55,7 @@ class Roster(commands.Cog):
                 #Saves new WA in Roster
                 await self.config.user(user).userwa.set(newnation)
                 async with self.config.roster() as roster:
-                    roster[user.display_name] = newnation
+                    roster[user.id] = (user.display_name, newnation)
                     await ctx.send("Your WA Nation has been set!")
             else:
                 await ctx.send("Make sure Nation given is in the WA")
@@ -70,7 +78,7 @@ class Roster(commands.Cog):
     async def roster(self, ctx):
         #Display current WA roster in flippable format
 
-        rosterdict = await self.config.roster()
+        rosterdict = {name: wa for name, wa in (await self.config.roster()).values()}
         tostring = json.dumps(rosterdict, sort_keys=True, indent=0)
 
         nav = pag.EmbedNavigatorFactory(max_lines=30, prefix="__**TITO Roster**__", enable_truncation=True)
