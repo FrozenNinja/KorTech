@@ -29,34 +29,26 @@ class Roster(commands.Cog):
     @commands.command()
     @commands.has_role("TITO Member")
     async def setwa(self, ctx, newnation):
-        users = ctx.message.author
+        """Set WA of a member in the roster."""
+
+        user = ctx.message.author
         self.nsapi = self.bot.get_cog('NSApi')
         
         #Checks that previous nation is no longer WA
-        oldnation = await self.config.user(users).userwa()
-        if oldnation != "Null":
-            wa = await self._isinwa(wanation=oldnation)
-            if "non-member" in wa.lower():
-                #Checks that new nation is WA
-                newwa = await self._isinwa(wanation=newnation)
-                if "non-member" not in newwa.lower():
-                    #Saves new WA in Roster
-                    await self.config.user(users).userwa.set(newnation)
-                    async with self.config.roster() as user:
-                        user[users.display_name] = newnation
-                        await ctx.send("Your WA Nation has been set!")
-                else:
-                    await ctx.send("Make sure Nation given is in the WA")
-            else:
-                await ctx.send("Make sure your old WA nation has successfully resigned")
+        oldnation = await self.config.user(user).userwa()
+        if oldnation == newnation:
+            await ctx.send("This nation has already been recorded.")
+        elif oldnation != "Null" and await self._isinwa(wanation=oldnation):
+            await ctx.send("Make sure your old WA nation has successfully resigned.")
         else:
+            # Only reach if old is null / not in WA
             #Checks that new nation is WA
-            newwa = await self._isinwa(wanation=newnation)
-            if "non-member" not in newwa.lower():
+            if await self._isinwa(wanation=newnation):
                 #Saves new WA in Roster
-                await self.config.user(users).userwa.set(newnation)
-                async with self.config.roster() as user:
-                   user[users.display_name] = newnation
+                await self.config.user(user).userwa.set(newnation)
+                async with self.config.roster() as roster:
+                    roster[user.display_name] = newnation
+                    await ctx.send("Your WA Nation has been set!")
             else:
                 await ctx.send("Make sure Nation given is in the WA")
                 
@@ -86,7 +78,7 @@ class Roster(commands.Cog):
 
         nav.start(ctx)
 
-    async def _isinwa(self, wanation):
+    async def _isinwa(self, wanation: str) -> bool:
         """Check if Nation is in the WA"""
         Api.agent = "10000 Islands Discord Bot contact Kortexia"
         request = Api(
@@ -95,4 +87,4 @@ class Roster(commands.Cog):
         )
         root = await request
         pretty = pretty_string(root)
-        return pretty
+        return "wa" in pretty.lower()
