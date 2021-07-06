@@ -92,7 +92,7 @@ class Roster(commands.Cog):
     @commands.has_role("KPCmd")
     async def clearroster(self, ctx: commands.Context) -> None:
         """Clear all data from the roster."""
-        self.config.roster.set({})
+        await self.config.roster.set({})
         await ctx.send("Roster cleared.")
 
     async def _isinwa(self, wanation: str) -> bool:
