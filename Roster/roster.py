@@ -20,10 +20,11 @@ class Roster(commands.Cog):
         self.delim = ', '
         self.config = Config.get_conf(self, identifier=31415926535)
         default_global = {
-            "roster": {}
+            "roster": set()
         }
         default_user = {
-            "userwa": "Null"
+            "userwa": "Null",
+            "name": "Null"
         }
         self.config.register_global(**default_global)
         self.config.register_user(**default_user)
@@ -34,7 +35,6 @@ class Roster(commands.Cog):
         """Set WA of a member in the roster."""
 
         user = ctx.message.author
-        self.nsapi = self.bot.get_cog('NSApi')
         
         #Checks that previous nation is no longer WA
         oldnation = await self.config.user(user).userwa()
@@ -48,9 +48,10 @@ class Roster(commands.Cog):
             if await self._isinwa(wanation=newnation):
                 #Saves new WA in Roster
                 await self.config.user(user).userwa.set(newnation)
+                await self.config.user(user).name.set(user.display_name)
                 async with self.config.roster() as roster:
-                    roster[user.id] = (user.display_name, newnation)
-                    await ctx.send("Your WA Nation has been set!")
+                    roster.add(user.id)
+                await ctx.send("Your WA Nation has been set!")
             else:
                 await ctx.send("Make sure Nation given is in the WA")
                 
@@ -66,14 +67,21 @@ class Roster(commands.Cog):
         #Lists current WA nation for self
         currentwa = await self.config.user(user).userwa()
         await ctx.send(currentwa)
+
+    async def _roster_map(self):
+        """Construct a name -> WA mapping of roster members."""
+        return {
+            (await self.config.user_from_id(user_id).name())
+            : (await self.config.user_from_id(user_id).userwa()) 
+            for user_id in (await self.config.roster())
+        }
     
     @commands.command()
     @commands.has_role("KPCmd")
     async def roster(self, ctx):
         #Display current WA roster in flippable format
 
-        rosterdict = {name: wa for name, wa in (await self.config.roster()).values()}
-        tostring = json.dumps(rosterdict, sort_keys=True, indent=0)
+        tostring = json.dumps(self._roster_map(), sort_keys=True, indent=0)
 
         nav = pag.EmbedNavigatorFactory(max_lines=30, prefix="__**TITO Roster**__", enable_truncation=True)
         nav += tostring.strip('{}').replace('":',"\n").replace('",','\n').replace('"',"**").rstrip('\n').rstrip('*')
@@ -85,14 +93,16 @@ class Roster(commands.Cog):
     async def rawroster(self, ctx: commands.Context) -> None:
         """Output the roster in raw key-value format."""
         # rosteritems = "\n".join(f"{name}={wa}" for userid, (name, wa) in (await self.config.roster()).items())
-        rosteritems = json.dumps({name: wa for (_, (name, wa)) in (await self.config.roster()).items()}, indent=4)
+        rosteritems = json.dumps(self._roster_map(), indent=4)
         await ctx.send("Roster", file=discord.File(io.BytesIO(rosteritems.encode("utf-8")), filename="roster.json"))
 
     @commands.command()
     @commands.has_role("KPCmd")
     async def clearroster(self, ctx: commands.Context) -> None:
         """Clear all data from the roster."""
-        await self.config.roster.set({})
+        # Yes this wipes all config data for this Cog,
+        # which should only be WA and roster list.
+        await self.config.clear_all()
         await ctx.send("Roster cleared.")
 
     async def _isinwa(self, wanation: str) -> bool:
