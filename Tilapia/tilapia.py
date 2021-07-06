@@ -13,3 +13,5 @@ class Tilapia(commands.Cog):
         if message.channel.id == 748238663862845502:
             if ":tilapia:" not in message.content:
                 await message.delete()
+            elif ":policepanda:" in message.content:
+                await message.delete()
