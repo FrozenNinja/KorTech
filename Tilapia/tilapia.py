@@ -1,22 +1,15 @@
 import discord
-import random
 from redbot.core import commands
-from redbot.core.config import Config
 
 
 class Tilapia(commands.Cog):
     """Tilapia"""
 
-    def is_channel():
-        def predicate(ctx):
-            return ctx.message.channel.id == 748238663862845502
-        return commands.check(predicate)
-
     def __init__(self, bot):
         self.bot = bot
 
     @commands.Cog.listener()
-    @is_channel()
     async def on_message_without_command(self, message):
-        if ":tilapia:" not in message.content:
-            await ctx.message.delete()
+        if ctx.message.channel.id == 748238663862845502
+            if ":tilapia:" not in message.content:
+                await ctx.message.delete()
