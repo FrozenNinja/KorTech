@@ -7,7 +7,7 @@ class Tilapia(commands.Cog):
 
     def is_channel():
         def predicate(ctx):
-            return ctx.message.channel.id == 748238663862845502
+            return ctx.message.channel.id == 748244385858322432
         return commands.check(predicate)
 
     def __init__(self, bot):
