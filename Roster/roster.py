@@ -2,6 +2,7 @@ import dataclasses
 import discord
 import asyncio
 import sans
+import io
 import json
 from sans.api import Api
 from sans.errors import HTTPException, NotFound
@@ -10,13 +11,6 @@ from redbot.core import checks, commands, Config
 from redbot.core.utils.chat_formatting import pagify, escape, box
 from lxml import etree as ET
 from libneko import pag
-
-@dataclasses.dataclass
-class RosterEntry:
-    """One entry of the roster."""
-
-    name: str
-    wa: str
 
 class Roster(commands.Cog):
 
@@ -85,6 +79,21 @@ class Roster(commands.Cog):
         nav += tostring.strip('{}').replace('":',"\n").replace('",','\n').replace('"',"**").rstrip('\n').rstrip('*')
 
         nav.start(ctx)
+
+    @commands.command()
+    @commands.has_role("KPCmd")
+    async def rawroster(self, ctx: commands.Context) -> None:
+        """Output the roster in raw key-value format."""
+        # rosteritems = "\n".join(f"{name}={wa}" for userid, (name, wa) in (await self.config.roster()).items())
+        rosteritems = json.dumps({name: wa for (_, (name, wa)) in (await self.config.roster()).items()}, indent=4)
+        await ctx.send("Roster", file=discord.File(io.BytesIO(rosteritems.encode("utf-8")), filename="roster.json"))
+
+    @commands.command()
+    @commands.has_role("KPCmd")
+    async def clearroster(self, ctx: commands.Context) -> None:
+        """Clear all data from the roster."""
+        self.config.roster.set({})
+        await ctx.send("Roster cleared.")
 
     async def _isinwa(self, wanation: str) -> bool:
         """Check if Nation is in the WA"""
