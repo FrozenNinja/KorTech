@@ -16,5 +16,5 @@ class Tilapia(commands.Cog):
     @commands.Cog.listener()
     @is_channel()
     async def on_message_without_command(self, message):
-        if "tilapia" not in message.content:
+        if ":tilapia:" not in message.content:
             await message.delete()
