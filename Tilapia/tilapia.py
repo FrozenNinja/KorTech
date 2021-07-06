@@ -10,6 +10,6 @@ class Tilapia(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
-        if ctx.message.channel.id == 748238663862845502:
+        if message.channel.id == 748238663862845502:
             if ":tilapia:" not in message.content:
                 await message.delete()
