@@ -10,11 +10,8 @@ class Tilapia(commands.Cog):
             return ctx.message.channel.id == 748244385858322432
         return commands.check(predicate)
 
-    def __init__(self, bot):
-        self.bot = bot
-
     @commands.Cog.listener()
     @is_channel()
-    async def on_message_without_command(self, message):
+    async def on_message_without_command(message):
         if "tilapia" not in message.content:
-            await ctx.message.delete()
+            await message.delete()
