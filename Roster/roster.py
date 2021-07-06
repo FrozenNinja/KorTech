@@ -42,18 +42,17 @@ class Roster(commands.Cog):
             await ctx.send("This nation has already been recorded.")
         elif oldnation != "Null" and await self._isinwa(wanation=oldnation):
             await ctx.send("Make sure your old WA nation has successfully resigned.")
+        # Only reach if old is null / not in WA
+        #Checks that new nation is WA
+        elif not await self._isinwa(wanation=newnation):
+            await ctx.send("Make sure Nation given is in the WA")
         else:
-            # Only reach if old is null / not in WA
-            #Checks that new nation is WA
-            if await self._isinwa(wanation=newnation):
-                #Saves new WA in Roster
-                await self.config.user(user).userwa.set(newnation)
-                await self.config.user(user).name.set(user.display_name)
-                async with self.config.roster() as roster:
-                    roster.add(user.id)
-                await ctx.send("Your WA Nation has been set!")
-            else:
-                await ctx.send("Make sure Nation given is in the WA")
+            #Saves new WA in Roster
+            await self.config.user(user).userwa.set(newnation)
+            await self.config.user(user).name.set(user.display_name)
+            async with self.config.roster() as roster:
+                roster.add(user.id)
+            await ctx.send("Your WA Nation has been set!")
                 
     @commands.command()
     async def removewa(self, ctx):
