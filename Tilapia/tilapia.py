@@ -11,7 +11,7 @@ class Tilapia(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-	@is_channel('748238663862845502')
+    @is_channel('748238663862845502')
     async def on_message_without_command(self, message):
  
         if ":tilapia:" not in message.content:
