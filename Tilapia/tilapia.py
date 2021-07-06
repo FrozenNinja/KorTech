@@ -20,4 +20,4 @@ class Tilapia(commands.Cog):
     async def on_message_without_command(self, message):
  
         if ":tilapia:" not in message.content:
-            await ctx.message.delete(message)
+            await ctx.message.delete()
