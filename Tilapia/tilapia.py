@@ -7,7 +7,7 @@ from redbot.core.config import Config
 class Tilapia(commands.Cog):
     """Tilapia"""
 
-    def in_channel(channel_id):
+    def is_channel(channel_id):
         def predicate(ctx):
             return ctx.message.channel.id == channel_id
         return commands.check(predicate)
