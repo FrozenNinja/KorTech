@@ -14,7 +14,7 @@ class Tilapia(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-    @is_channel()
-    async def on_message(message):
+    #@is_channel()
+    async def on_message_without_command(self, message):
         if ":tilapia:" not in message.content:
             await ctx.message.delete()
