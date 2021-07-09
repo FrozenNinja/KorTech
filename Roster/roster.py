@@ -20,7 +20,7 @@ class Roster(commands.Cog):
         self.delim = ', '
         self.config = Config.get_conf(self, identifier=31415926535)
         default_global = {
-            "roster": set()
+            "roster": {}
         }
         default_user = {
             "userwa": "Null",
@@ -51,13 +51,15 @@ class Roster(commands.Cog):
             await self.config.user(user).userwa.set(newnation)
             await self.config.user(user).name.set(user.display_name)
             async with self.config.roster() as roster:
-                roster.add(user.id)
+                roster[user.id] = True
             await ctx.send("Your WA Nation has been set!")
                 
     @commands.command()
     async def removewa(self, ctx):
         user = ctx.message.author
         await self.config.user(user).clear()
+        async with self.config.roster() as roster:
+            roster.pop(user.id, None)
 
     @commands.command()            
     async def checkwa(self, ctx):
@@ -72,32 +74,35 @@ class Roster(commands.Cog):
         return {
             (await self.config.user_from_id(user_id).name())
             : (await self.config.user_from_id(user_id).userwa()) 
-            for user_id in (await self.config.roster())
+            for user_id in (await (self.config.roster())).keys()
         }
     
-    @commands.command()
+    @commands.group()
     @commands.has_role("KPCmd")
-    async def roster(self, ctx):
+    async def roster(self, ctx: commands.Context):
         #Display current WA roster in flippable format
 
-        tostring = json.dumps(self._roster_map(), sort_keys=True, indent=0)
+        if ctx.invoked_subcommand is None:
+            rosterdict = await self._roster_map()
+            if rosterdict:
+                tostring = json.dumps(rosterdict, sort_keys=True, indent=0)
 
-        nav = pag.EmbedNavigatorFactory(max_lines=30, prefix="__**TITO Roster**__", enable_truncation=True)
-        nav += tostring.strip('{}').replace('":',"\n").replace('",','\n').replace('"',"**").rstrip('\n').rstrip('*')
+                nav = pag.EmbedNavigatorFactory(max_lines=30, prefix="__**TITO Roster**__", enable_truncation=True)
+                nav += tostring.strip('{}').replace('":',"\n").replace('",','\n').replace('"',"**").rstrip('\n').rstrip('*')
 
-        nav.start(ctx)
+                nav.start(ctx)
+            else:
+                await ctx.send("Roster is empty.")
 
-    @commands.command()
-    @commands.has_role("KPCmd")
-    async def rawroster(self, ctx: commands.Context) -> None:
+    @roster.command()
+    async def raw(self, ctx: commands.Context) -> None:
         """Output the roster in raw key-value format."""
         # rosteritems = "\n".join(f"{name}={wa}" for userid, (name, wa) in (await self.config.roster()).items())
-        rosteritems = json.dumps(self._roster_map(), indent=4)
+        rosteritems = json.dumps(await self._roster_map(), indent=4)
         await ctx.send("Roster", file=discord.File(io.BytesIO(rosteritems.encode("utf-8")), filename="roster.json"))
 
-    @commands.command()
-    @commands.has_role("KPCmd")
-    async def clearroster(self, ctx: commands.Context) -> None:
+    @roster.command()
+    async def clear(self, ctx: commands.Context) -> None:
         """Clear all data from the roster."""
         # Yes this wipes all config data for this Cog,
         # which should only be WA and roster list.
