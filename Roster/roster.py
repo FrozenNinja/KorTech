@@ -79,8 +79,12 @@ class Roster(commands.Cog):
     
     @commands.group()
     @commands.has_role("KPCmd")
-    async def roster(self, ctx: commands.Context):
-        #Display current WA roster in flippable format
+    async def roster(self, ctx: commands.Context) -> None:
+        """Roster related command group."""
+
+    @roster.command()
+    async def show(self, ctx: commands.Context):
+        """Display current WA roster in flippable format."""
 
         if ctx.invoked_subcommand is None:
             rosterdict = await self._roster_map()
