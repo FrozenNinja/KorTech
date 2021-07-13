@@ -8,6 +8,7 @@ import discord
 from libneko import pag
 from redbot.core import commands, Config
 
+import sans
 from sans.api import Api
 from sans.utils import pretty_string
 
@@ -50,7 +51,7 @@ class Roster(commands.Cog):
         # Only reach if old is null / not in WA
         # Checks that new nation is WA
         elif not await self._isinwa(wanation=newnation):
-            await ctx.send("Make sure Nation given is in the WA")
+            await ctx.send(f"Nation '{newnation}' is not in the WA.")
         else:
             # Saves new WA in Roster
             await self.config.user(user).userwa.set(newnation)
@@ -140,6 +141,10 @@ class Roster(commands.Cog):
             "wa",
             nation=wanation,
         )
-        root = await request
-        pretty = pretty_string(root)
-        return "wa" in pretty.lower()
+        try:
+            root = await request
+        except sans.errors.HTTPException:
+            return False
+        else:
+            pretty = pretty_string(root)
+            return "wa" in pretty.lower()
