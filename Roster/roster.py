@@ -1,109 +1,129 @@
-import dataclasses
-import discord
-import asyncio
-import sans
+"""Manage a WA roster."""
+
 import io
 import json
-from sans.api import Api
-from sans.errors import HTTPException, NotFound
-from sans.utils import pretty_string
-from redbot.core import checks, commands, Config
-from redbot.core.utils.chat_formatting import pagify, escape, box
-from lxml import etree as ET
+import typing as t
+
+import discord
 from libneko import pag
+from redbot.core import commands, Config
+
+from sans.api import Api
+from sans.utils import pretty_string
+
+# from lxml import etree as ET
+# from redbot.core.utils.chat_formatting import pagify, escape, box
+# from sans.errors import HTTPException, NotFound
+
 
 class Roster(commands.Cog):
+    """Roster Cog."""
 
-    def __init__(self, bot):
-        Api.loop = bot.loop
+    def __init__(self, bot: commands.Bot) -> None:
+        """Initiate this cog with the given bot."""
         self.bot = bot
-        self.delim = ', '
+        # Connect sans to bot async loop
+        Api.loop = bot.loop
+
+        self.delim = ", "
+
+        # Setup config structure
         self.config = Config.get_conf(self, identifier=31415926535)
-        default_global = {
-            "roster": {}
-        }
-        default_user = {
-            "userwa": "Null",
-            "name": "Null"
-        }
+        default_global = {"roster": {}}
+        default_user = {"userwa": "Null", "name": "Null"}
         self.config.register_global(**default_global)
         self.config.register_user(**default_user)
 
     @commands.command()
     @commands.has_role("TITO Member")
-    async def setwa(self, ctx, newnation):
-        """Set WA of a member in the roster."""
+    async def setwa(self, ctx: commands.Context, newnation: str) -> None:
+        """Set your WA in the roster."""
 
         user = ctx.message.author
-        
-        #Checks that previous nation is no longer WA
+
+        # Checks that previous nation is no longer WA
         oldnation = await self.config.user(user).userwa()
         if oldnation == newnation:
             await ctx.send("This nation has already been recorded.")
         elif oldnation != "Null" and await self._isinwa(wanation=oldnation):
             await ctx.send("Make sure your old WA nation has successfully resigned.")
         # Only reach if old is null / not in WA
-        #Checks that new nation is WA
+        # Checks that new nation is WA
         elif not await self._isinwa(wanation=newnation):
             await ctx.send("Make sure Nation given is in the WA")
         else:
-            #Saves new WA in Roster
+            # Saves new WA in Roster
             await self.config.user(user).userwa.set(newnation)
             await self.config.user(user).name.set(user.display_name)
             async with self.config.roster() as roster:
                 roster[user.id] = True
             await ctx.send("Your WA Nation has been set!")
-                
+
     @commands.command()
-    async def removewa(self, ctx):
+    @commands.has_role("TITO Member")
+    async def removewa(self, ctx: commands.Context) -> None:
+        """Remove your WA from the roster."""
         user = ctx.message.author
         await self.config.user(user).clear()
         async with self.config.roster() as roster:
             roster.pop(user.id, None)
 
-    @commands.command()            
-    async def checkwa(self, ctx):
+    @commands.command()
+    @commands.has_role("TITO Member")
+    async def checkwa(self, ctx: commands.Context) -> None:
+        """Check you WA in the roster."""
         user = ctx.message.author
-        
-        #Lists current WA nation for self
+        # Lists current WA nation for self
         currentwa = await self.config.user(user).userwa()
         await ctx.send(currentwa)
 
-    async def _roster_map(self):
+    async def _roster_map(self) -> t.Mapping[str, str]:
         """Construct a name -> WA mapping of roster members."""
         return {
             (await self.config.user_from_id(user_id).name())
-            : (await self.config.user_from_id(user_id).userwa()) 
+            : (await self.config.user_from_id(user_id).userwa())
             for user_id in (await (self.config.roster())).keys()
         }
-    
+
     @commands.group()
     @commands.has_role("KPCmd")
     async def roster(self, ctx: commands.Context) -> None:
         """Roster related command group."""
 
     @roster.command()
-    async def show(self, ctx: commands.Context):
+    async def show(self, ctx: commands.Context) -> None:
         """Display current WA roster in flippable format."""
 
-        if ctx.invoked_subcommand is None:
-            rosterdict = await self._roster_map()
-            if rosterdict:
-                tostring = json.dumps(rosterdict, sort_keys=True, indent=0)
+        rosterdict = await self._roster_map()
+        if rosterdict:
+            tostring = json.dumps(rosterdict, sort_keys=True, indent=0)
 
-                nav = pag.EmbedNavigatorFactory(max_lines=30, prefix="__**TITO Roster**__", enable_truncation=True)
-                nav += tostring.strip('{}').replace('":',"\n").replace('",','\n').replace('"',"**").rstrip('\n').rstrip('*')
+            nav = pag.EmbedNavigatorFactory(
+                max_lines=30, prefix="__**TITO Roster**__", enable_truncation=True
+            )
+            nav += (
+                tostring.strip("{}")
+                .replace('":', "\n")
+                .replace('",', "\n")
+                .replace('"', "**")
+                .rstrip("\n")
+                .rstrip("*")
+            )
 
-                nav.start(ctx)
-            else:
-                await ctx.send("Roster is empty.")
+            nav.start(ctx)
+        else:
+            await ctx.send("Roster is empty.")
 
     @roster.command()
     async def raw(self, ctx: commands.Context) -> None:
         """Output the roster in raw key-value format."""
-        # rosteritems = "\n".join(f"{name}={wa}" for userid, (name, wa) in (await self.config.roster()).items())
         rosteritems = json.dumps(await self._roster_map(), indent=4)
-        await ctx.send("Roster", file=discord.File(io.BytesIO(rosteritems.encode("utf-8")), filename="roster.json"))
+        await ctx.send(
+            "Roster",
+            file=discord.File(
+                io.BytesIO(rosteritems.encode("utf-8")), filename="roster.json"
+            ),
+        )
 
     @roster.command()
     async def clear(self, ctx: commands.Context) -> None:
