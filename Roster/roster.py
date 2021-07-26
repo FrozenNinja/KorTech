@@ -82,8 +82,9 @@ class Roster(commands.Cog):
     async def _roster_map(self) -> t.Mapping[str, str]:
         """Construct a name -> WA mapping of roster members."""
         return {
-            (await self.config.user_from_id(user_id).name())
-            : (await self.config.user_from_id(user_id).userwa())
+            (await self.config.user_from_id(user_id).name()): (
+                await self.config.user_from_id(user_id).userwa()
+            )
             for user_id in (await (self.config.roster())).keys()
         }
 
