@@ -134,20 +134,26 @@ class Roster(commands.Cog):
         # Yes this wipes all config data for this Cog,
         # which should only be WA and roster list.
         timeout = 5
-        await ctx.send(f"Confirmation required; type 'confirm' within {timeout} seconds.")
+        await ctx.send(
+            f"Confirmation required; type 'confirm' within {timeout} seconds."
+        )
         try:
             await self.bot.wait_for(
                 "message",
-                check=(lambda msg: msg.channel == ctx.channel and msg.author == ctx.author and msg.content.strip().lower() == "confirm"),
-                timeout=timeout
+                check=(
+                    lambda msg: msg.channel == ctx.channel
+                    and msg.author == ctx.author
+                    and msg.content.strip().lower() == "confirm"
+                ),
+                timeout=timeout,
             )
+        except asyncio.TimeoutError:
+            await ctx.send("Timeout passed, roster not cleared.")
+        else:
             # checking for 'confirm' is done in the wait_for predicate
             # so at this point in code we can clear
             await self.config.clear_all()
             await ctx.send("Roster cleared.")
-        except asyncio.TimeoutError:
-            await ctx.send("Timeout passed, roster not cleared.")
-       
 
     async def _isinwa(self, wanation: str) -> bool:
         """Check if Nation is in the WA"""
