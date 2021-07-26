@@ -1,5 +1,6 @@
 """Manage a WA roster."""
 
+import asyncio
 import io
 import json
 import typing as t
@@ -131,8 +132,21 @@ class Roster(commands.Cog):
         """Clear all data from the roster."""
         # Yes this wipes all config data for this Cog,
         # which should only be WA and roster list.
-        await self.config.clear_all()
-        await ctx.send("Roster cleared.")
+        timeout = 5
+        await ctx.send(f"Confirmation required; type 'confirm' within {timeout} seconds.")
+        try:
+            await self.bot.wait_for(
+                "message",
+                check=(lambda msg: msg.channel == ctx.channel and msg.author == ctx.author and msg.content.strip().lower() == "confirm"),
+                timeout=timeout
+            )
+            # checking for 'confirm' is done in the wait_for predicate
+            # so at this point in code we can clear
+            await self.config.clear_all()
+            await ctx.send("Roster cleared.")
+        except asyncio.TimeoutError:
+            await ctx.send("Timeout passed, roster not cleared.")
+       
 
     async def _isinwa(self, wanation: str) -> bool:
         """Check if Nation is in the WA"""
