@@ -120,7 +120,7 @@ class Roster(commands.Cog):
     @roster.command()
     async def raw(self, ctx: commands.Context) -> None:
         """Output the roster in raw key-value format."""
-        rosteritems = json.dumps(await self._roster_map(), indent=4)
+        rosteritems = json.dumps(await self._roster_map(), indent=4, sort_keys=True)
         await ctx.send(
             "Roster",
             file=discord.File(
