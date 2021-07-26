@@ -62,7 +62,7 @@ class Roster(commands.Cog):
             await self.config.user(user).userwa.set(newnation)
             await self.config.user(user).name.set(user.display_name)
             async with self.config.roster() as roster:
-                roster[user.id] = True
+                roster[str(user.id)] = True
             await ctx.send("Your WA Nation has been set!")
 
     @commands.command()
@@ -74,7 +74,9 @@ class Roster(commands.Cog):
             user = ctx.message.author
         await self.config.user(user).clear()
         async with self.config.roster() as roster:
-            roster.pop(user.id, None)
+            # config mappings use string keys
+            roster.pop(str(user.id), None)
+        await ctx.send("Your WA Nation has been removed.")
 
     @commands.command()
     @commands.has_role("TITO Member")
@@ -93,7 +95,7 @@ class Roster(commands.Cog):
             (await self.config.user_from_id(user_id).name()): (
                 await self.config.user_from_id(user_id).userwa()
             )
-            for user_id in (await (self.config.roster())).keys()
+            for user_id in map(int, (await (self.config.roster())).keys())
         }
 
     @commands.group()
