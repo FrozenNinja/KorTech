@@ -32,9 +32,46 @@ class Roster(commands.Cog):
         # Setup config structure
         self.config = Config.get_conf(self, identifier=31415926535)
         default_global = {"roster": {}}
-        default_user = {"userwa": "Null", "name": "Null"}
+        default_user = {"userwa": "Null", "name": "Null", "nations": []}
         self.config.register_global(**default_global)
         self.config.register_user(**default_user)
+
+    @commands.command()
+    @commands.has_role("TITO Member")
+    async def addnation(
+        self, ctx: commands.Context, nation: str, user: discord.Member = None
+    ) -> None:
+        """Register one of your nations to be tracked."""
+        # Command can act on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
+        async with self.config.user(user).nations as nations:
+            if nation not in nations:
+                nations.append(nation)
+                await ctx.send(f"Nation '{nation}' added for {user.display_name}.")
+            else:
+                await ctx.send(
+                    f"Nation '{nation}' already added for {user.display_name}."
+                )
+
+    @commands.command()
+    @commands.has_role("TITO Member")
+    async def removenation(
+        self, ctx: commands.Context, nation: str, user: discord.Member = None
+    ) -> None:
+        """Register one of your nations to be tracked."""
+        # Command can act on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
+        async with self.config.user(user).nations as nations:
+            try:
+                nations.remove(nation)
+            except ValueError:
+                await ctx.send(
+                    f"Nation '{nation}' was not tracked for {user.display_name}."
+                )
+            else:
+                await ctx.send(f"Nation '{nation}' removed for {user.display_name}.")
 
     @commands.command()
     @commands.has_role("TITO Member")
@@ -67,7 +104,9 @@ class Roster(commands.Cog):
 
     @commands.command()
     @commands.has_role("TITO Member")
-    async def removewa(self, ctx: commands.Context, user: discord.Member = None) -> None:
+    async def removewa(
+        self, ctx: commands.Context, user: discord.Member = None
+    ) -> None:
         """Remove your WA from the roster."""
         # Command can use removewa on other members
         if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
