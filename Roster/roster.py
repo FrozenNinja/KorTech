@@ -32,7 +32,7 @@ class Roster(commands.Cog):
         # Setup config structure
         self.config = Config.get_conf(self, identifier=31415926535)
         default_global = {"roster": {}}
-        default_user = {"userwa": "Null", "name": "Null", "nations": []}
+        default_user = {"userwa": "Null", "name": "Null", "nations": {}}
         self.config.register_global(**default_global)
         self.config.register_user(**default_user)
 
@@ -45,14 +45,12 @@ class Roster(commands.Cog):
         # Command can act on other members
         if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
             user = ctx.message.author
-        async with self.config.user(user).nations as nations:
-            if nation not in nations:
-                nations.append(nation)
-                await ctx.send(f"Nation '{nation}' added for {user.display_name}.")
+        async with self.config.user(user).nations() as nations:
+            if nation in nations:
+                await ctx.send(f"Nation '{nation}' was already tracked for {user.display_name}.")
             else:
-                await ctx.send(
-                    f"Nation '{nation}' already added for {user.display_name}."
-                )
+                nations[nation] = True
+                await ctx.send(f"Nation '{nation}' added for {user.display_name}.")
 
     @commands.command()
     @commands.has_role("TITO Member")
@@ -63,10 +61,10 @@ class Roster(commands.Cog):
         # Command can act on other members
         if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
             user = ctx.message.author
-        async with self.config.user(user).nations as nations:
+        async with self.config.user(user).nations() as nations:
             try:
-                nations.remove(nation)
-            except ValueError:
+                del nations[nation]
+            except KeyError:
                 await ctx.send(
                     f"Nation '{nation}' was not tracked for {user.display_name}."
                 )
