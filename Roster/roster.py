@@ -38,10 +38,14 @@ class Roster(commands.Cog):
 
     @commands.command()
     @commands.has_role("TITO Member")
-    async def setwa(self, ctx: commands.Context, newnation: str) -> None:
+    async def setwa(
+        self, ctx: commands.Context, newnation: str, user: discord.Member = None
+    ) -> None:
         """Set your WA in the roster."""
 
-        user = ctx.message.author
+        # Command can use setwa on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
 
         # Checks that previous nation is no longer WA
         oldnation = await self.config.user(user).userwa()
@@ -63,18 +67,22 @@ class Roster(commands.Cog):
 
     @commands.command()
     @commands.has_role("TITO Member")
-    async def removewa(self, ctx: commands.Context) -> None:
+    async def removewa(self, ctx: commands.Context, user: discord.Member = None) -> None:
         """Remove your WA from the roster."""
-        user = ctx.message.author
+        # Command can use removewa on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
         await self.config.user(user).clear()
         async with self.config.roster() as roster:
             roster.pop(user.id, None)
 
     @commands.command()
     @commands.has_role("TITO Member")
-    async def checkwa(self, ctx: commands.Context) -> None:
+    async def checkwa(self, ctx: commands.Context, user: discord.Member = None) -> None:
         """Check you WA in the roster."""
-        user = ctx.message.author
+        # Command can use checkwa on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
         # Lists current WA nation for self
         currentwa = await self.config.user(user).userwa()
         await ctx.send(currentwa)
