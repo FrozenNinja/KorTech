@@ -47,7 +47,9 @@ class Roster(commands.Cog):
             user = ctx.message.author
         async with self.config.user(user).nations() as nations:
             if nation in nations:
-                await ctx.send(f"Nation '{nation}' was already tracked for {user.display_name}.")
+                await ctx.send(
+                    f"Nation '{nation}' was already tracked for {user.display_name}."
+                )
             else:
                 nations[nation] = True
                 await ctx.send(f"Nation '{nation}' added for {user.display_name}.")
@@ -70,6 +72,30 @@ class Roster(commands.Cog):
                 )
             else:
                 await ctx.send(f"Nation '{nation}' removed for {user.display_name}.")
+
+    @commands.command()
+    @commands.has_role("TITO Member")
+    async def listnations(
+        self, ctx: commands.Context, user: discord.Member = None
+    ) -> None:
+        """List all of your tracked nations."""
+        # Command can act on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
+        await ctx.send(str(list((await self.config.user(user).nations()).keys())))
+
+    @commands.command()
+    @commands.has_role("TITO Member")
+    async def markwa(
+        self, ctx: commands.Context, nation: str, user: discord.Member = None
+    ) -> None:
+        """Mark a nation as a possible future WA in the roster."""
+        # Command can act on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
+            async with self.config.user(user).nations() as nations:
+                nations[nation] = True
+                await ctx.send(f"Nation '{nation}' has been marked for {user.display_name}.")
 
     @commands.command()
     @commands.has_role("TITO Member")
