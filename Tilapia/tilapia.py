@@ -8,7 +8,7 @@ class Tilapia(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def filter_message(message: discord.Message) -> bool:
+    async def filter_message(self, message: discord.Message) -> bool:
         """Filter the given message based on channel and content.
 
         May delete the message depending on message content,
@@ -27,7 +27,7 @@ class Tilapia(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
-        await filter_message(message)
+        await self.filter_message(message)
 
     @commands.Cog.listener()
     async def on_message_edit(self, before: discord.Message, after: discord.Message) -> None:
