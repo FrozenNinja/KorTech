@@ -27,7 +27,7 @@ class Tilapia(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
-        await self.filter_message(message)
+        await filter_message(message)
 
     @commands.Cog.listener()
     async def on_message_edit(self, before: discord.Message, after: discord.Message) -> None:
