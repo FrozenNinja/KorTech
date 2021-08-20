@@ -17,6 +17,8 @@ from sans.utils import pretty_string
 # from redbot.core.utils.chat_formatting import pagify, escape, box
 # from sans.errors import HTTPException, NotFound
 
+from . import deployed
+
 
 def channel_and_author(ctx: commands.Context) -> t.Callable[[discord.Message], bool]:
     """Construct a predicate that checks author and channel to be same as context."""
@@ -89,6 +91,15 @@ class Roster(commands.Cog):
             "Known",
             file=discord.File(io.BytesIO(known.encode("utf-8")), filename="known.json"),
         )
+
+    @commands.command()
+    @commands.has_role("KPCmd")
+    async def deployed(self, ctx: commands.Context, lead: str) -> None:
+        """Check who is deployed on a lead, according to loaded known file."""
+        endorsers = await deployed.deployed(
+            lead=lead, roster=(await self.config.known())
+        )
+        await ctx.send(f"Deployed: {','.join(endorsers)}")
 
     @commands.command()
     @commands.has_role("TITO Member")
