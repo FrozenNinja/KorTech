@@ -18,6 +18,15 @@ from sans.utils import pretty_string
 # from sans.errors import HTTPException, NotFound
 
 
+def channel_and_author(ctx: commands.Context) -> t.Callable[[discord.Message], bool]:
+    """Construct a predicate that checks author and channel to be same as context."""
+
+    def pred(message: discord.Message) -> bool:
+        return message.author == ctx.author and message.channel == ctx.channel
+
+    return pred
+
+
 class Roster(commands.Cog):
     """Roster Cog."""
 
@@ -31,10 +40,55 @@ class Roster(commands.Cog):
 
         # Setup config structure
         self.config = Config.get_conf(self, identifier=31415926535)
-        default_global = {"roster": {}}
-        default_user = {"userwa": "Null", "name": "Null"}
-        self.config.register_global(**default_global)
-        self.config.register_user(**default_user)
+        # Roster is a mapping from id to True
+        # Known is
+        self.config.register_global(roster={}, known={})
+        self.config.register_user(userwa="Null", name="Null")
+
+    @commands.command()
+    @commands.has_role("KPCmd")
+    async def importknown(self, ctx: commands.Context) -> None:
+        """Import the JSON file attached to this command,
+        or wait for a file to be uploaded after the command is run.
+
+        Interprets the file as a roster of known puppets;
+        the JSON should be formatted as {name: [puppets]}
+        The name is also interpreted as a puppet.
+        """
+        if len(ctx.message.attachments) > 0:
+            file = ctx.message.attachments[0]
+        else:
+            RESPONSE_TIMEOUT = 10
+            await ctx.send(
+                f"Please send a roster JSON file within the next {RESPONSE_TIMEOUT} seconds."
+            )
+            try:
+                message = await self.bot.wait_for(
+                    "message", check=channel_and_author(ctx), timeout=RESPONSE_TIMEOUT
+                )
+            except asyncio.TimeoutError:
+                await ctx.send("Timed out waiting for roster JSON file.")
+                return
+            else:
+                if len(message.attachments) > 0:
+                    file = message.attachments[0]
+                else:
+                    await ctx.send("No file attached, please rerun this command.")
+                    return
+        raw: bytes = await file.read()
+        known = json.loads(raw)
+        await self.config.known.set(known)
+        await ctx.send("Known list updated.")
+
+    @commands.command()
+    @commands.has_role("KPCmd")
+    async def exportknown(self, ctx: commands.Context, sort: bool = True) -> None:
+        """Export known puppets as JSON."""
+        known = json.dumps(await self.config.known(), indent=4, sort_keys=sort)
+        await ctx.send(
+            "Known",
+            file=discord.File(io.BytesIO(known.encode("utf-8")), filename="known.json"),
+        )
 
     @commands.command()
     @commands.has_role("TITO Member")
