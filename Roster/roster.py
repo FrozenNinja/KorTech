@@ -222,8 +222,6 @@ class Roster(commands.Cog):
     @roster.command()
     async def clear(self, ctx: commands.Context) -> None:
         """Clear all data from the roster."""
-        # Yes this wipes all config data for this Cog,
-        # which should only be WA and roster list.
         timeout = 5
         await ctx.send(
             f"Confirmation required; type 'confirm' within {timeout} seconds."
@@ -243,8 +241,11 @@ class Roster(commands.Cog):
         else:
             # checking for 'confirm' is done in the wait_for predicate
             # so at this point in code we can clear
-            await self.config.clear_all()
-            await ctx.send("Roster cleared.")
+            # we only clear the roster and user data,
+            # we don't want to clear the known data
+            await self.config.roster.clear()
+            await self.config.clear_all_users()
+            await ctx.send("Roster list and user WAs cleared.")
 
     async def _isinwa(self, wanation: str) -> bool:
         """Check if Nation is in the WA"""
