@@ -47,9 +47,13 @@ class Roster(commands.Cog):
         self.config.register_global(roster={}, known={})
         self.config.register_user(userwa="Null", name="Null")
 
-    @commands.command()
+    @commands.group()
     @commands.has_role("KPCmd")
-    async def importknown(self, ctx: commands.Context) -> None:
+    async def known(self, ctx: commands.Context) -> None:
+        """Command group for managing a list of known puppets."""
+
+    @known.command()
+    async def upload(self, ctx: commands.Context) -> None:
         """Import the JSON file attached to this command,
         or wait for a file to be uploaded after the command is run.
 
@@ -82,9 +86,8 @@ class Roster(commands.Cog):
         await self.config.known.set(known)
         await ctx.send("Known list updated.")
 
-    @commands.command()
-    @commands.has_role("KPCmd")
-    async def exportknown(self, ctx: commands.Context, sort: bool = True) -> None:
+    @known.command()
+    async def export(self, ctx: commands.Context, sort: bool = True) -> None:
         """Export known puppets as JSON."""
         known = json.dumps(await self.config.known(), indent=4, sort_keys=sort)
         await ctx.send(
