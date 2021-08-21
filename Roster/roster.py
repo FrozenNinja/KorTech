@@ -1,5 +1,6 @@
 """Manage a WA roster."""
 
+import asyncio
 import io
 import json
 import typing as t
@@ -16,6 +17,17 @@ from sans.utils import pretty_string
 # from redbot.core.utils.chat_formatting import pagify, escape, box
 # from sans.errors import HTTPException, NotFound
 
+from . import deployed
+
+
+def channel_and_author(ctx: commands.Context) -> t.Callable[[discord.Message], bool]:
+    """Construct a predicate that checks author and channel to be same as context."""
+
+    def pred(message: discord.Message) -> bool:
+        return message.author == ctx.author and message.channel == ctx.channel
+
+    return pred
+
 
 class Roster(commands.Cog):
     """Roster Cog."""
@@ -30,17 +42,96 @@ class Roster(commands.Cog):
 
         # Setup config structure
         self.config = Config.get_conf(self, identifier=31415926535)
-        default_global = {"roster": {}}
-        default_user = {"userwa": "Null", "name": "Null"}
-        self.config.register_global(**default_global)
-        self.config.register_user(**default_user)
+        # Roster is a mapping from id to True
+        # Known is
+        self.config.register_global(roster={}, known={})
+        self.config.register_user(userwa="Null", name="Null")
+
+    @commands.group()
+    @commands.has_role("KPCmd")
+    async def known(self, ctx: commands.Context) -> None:
+        """Command group for managing a list of known puppets."""
+
+    @known.command()
+    async def upload(self, ctx: commands.Context) -> None:
+        """Import the JSON file attached to this command,
+        or wait for a file to be uploaded after the command is run.
+
+        Interprets the file as a roster of known puppets;
+        the JSON should be formatted as {name: [puppets]}
+        The name is also interpreted as a puppet.
+        """
+        if len(ctx.message.attachments) > 0:
+            file = ctx.message.attachments[0]
+        else:
+            RESPONSE_TIMEOUT = 10
+            await ctx.send(
+                f"Please send a roster JSON file within the next {RESPONSE_TIMEOUT} seconds."
+            )
+            try:
+                message = await self.bot.wait_for(
+                    "message", check=channel_and_author(ctx), timeout=RESPONSE_TIMEOUT
+                )
+            except asyncio.TimeoutError:
+                await ctx.send("Timed out waiting for roster JSON file.")
+                return
+            else:
+                if len(message.attachments) > 0:
+                    file = message.attachments[0]
+                else:
+                    await ctx.send("No file attached, please rerun this command.")
+                    return
+        raw: bytes = await file.read()
+        try:
+            known = json.loads(raw)
+        except json.JSONDecodeError:
+            await ctx.send("Provided file is not well-formed JSON.")
+        else:
+            await self.config.known.set(known)
+            await ctx.send("Known list updated.")
+
+    @known.command()
+    async def export(self, ctx: commands.Context, sort: bool = True) -> None:
+        """Export known puppets as JSON."""
+        known = json.dumps(await self.config.known(), indent=4, sort_keys=sort)
+        await ctx.send(
+            "Known",
+            file=discord.File(io.BytesIO(known.encode("utf-8")), filename="known.json"),
+        )
+
+    @commands.command()
+    @commands.has_role("KPCmd")
+    async def deployed(self, ctx: commands.Context, lead: str) -> None:
+        """Check who is deployed on a lead, according to loaded known file."""
+        endorsers, unknown = await deployed.deployed(
+            lead=lead, roster=(await self.config.known())
+        )
+        # yeah this works. zip(*iterable) is its own inverse
+        # kinda mind bending but it checks out
+        endorser_names, endorser_puppets = zip(*sorted(endorsers))
+        content = "Known: {known}\nKnown Puppets: {puppets}\nUnknown: {unknown}".format(
+            known=", ".join(endorser_names),
+            puppets=", ".join(endorser_puppets),
+            unknown=", ".join(unknown),
+        )
+        await ctx.send(
+            f"Deployed on {lead}:",
+            file=discord.File(
+                io.BytesIO(content.encode("utf-8")),
+                filename=f"deployed_{deployed.clean_format(lead)}.txt",
+            ),
+        )
 
     @commands.command()
     @commands.has_role("TITO Member")
-    async def setwa(self, ctx: commands.Context, newnation: str) -> None:
+    async def setwa(
+        self, ctx: commands.Context, newnation: str, user: discord.Member = None
+    ) -> None:
         """Set your WA in the roster."""
 
-        user = ctx.message.author
+        # Command can use setwa on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
 
         # Checks that previous nation is no longer WA
         oldnation = await self.config.user(user).userwa()
@@ -57,23 +148,31 @@ class Roster(commands.Cog):
             await self.config.user(user).userwa.set(newnation)
             await self.config.user(user).name.set(user.display_name)
             async with self.config.roster() as roster:
-                roster[user.id] = True
+                roster[str(user.id)] = True
             await ctx.send("Your WA Nation has been set!")
 
     @commands.command()
     @commands.has_role("TITO Member")
-    async def removewa(self, ctx: commands.Context) -> None:
+    async def removewa(
+        self, ctx: commands.Context, user: discord.Member = None
+    ) -> None:
         """Remove your WA from the roster."""
-        user = ctx.message.author
+        # Command can use removewa on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
         await self.config.user(user).clear()
         async with self.config.roster() as roster:
-            roster.pop(user.id, None)
+            # config mappings use string keys
+            roster.pop(str(user.id), None)
+        await ctx.send("Your WA Nation has been removed.")
 
     @commands.command()
     @commands.has_role("TITO Member")
-    async def checkwa(self, ctx: commands.Context) -> None:
+    async def checkwa(self, ctx: commands.Context, user: discord.Member = None) -> None:
         """Check you WA in the roster."""
-        user = ctx.message.author
+        # Command can use checkwa on other members
+        if not (user and discord.utils.get(ctx.author.roles, name="KPCmd")):
+            user = ctx.message.author
         # Lists current WA nation for self
         currentwa = await self.config.user(user).userwa()
         await ctx.send(currentwa)
@@ -81,9 +180,10 @@ class Roster(commands.Cog):
     async def _roster_map(self) -> t.Mapping[str, str]:
         """Construct a name -> WA mapping of roster members."""
         return {
-            (await self.config.user_from_id(user_id).name())
-            : (await self.config.user_from_id(user_id).userwa())
-            for user_id in (await (self.config.roster())).keys()
+            (await self.config.user_from_id(user_id).name()): (
+                await self.config.user_from_id(user_id).userwa()
+            )
+            for user_id in map(int, (await (self.config.roster())).keys())
         }
 
     @commands.group()
@@ -118,7 +218,7 @@ class Roster(commands.Cog):
     @roster.command()
     async def raw(self, ctx: commands.Context) -> None:
         """Output the roster in raw key-value format."""
-        rosteritems = json.dumps(await self._roster_map(), indent=4)
+        rosteritems = json.dumps(await self._roster_map(), indent=4, sort_keys=True)
         await ctx.send(
             "Roster",
             file=discord.File(
@@ -129,10 +229,30 @@ class Roster(commands.Cog):
     @roster.command()
     async def clear(self, ctx: commands.Context) -> None:
         """Clear all data from the roster."""
-        # Yes this wipes all config data for this Cog,
-        # which should only be WA and roster list.
-        await self.config.clear_all()
-        await ctx.send("Roster cleared.")
+        timeout = 5
+        await ctx.send(
+            f"Confirmation required; type 'confirm' within {timeout} seconds."
+        )
+        try:
+            await self.bot.wait_for(
+                "message",
+                check=(
+                    lambda msg: msg.channel == ctx.channel
+                    and msg.author == ctx.author
+                    and msg.content.strip().lower() == "confirm"
+                ),
+                timeout=timeout,
+            )
+        except asyncio.TimeoutError:
+            await ctx.send("Timeout passed, roster not cleared.")
+        else:
+            # checking for 'confirm' is done in the wait_for predicate
+            # so at this point in code we can clear
+            # we only clear the roster and user data,
+            # we don't want to clear the known data
+            await self.config.roster.clear()
+            await self.config.clear_all_users()
+            await ctx.send("Roster list and user WAs cleared.")
 
     async def _isinwa(self, wanation: str) -> bool:
         """Check if Nation is in the WA"""
