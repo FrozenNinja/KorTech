@@ -82,9 +82,13 @@ class Roster(commands.Cog):
                     await ctx.send("No file attached, please rerun this command.")
                     return
         raw: bytes = await file.read()
-        known = json.loads(raw)
-        await self.config.known.set(known)
-        await ctx.send("Known list updated.")
+        try:
+            known = json.loads(raw)
+        except json.JSONDecodeError:
+            await ctx.send("Provided file is not well-formed JSON.")
+        else:
+            await self.config.known.set(known)
+            await ctx.send("Known list updated.")
 
     @known.command()
     async def export(self, ctx: commands.Context, sort: bool = True) -> None:
