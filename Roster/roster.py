@@ -96,10 +96,17 @@ class Roster(commands.Cog):
     @commands.has_role("KPCmd")
     async def deployed(self, ctx: commands.Context, lead: str) -> None:
         """Check who is deployed on a lead, according to loaded known file."""
-        endorsers = await deployed.deployed(
+        endorsers, _ = await deployed.deployed(
             lead=lead, roster=(await self.config.known())
         )
-        await ctx.send(f"Deployed: {','.join(endorsers)}")
+        content = ", ".join(sorted(endorsers))
+        await ctx.send(
+            f"Deployed on {lead}:",
+            file=discord.File(
+                io.BytesIO(content.encode("utf-8")),
+                filename=f"deployed_{deployed.clean_format(lead)}.txt",
+            ),
+        )
 
     @commands.command()
     @commands.has_role("TITO Member")

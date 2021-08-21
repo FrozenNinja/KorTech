@@ -3,11 +3,11 @@
 Based on https://github.com/HN67/nsapi/blob/master/roster/deployed.py
 but adapted to work with sans."""
 
+import itertools
 import typing as t
 
 import sans
 from sans.api import Api
-from sans.utils import pretty_string
 
 
 def clean_format(nation: str) -> str:
@@ -27,17 +27,18 @@ async def endorsements(nation: str) -> t.Iterable[str]:
     except sans.errors.HTTPException:
         return []
     else:
-        pretty = pretty_string(root)
-        return pretty.split(",")
+        return root.ENDORSEMENTS.text.split(",")
 
 
 async def deployed(
     lead: str,
     roster: t.Mapping[str, t.Iterable[str]],
-) -> t.Collection[str]:
-    """Determine who are deployed and endorsing the lead."""
-    # Obtain endorsement list of lead
-    endos = map(clean_format, await endorsements(lead))
+) -> t.Tuple[t.Collection[str], t.Collection[str]]:
+    """Determine who are deployed and endorsing the lead.
+
+    Returns a tuple of those known to be deployed on and including the lead,
+    and a collection of puppets whose owners are unknown.
+    """
     # Invert roster into puppet -> main form
     owners = {
         clean_format(switcher): main
@@ -45,6 +46,10 @@ async def deployed(
         for switcher in switchers
     }
     # Also include main nations
-    owners.update({main: main for main in roster.keys()})
+    owners.update({clean_format(main): main for main in roster.keys()})
+    # Obtain endorsement list of lead
+    endos = map(clean_format, await endorsements(lead))
+    # We also want to include the lead in those deployed
+    deployed_puppets = itertools.chain(endos, [clean_format(lead)])
     # Return owners who have a nation endoing lead
-    return [owners[nation] for nation in endos if nation in owners]
+    return [owners[nation] for nation in deployed_puppets if nation in owners], []
