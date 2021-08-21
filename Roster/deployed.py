@@ -3,7 +3,6 @@
 Based on https://github.com/HN67/nsapi/blob/master/roster/deployed.py
 but adapted to work with sans."""
 
-import itertools
 import typing as t
 
 import sans
@@ -33,7 +32,7 @@ async def endorsements(nation: str) -> t.Iterable[str]:
 async def deployed(
     lead: str,
     roster: t.Mapping[str, t.Iterable[str]],
-) -> t.Tuple[t.Collection[str], t.Collection[str]]:
+) -> t.Tuple[t.Collection[t.Tuple[str, str]], t.Collection[str]]:
     """Determine who are deployed and endorsing the lead.
 
     Returns a tuple of those known to be deployed on and including the lead,
@@ -50,6 +49,9 @@ async def deployed(
     # Obtain endorsement list of lead
     endos = map(clean_format, await endorsements(lead))
     # We also want to include the lead in those deployed
-    deployed_puppets = itertools.chain(endos, [clean_format(lead)])
+    deployed_puppets = list(endos) + [clean_format(lead)]
     # Return owners who have a nation endoing lead
-    return [owners[nation] for nation in deployed_puppets if nation in owners], []
+    return (
+        [(owners[nation], nation) for nation in deployed_puppets if nation in owners],
+        [puppet for puppet in deployed_puppets if puppet not in owners],
+    )

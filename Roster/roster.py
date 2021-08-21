@@ -96,10 +96,17 @@ class Roster(commands.Cog):
     @commands.has_role("KPCmd")
     async def deployed(self, ctx: commands.Context, lead: str) -> None:
         """Check who is deployed on a lead, according to loaded known file."""
-        endorsers, _ = await deployed.deployed(
+        endorsers, unknown = await deployed.deployed(
             lead=lead, roster=(await self.config.known())
         )
-        content = ", ".join(sorted(endorsers))
+        # yeah this works. zip(*iterable) is its own inverse
+        # kinda mind bending but it checks out
+        endorser_names, endorser_puppets = zip(*sorted(endorsers))
+        content = "Known: {known}\nKnown Puppets: {puppets}\nUnknown: {unknown}".format(
+            known=", ".join(endorser_names),
+            puppets=", ".join(endorser_puppets),
+            unknown=", ".join(unknown),
+        )
         await ctx.send(
             f"Deployed on {lead}:",
             file=discord.File(
