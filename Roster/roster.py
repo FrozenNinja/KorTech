@@ -101,26 +101,43 @@ class Roster(commands.Cog):
 
     @commands.command()
     @commands.has_role("KPCmd")
-    async def deployed(self, ctx: commands.Context, lead: str) -> None:
+    async def deployed(
+        self,
+        ctx: commands.Context,
+        lead: str,
+        force_file: bool = False,
+        cutoff: int = 500,
+    ) -> None:
         """Check who is deployed on a lead, according to loaded known file."""
         endorsers, unknown = await deployed.deployed(
             lead=lead, roster=(await self.config.known())
         )
         # yeah this works. zip(*iterable) is its own inverse
         # kinda mind bending but it checks out
-        endorser_names, endorser_puppets = zip(*sorted(endorsers))
+        # we need to strictly evaluate the zip using list so that we can tell if its empty
+        seperated_endorsers = list(zip(*sorted(endorsers)))
+        # If there are no endorsers, [] is inverted to [] which we can't split
+        if seperated_endorsers:
+            endorser_names, endorser_puppets = seperated_endorsers
+        else:
+            endorser_names, endorser_puppets = [], []
+
+        # Generate content
         content = "Known: {known}\nKnown Puppets: {puppets}\nUnknown: {unknown}".format(
             known=", ".join(endorser_names),
             puppets=", ".join(endorser_puppets),
             unknown=", ".join(unknown),
         )
-        await ctx.send(
-            f"Deployed on {lead}:",
-            file=discord.File(
+        message = f"Deployed on {lead}:"
+        if force_file or len(content) > cutoff:
+            file = discord.File(
                 io.BytesIO(content.encode("utf-8")),
                 filename=f"deployed_{deployed.clean_format(lead)}.txt",
-            ),
-        )
+            )
+        else:
+            message += "\n" + content.join(("```", "```"))
+            file = None
+        await ctx.send(message, file=file)
 
     @commands.command()
     @commands.has_role("TITO Member")
