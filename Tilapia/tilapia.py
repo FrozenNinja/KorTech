@@ -20,7 +20,7 @@ class Tilapia(commands.Cog):
         the message is deleted.
         """
         if message.channel.id == 748238663862845502:
-            if ":tilapia:" not in message.content or "panda" in message.content:
+            if "panda" not in message.content or "tilapia" in message.content:
                 await message.delete()
                 return True
         return False
