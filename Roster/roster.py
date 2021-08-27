@@ -1,6 +1,7 @@
 """Manage a WA roster."""
 
 import asyncio
+import enum
 import io
 import json
 import typing as t
@@ -27,6 +28,16 @@ def channel_and_author(ctx: commands.Context) -> t.Callable[[discord.Message], b
         return message.author == ctx.author and message.channel == ctx.channel
 
     return pred
+
+
+class DModes(enum.Enum):
+    """Modes that [p]deployed can run in."""
+
+    FILE = "file"
+    NO_FILE = "no-file"
+    KNOWN = "known"
+    PUPPETS = "puppets"
+    UNKNOWN = "unknown"
 
 
 class Roster(commands.Cog):
@@ -113,53 +124,60 @@ class Roster(commands.Cog):
     @commands.command()
     @commands.has_role("KPCmd")
     async def deployed(
-        self,
-        ctx: commands.Context,
-        lead: str,
-        file: bool = True,
+        self, ctx: commands.Context, lead: str, mode: str = "file"
     ) -> None:
-        """Check who is deployed on a lead, according to loaded known file."""
-        deployments = await self._deployments(lead)
+        """Check who is deployed on a lead, according to loaded known file.
 
-        # Generate content
-        content = "Known: {known}\nKnown Puppets: {puppets}\nUnknown: {unknown}".format(
-            known=", ".join(deployments.known),
-            puppets=", ".join(deployments.puppets),
-            unknown=", ".join(deployments.unknown),
-        )
-        message = f"Deployed on {lead}:"
-        if file:
-            outfile = discord.File(
-                io.BytesIO(content.encode("utf-8")),
-                filename=f"deployed_{deployed.clean_format(lead)}.txt",
-            )
+        Possible modes are [file, no-file, known, puppets, unknown].
+        """
+        MAX_MESSAGE_SIZE = 2000
+
+        # Convert to Enum Mode
+        try:
+            dmode = DModes(mode)
+        except ValueError:
+            possible_modes = ", ".join(mode.value for mode in DModes)
+            await ctx.send(f"Invalid mode {mode}. Valid modes are [{possible_modes}].")
         else:
-            message += "\n" + content.join(("```", "```"))
-            outfile = None
-        await ctx.send(message, file=outfile)
+            deployments = await self._deployments(lead)
 
-    @commands.group()
-    @commands.has_role("KPCmd")
-    async def sdeployed(self, ctx: commands.Context) -> None:
-        """Command group for getting specific pieces of info about deploymenets."""
+            # Most modes don't have a file
+            outfile: t.Optional[discord.File] = None
+            message: str = ""
 
-    @sdeployed.command(name="known")
-    async def sd_known(self, ctx: commands.Context, lead: str) -> None:
-        """Provide the known deployed members."""
-        deployments = await self._deployments(lead)
-        await ctx.send(", ".join(deployments.known))
+            if dmode is DModes.FILE or dmode is DModes.NO_FILE:
+                # Generate content
+                content = "Known: {known}\nKnown Puppets: {puppets}\nUnknown: {unknown}".format(
+                    known=", ".join(deployments.known),
+                    puppets=", ".join(deployments.puppets),
+                    unknown=", ".join(deployments.unknown),
+                )
+                message = f"Deployed on {lead}:"
+                if dmode is DModes.FILE:
+                    outfile = discord.File(
+                        io.BytesIO(content.encode("utf-8")),
+                        filename=f"deployed_{deployed.clean_format(lead)}.txt",
+                    )
+                else:
+                    message += "\n" + content.join(("```", "```"))
+                    outfile = None
+            elif dmode is DModes.KNOWN:
+                message = ", ".join(deployments.known)
+            elif dmode is DModes.PUPPETS:
+                message = ", ".join(deployments.puppets)
+            elif dmode is DModes.UNKNOWN:
+                message = ", ".join(deployments.unknown)
+            else:
+                message = f"Mode {dmode} currently unsupported."
 
-    @sdeployed.command(name="puppets")
-    async def sd_puppets(self, ctx: commands.Context, lead: str) -> None:
-        """Provide the known deployed puppets (in same order as members)."""
-        deployments = await self._deployments(lead)
-        await ctx.send(", ".join(deployments.puppets))
+            # We cannot send an empty message
+            if not message:
+                message = "None"
+            # Also can't send too big of a message
+            elif len(message) > MAX_MESSAGE_SIZE:
+                message = "Body too large to send, use `file` mode."
 
-    @sdeployed.command(name="unknown")
-    async def sd_unknown(self, ctx: commands.Context, lead: str) -> None:
-        """Provide the unknown deployed puppets."""
-        deployments = await self._deployments(lead)
-        await ctx.send(", ".join(deployments.unknown))
+            await ctx.send(message, file=outfile)
 
     @commands.command()
     @commands.has_role("TITO Member")
