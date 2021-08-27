@@ -1,6 +1,7 @@
 """Manage a WA roster."""
 
 import asyncio
+import enum
 import io
 import json
 import typing as t
@@ -27,6 +28,16 @@ def channel_and_author(ctx: commands.Context) -> t.Callable[[discord.Message], b
         return message.author == ctx.author and message.channel == ctx.channel
 
     return pred
+
+
+class DModes(enum.Enum):
+    """Modes that [p]deployed can run in."""
+
+    FILE = "file"
+    NO_FILE = "no-file"
+    KNOWN = "known"
+    PUPPETS = "puppets"
+    UNKNOWN = "unknown"
 
 
 class Roster(commands.Cog):
@@ -99,28 +110,74 @@ class Roster(commands.Cog):
             file=discord.File(io.BytesIO(known.encode("utf-8")), filename="known.json"),
         )
 
-    @commands.command()
-    @commands.has_role("KPCmd")
-    async def deployed(self, ctx: commands.Context, lead: str) -> None:
-        """Check who is deployed on a lead, according to loaded known file."""
-        endorsers, unknown = await deployed.deployed(
+    async def _deployments(self, lead: str) -> deployed.Deployments:
+        """Automatically use the known config to determine deployments."""
+        deployments = await deployed.deployed_lists(
             lead=lead, roster=(await self.config.known())
         )
-        # yeah this works. zip(*iterable) is its own inverse
-        # kinda mind bending but it checks out
-        endorser_names, endorser_puppets = zip(*sorted(endorsers))
-        content = "Known: {known}\nKnown Puppets: {puppets}\nUnknown: {unknown}".format(
-            known=", ".join(endorser_names),
-            puppets=", ".join(endorser_puppets),
-            unknown=", ".join(unknown),
-        )
-        await ctx.send(
-            f"Deployed on {lead}:",
-            file=discord.File(
-                io.BytesIO(content.encode("utf-8")),
-                filename=f"deployed_{deployed.clean_format(lead)}.txt",
-            ),
-        )
+        return deployments
+
+    # TODO maybe change this again
+    # I like the new structure
+    # but having a seperate command group is akward af
+    # so I'll probably try adding another parameter to `deployed`
+    @commands.command()
+    @commands.has_role("KPCmd")
+    async def deployed(
+        self, ctx: commands.Context, lead: str, mode: str = "file"
+    ) -> None:
+        """Check who is deployed on a lead, according to loaded known file.
+
+        Possible modes are [file, no-file, known, puppets, unknown].
+        """
+        MAX_MESSAGE_SIZE = 2000
+
+        # Convert to Enum Mode
+        try:
+            dmode = DModes(mode)
+        except ValueError:
+            possible_modes = ", ".join(mode.value for mode in DModes)
+            await ctx.send(f"Invalid mode {mode}. Valid modes are [{possible_modes}].")
+        else:
+            deployments = await self._deployments(lead)
+
+            # Most modes don't have a file
+            outfile: t.Optional[discord.File] = None
+            message: str = ""
+
+            if dmode is DModes.FILE or dmode is DModes.NO_FILE:
+                # Generate content
+                content = "Known: {known}\nKnown Puppets: {puppets}\nUnknown: {unknown}".format(
+                    known=", ".join(deployments.known),
+                    puppets=", ".join(deployments.puppets),
+                    unknown=", ".join(deployments.unknown),
+                )
+                message = f"Deployed on {lead}:"
+                if dmode is DModes.FILE:
+                    outfile = discord.File(
+                        io.BytesIO(content.encode("utf-8")),
+                        filename=f"deployed_{deployed.clean_format(lead)}.txt",
+                    )
+                else:
+                    message += "\n" + content.join(("```", "```"))
+                    outfile = None
+            elif dmode is DModes.KNOWN:
+                message = ", ".join(deployments.known)
+            elif dmode is DModes.PUPPETS:
+                message = ", ".join(deployments.puppets)
+            elif dmode is DModes.UNKNOWN:
+                message = ", ".join(deployments.unknown)
+            else:
+                message = f"Mode {dmode} currently unsupported."
+
+            # We cannot send an empty message
+            if not message:
+                message = "None"
+            # Also can't send too big of a message
+            elif len(message) > MAX_MESSAGE_SIZE:
+                message = "Body too large to send, use `file` mode."
+
+            await ctx.send(message, file=outfile)
 
     @commands.command()
     @commands.has_role("TITO Member")
