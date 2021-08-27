@@ -99,45 +99,67 @@ class Roster(commands.Cog):
             file=discord.File(io.BytesIO(known.encode("utf-8")), filename="known.json"),
         )
 
+    async def _deployments(self, lead: str) -> deployed.Deployments:
+        """Automatically use the known config to determine deployments."""
+        deployments = await deployed.deployed_lists(
+            lead=lead, roster=(await self.config.known())
+        )
+        return deployments
+
+    # TODO maybe change this again
+    # I like the new structure
+    # but having a seperate command group is akward af
+    # so I'll probably try adding another parameter to `deployed`
     @commands.command()
     @commands.has_role("KPCmd")
     async def deployed(
         self,
         ctx: commands.Context,
         lead: str,
-        force_file: bool = False,
-        cutoff: int = 500,
+        file: bool = True,
     ) -> None:
         """Check who is deployed on a lead, according to loaded known file."""
-        endorsers, unknown = await deployed.deployed(
-            lead=lead, roster=(await self.config.known())
-        )
-        # yeah this works. zip(*iterable) is its own inverse
-        # kinda mind bending but it checks out
-        # we need to strictly evaluate the zip using list so that we can tell if its empty
-        seperated_endorsers = list(zip(*sorted(endorsers)))
-        # If there are no endorsers, [] is inverted to [] which we can't split
-        if seperated_endorsers:
-            endorser_names, endorser_puppets = seperated_endorsers
-        else:
-            endorser_names, endorser_puppets = [], []
+        deployments = await self._deployments(lead)
 
         # Generate content
         content = "Known: {known}\nKnown Puppets: {puppets}\nUnknown: {unknown}".format(
-            known=", ".join(endorser_names),
-            puppets=", ".join(endorser_puppets),
-            unknown=", ".join(unknown),
+            known=", ".join(deployments.known),
+            puppets=", ".join(deployments.puppets),
+            unknown=", ".join(deployments.unknown),
         )
         message = f"Deployed on {lead}:"
-        if force_file or len(content) > cutoff:
-            file = discord.File(
+        if file:
+            outfile = discord.File(
                 io.BytesIO(content.encode("utf-8")),
                 filename=f"deployed_{deployed.clean_format(lead)}.txt",
             )
         else:
             message += "\n" + content.join(("```", "```"))
-            file = None
-        await ctx.send(message, file=file)
+            outfile = None
+        await ctx.send(message, file=outfile)
+
+    @commands.group()
+    @commands.has_role("KPCmd")
+    async def sdeployed(self, ctx: commands.Context) -> None:
+        """Command group for getting specific pieces of info about deploymenets."""
+
+    @sdeployed.command(name="known")
+    async def sd_known(self, ctx: commands.Context, lead: str) -> None:
+        """Provide the known deployed members."""
+        deployments = await self._deployments(lead)
+        await ctx.send(", ".join(deployments.known))
+
+    @sdeployed.command(name="puppets")
+    async def sd_puppets(self, ctx: commands.Context, lead: str) -> None:
+        """Provide the known deployed puppets (in same order as members)."""
+        deployments = await self._deployments(lead)
+        await ctx.send(", ".join(deployments.puppets))
+
+    @sdeployed.command(name="unknown")
+    async def sd_unknown(self, ctx: commands.Context, lead: str) -> None:
+        """Provide the unknown deployed puppets."""
+        deployments = await self._deployments(lead)
+        await ctx.send(", ".join(deployments.unknown))
 
     @commands.command()
     @commands.has_role("TITO Member")
