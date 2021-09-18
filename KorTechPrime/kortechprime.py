@@ -112,7 +112,7 @@ class KorTechPrime(commands.Cog):
                         except discord.errors.Forbidden:
                                 await ctx.send("Failed to unmask - I don't have permissions to do that.")
                         else:
-                                await ctx.send("%s: Muted." % Member.mention)
+                                return
 
     @commands.command()
     async def silence_over(self, ctx: commands.Context):
@@ -137,4 +137,4 @@ class KorTechPrime(commands.Cog):
                         except discord.errors.Forbidden:
                                 await ctx.send("Failed to unmask - I don't have permissions to do that.")
                         else:
-                                await ctx.send("%s: Unmuted." % Member.mention)
+                                return
