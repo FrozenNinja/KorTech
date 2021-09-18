@@ -102,6 +102,8 @@ class KorTechPrime(commands.Cog):
                 if not role_cmd in ctx.author.roles:
                         await ctx.send("You are not authorized to use this command.")
                         return
+                else:
+                    await ctx.send("Radio Silence has been enacted, pay attention to posted orders")
 
                 for Member in guild.members:
                         if not role_upd in Member.roles:
@@ -125,6 +127,8 @@ class KorTechPrime(commands.Cog):
                 if not role_cmd in ctx.author.roles:
                         await ctx.send("You are not authorized to use this command.")
                         return
+                else:
+                    await ctx.send("Radio Silence has been disabled, resume normal conversation")
 
                 for Member in guild.members:
                         if not role_mute in Member.roles:
