@@ -111,8 +111,6 @@ class KorTechPrime(commands.Cog):
                                 await Member.add_roles(role_mute)
                         except discord.errors.Forbidden:
                                 await ctx.send("Failed to unmask - I don't have permissions to do that.")
-                        else:
-                                return
 
     @commands.command()
     async def silence_over(self, ctx: commands.Context):
@@ -136,5 +134,3 @@ class KorTechPrime(commands.Cog):
                                 await Member.remove_roles(role_mute)
                         except discord.errors.Forbidden:
                                 await ctx.send("Failed to unmask - I don't have permissions to do that.")
-                        else:
-                                return
