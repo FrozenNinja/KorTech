@@ -25,8 +25,8 @@ class ExecutionCog(commands.Cog):
                 await ctx.send("*" + author.mention + " summons **MechaKorTech** to blast " + user.mention + " into smithereens!" + "*")
         elif author.id == 313367342966898689: #Hakke
             await ctx.send("*" + author.mention + " hugs " + user.mention + " and smothers them to death" + "*")
-        elif author.id == 214367240991014912: #Shy Guyia
-            await ctx.send("*" + author.mention + " throws a blue shell, sending " + user.mention + " straight to last place!" + "*")
+        elif author.id == 700757718473900052: #Thed
+            await ctx.send("*" + author.mention + " lights a match and watches " + user.mention + " burn at the stake. May the fire cleanse you of all your sins and failures." + "*")
         elif author.id == 304481265233559554: #Mark
             await ctx.send("*" + user.mention + " has failed our Glorious Leader " + author.mention + " and has thus forfeit their life." + "*")
         elif author.id == 200525863060635649: #SM
