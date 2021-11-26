@@ -117,10 +117,6 @@ class Roster(commands.Cog):
         )
         return deployments
 
-    # TODO maybe change this again
-    # I like the new structure
-    # but having a seperate command group is akward af
-    # so I'll probably try adding another parameter to `deployed`
     @commands.command()
     @commands.has_role("KPCmd")
     async def deployed(
