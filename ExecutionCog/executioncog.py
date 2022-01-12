@@ -47,7 +47,7 @@ class ExecutionCog(commands.Cog):
             await ctx.send("You aren't Häme!")
 
     @commands.command()
-	async def husband(self, ctx: commands.Context, user: discord.Member):
+    async def husband(self, ctx: commands.Context, user: discord.Member):
 
         author = ctx.message.author
         if user.id == 754524576670548049:
