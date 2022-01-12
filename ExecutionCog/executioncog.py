@@ -47,10 +47,10 @@ class ExecutionCog(commands.Cog):
             await ctx.send("You aren't Häme!")
 
     @commands.command()
-    async def husband(self, ctx: commands.Context, user: discord.Member):
+    async def husband(self, user: discord.Member):
 
         author = ctx.message.author
-        if user.id == 754524576670548049:
+        if author.id == 754524576670548049:
             await ctx.send("*Luna hugs FE and tells him how great a husband he is!*")
         else:
             return
