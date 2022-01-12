@@ -52,5 +52,3 @@ class ExecutionCog(commands.Cog):
         author = ctx.message.author
         if author.id == 754524576670548049:
             await ctx.send("*Luna hugs FE and tells him how great a husband he is!*")
-        else:
-            return
