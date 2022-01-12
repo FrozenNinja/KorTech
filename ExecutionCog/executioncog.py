@@ -50,5 +50,5 @@ class ExecutionCog(commands.Cog):
     async def husband(self, ctx, user: discord.Member):
 
         author = ctx.message.author
-        if author.id == 754524576670548049:
+        if author.id == 116329127732051974:
             await ctx.send("*Luna hugs FE and tells him how great a husband he is!*")
