@@ -12,7 +12,8 @@ from redbot.core import commands, Config
 
 import sans
 from sans.api import Api
-from sans.utils import pretty_string
+
+# from sans.utils import pretty_string
 
 # from lxml import etree as ET
 # from redbot.core.utils.chat_formatting import pagify, escape, box
@@ -319,5 +320,7 @@ class Roster(commands.Cog):
         except sans.errors.HTTPException:
             return False
         else:
-            pretty = pretty_string(root)
-            return "wa" in pretty.lower()
+            # pretty = pretty_string(root)
+            wa_status: str = root["UNSTATUS"].text
+            # logging.info(wa_status)
+            return "wa" in wa_status.lower()
