@@ -1,0 +1,8 @@
+{
+    "author": ["Kortexia"],
+    "description": "XKI utilities for update management.",
+    "install_msg": "KorTechPrime installed.",
+    "short": "Update management utilities",
+    "end_user_data_statement": "No user data is stored.",
+    "requirements": []
+}
