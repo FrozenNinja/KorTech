@@ -54,7 +54,7 @@ class MoI(commands.Cog):
             pass
 
     @moi.command()
-    async def 2000(
+    async def tg2000(
         self, ctx: commands.Context, user: discord.Member = None
     ) -> None:
         """Gives 2000 Telegrams Sent Monthly! role"""
@@ -64,7 +64,7 @@ class MoI(commands.Cog):
             pass
 
     @moi.command()
-    async def 1000(
+    async def tg1000(
         self, ctx: commands.Context, user: discord.Member = None
     ) -> None:
         """Gives 1000 Telegrams Sent Monthly! role"""
@@ -74,7 +74,7 @@ class MoI(commands.Cog):
             pass
 
     @moi.command()
-    async def 500(
+    async def tg500(
         self, ctx: commands.Context, user: discord.Member = None
     ) -> None:
         """Gives 500 Telegrams Sent Monthly! role"""
@@ -84,7 +84,7 @@ class MoI(commands.Cog):
             pass
 
     @moi.command()
-    async def 250(
+    async def tg250(
         self, ctx: commands.Context, user: discord.Member = None
     ) -> None:
         """Gives 250 Telegrams Sent Monthly! role"""
