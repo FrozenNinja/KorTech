@@ -26,7 +26,7 @@ class MoI(commands.Cog):
 
         for member in guild.members:
             if role_monthlytop in member.roles:
-			    try:
+                try:
                     await member.remove_roles(role_monthlytop)
                     await ctx.send("removed")
                 except discord.Forbidden:
