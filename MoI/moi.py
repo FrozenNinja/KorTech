@@ -2,7 +2,7 @@
 
 import discord
 from redbot.core import commands
-
+from datetime import date
 
 class MoI(commands.Cog):
     """10KI Cog for Minister of Immigration role management"""
@@ -124,29 +124,32 @@ class MoI(commands.Cog):
         role_500tg = discord.utils.get(ctx.guild.roles, name="500 Telegrams Sent Monthly!")
         role_250tg = discord.utils.get(ctx.guild.roles, name="250 Telegrams Sent Monthly!")
 
-        for member in guild.members:
-            if role_2000tg in member.roles:
-                try:
-                    await member.remove_roles(role_2000tg)
-                except discord.Forbidden:
-                    await ctx.send("Error resetting roles")
-                    pass
-            if role_1000tg in member.roles:
-                try:
-                    await member.remove_roles(role_1000tg)
-                except discord.Forbidden:
-                    await ctx.send("Error resetting roles")
-                    pass
-            if role_500tg in member.roles:
-                try:
-                    await member.remove_roles(role_500tg)
-                except discord.Forbidden:
-                    await ctx.send("Error resetting roles")
-                    pass
-            if role_250tg in member.roles:
-                try:
-                    await member.remove_roles(role_250tg)
-                except discord.Forbidden:
-                    await ctx.send("Error resetting roles")
-                    pass
-        await ctx.send("All Monthly roles reset")
+        if date.today().day !=8:
+            return
+        else:
+            for member in guild.members:
+                if role_2000tg in member.roles:
+                    try:
+                        await member.remove_roles(role_2000tg)
+                    except discord.Forbidden:
+                        await ctx.send("Error resetting roles")
+                        pass
+                if role_1000tg in member.roles:
+                    try:
+                        await member.remove_roles(role_1000tg)
+                    except discord.Forbidden:
+                        await ctx.send("Error resetting roles")
+                        pass
+                if role_500tg in member.roles:
+                    try:
+                        await member.remove_roles(role_500tg)
+                    except discord.Forbidden:
+                        await ctx.send("Error resetting roles")
+                        pass
+                if role_250tg in member.roles:
+                    try:
+                        await member.remove_roles(role_250tg)
+                    except discord.Forbidden:
+                        await ctx.send("Error resetting roles")
+                        pass
+            await ctx.send("All Monthly roles reset")
