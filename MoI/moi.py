@@ -9,6 +9,7 @@ class MoI(commands.Cog):
 
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
+        guild = ctx.message.guild
 
     @commands.group()
     @commands.has_role("MoI")
@@ -25,7 +26,7 @@ class MoI(commands.Cog):
 
     @moi.command()
     async def topmonth(
-        self, ctx: commands.Context, guild: discord.Guild, user: discord.Member = None
+        self, ctx: commands.Context, user: discord.Member = None
         ) -> None:
         """Gives Recruiter of the Month role and takes it from previous"""
         for member in guild.members:
@@ -40,7 +41,7 @@ class MoI(commands.Cog):
     
     @moi.command()
     async def topweek(
-        self, ctx: commands.Context, guild: discord.Guild, user: discord.Member = None
+        self, ctx: commands.Context, user: discord.Member = None
     ) -> None:
         """Gives Recruiter of the Week role and takes it from previous"""
         for member in guild.members:
@@ -96,7 +97,7 @@ class MoI(commands.Cog):
     @commands.command()
     @commands.admin()
     async def remove_monthly_role(
-        self, ctx: commands.Context, guild: discord.Guild
+        self, ctx: commands.Context
     ) -> None:
         """Removes all monthly roles from users"""
         for member in guild.members:
