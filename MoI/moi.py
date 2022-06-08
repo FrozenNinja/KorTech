@@ -28,7 +28,7 @@ class MoI(commands.Cog):
         self, ctx: commands.Context, user: discord.Member = None, guild: discord.Guild
     ) -> None:
         """Gives Recruiter of the Month role and takes it from previous"""
-        for member in guild.members
+        for member in guild.members:
             try:
                 await member.remove_roles(role_monthlytop)
             except discord.Forbidden:
@@ -43,7 +43,7 @@ class MoI(commands.Cog):
         self, ctx: commands.Context, user: discord.Member = None, guild: discord.Guild
     ) -> None:
         """Gives Recruiter of the Week role and takes it from previous"""
-        for member in guild.members
+        for member in guild.members:
             try:
                 await member.remove_roles(role_weeklytop)
             except discord.Forbidden:
@@ -99,7 +99,7 @@ class MoI(commands.Cog):
         self, ctx: commands.Context, guild: discord.Guild
     ) -> None:
         """Removes all monthly roles from users"""
-        for member in guild.members
+        for member in guild.members:
             try:
                 await member.remove_roles(role_2000tg)
                 await member.remove_roles(role_1000tg)
