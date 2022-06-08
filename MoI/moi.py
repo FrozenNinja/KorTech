@@ -6,7 +6,6 @@ from redbot.core import commands
 
 class MoI(commands.Cog):
     """10KI Cog for Minister of Immigration role management"""
-    guild = ctx.message.guild
 
     role_monthlytop = discord.utils.get(ctx.guild.roles, name="Recruiter of the Month")
     role_weeklytop = discord.utils.get(ctx.guild.roles, name="Recruiter of the Week")
@@ -29,6 +28,8 @@ class MoI(commands.Cog):
         self, ctx: commands.Context, user: discord.Member = None
         ) -> None:
         """Gives Recruiter of the Month role and takes it from previous"""
+        guild = ctx.message.guild
+
         for member in guild.members:
             try:
                 await member.remove_roles(role_monthlytop)
@@ -44,6 +45,8 @@ class MoI(commands.Cog):
         self, ctx: commands.Context, user: discord.Member = None
     ) -> None:
         """Gives Recruiter of the Week role and takes it from previous"""
+        guild = ctx.message.guild
+
         for member in guild.members:
             try:
                 await member.remove_roles(role_weeklytop)
@@ -100,6 +103,8 @@ class MoI(commands.Cog):
         self, ctx: commands.Context
     ) -> None:
         """Removes all monthly roles from users"""
+        guild = ctx.message.guild
+
         for member in guild.members:
             try:
                 await member.remove_roles(role_2000tg)
