@@ -94,7 +94,7 @@ class MoI(commands.Cog):
             pass
 
     @commands.command()
-    @commands.is_admin()
+    @commands.admin()
     async def remove_monthly_role(
         self, ctx: commands.Context, guild: discord.Guild
     ) -> None:
