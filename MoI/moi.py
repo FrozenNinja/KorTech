@@ -114,7 +114,7 @@ class MoI(commands.Cog):
 
     @commands.command()
     @commands.admin()
-    async def remove_monthly_role(
+    async def remove_monthly_roles(
         self, ctx: commands.Context
     ) -> None:
         """Removes all monthly roles from users"""
@@ -125,13 +125,27 @@ class MoI(commands.Cog):
         role_250tg = discord.utils.get(ctx.guild.roles, name="250 Telegrams Sent Monthly!")
 
         for member in guild.members:
-            if role_2000tg or role_1000tg or role_500tg or role_250tg in member.roles:
+            if role_2000tg in member.roles:
                 try:
                     await member.remove_roles(role_2000tg)
+                except discord.Forbidden:
+                    await ctx.send("Error resetting roles")
+                    pass
+            if role_1000tg in member.roles:
+                try:
                     await member.remove_roles(role_1000tg)
+                except discord.Forbidden:
+                    await ctx.send("Error resetting roles")
+                    pass
+            if role_500tg in member.roles:
+                try:
                     await member.remove_roles(role_500tg)
+                except discord.Forbidden:
+                    await ctx.send("Error resetting roles")
+                    pass
+            if role_250tg in member.roles:
+                try:
                     await member.remove_roles(role_250tg)
-
                 except discord.Forbidden:
                     await ctx.send("Error resetting roles")
                     pass
