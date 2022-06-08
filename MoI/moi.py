@@ -27,11 +27,15 @@ class MoI(commands.Cog):
         for member in guild.members:
             try:
                 await member.remove_roles(role_monthlytop)
+                await ctx.send("removed")
             except discord.Forbidden:
+                await ctx.send("Forbidden")
                 pass
         try:
             await user.add_roles(role_monthlytop)
+            await ctx.send("role added")
         except discord.Forbidden:
+            await ctx.send("Forbidden")
             pass
     
     @moi.command()
