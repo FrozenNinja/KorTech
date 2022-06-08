@@ -11,7 +11,7 @@ class MoI(commands.Cog):
         self.bot = bot
 
     @commands.group()
-    @commands.hasrole("MoI")
+    @commands.has_role("MoI")
     async def moi(
         self, ctx: commands.Context) -> None:
         """Command group for MoI Role Management"""
