@@ -131,7 +131,8 @@ class MoI(commands.Cog):
                     await member.remove_roles(role_1000tg)
                     await member.remove_roles(role_500tg)
                     await member.remove_roles(role_250tg)
-                    await ctx.send("All Monthly roles reset")
+
                 except discord.Forbidden:
                     await ctx.send("Error resetting roles")
                     pass
+        await ctx.send("All Monthly roles reset")
