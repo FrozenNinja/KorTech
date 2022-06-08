@@ -6,14 +6,14 @@ from redbot.core import commands
 
 class MoI(commands.Cog):
     """10KI Cog for Minister of Immigration role management"""
-        guild = ctx.message.guild
+    guild = ctx.message.guild
 
-        role_monthlytop = discord.utils.get(ctx.guild.roles, name="Recruiter of the Month")
-        role_weeklytop = discord.utils.get(ctx.guild.roles, name="Recruiter of the Week")
-        role_2000tg = discord.utils.get(ctx.guild.roles, name="2000 Telegrams Sent Monthly!")
-        role_1000tg = discord.utils.get(ctx.guild.roles, name="1000 Telegrams Sent Monthly!")
-        role_500tg = discord.utils.get(ctx.guild.roles, name="500 Telegrams Sent Monthly!")
-        role_250tg = discord.utils.get(ctx.guild.roles, name="250 Telegrams Sent Monthly!")
+    role_monthlytop = discord.utils.get(ctx.guild.roles, name="Recruiter of the Month")
+    role_weeklytop = discord.utils.get(ctx.guild.roles, name="Recruiter of the Week")
+    role_2000tg = discord.utils.get(ctx.guild.roles, name="2000 Telegrams Sent Monthly!")
+    role_1000tg = discord.utils.get(ctx.guild.roles, name="1000 Telegrams Sent Monthly!")
+    role_500tg = discord.utils.get(ctx.guild.roles, name="500 Telegrams Sent Monthly!")
+    role_250tg = discord.utils.get(ctx.guild.roles, name="250 Telegrams Sent Monthly!")
 
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
