@@ -28,15 +28,14 @@ class MoI(commands.Cog):
             if role_monthlytop in member.roles:
                 try:
                     await member.remove_roles(role_monthlytop)
-                    await ctx.send("removed")
                 except discord.Forbidden:
-                    await ctx.send("Forbidden")
+                    await ctx.send("I can't do that")
                     pass
         try:
             await user.add_roles(role_monthlytop)
-            await ctx.send("role added")
+            await ctx.send("Role succesfully swapped to new Monthly Top Recruiter")
         except discord.Forbidden:
-            await ctx.send("Forbidden")
+            await ctx.send("I can't do that")
             pass
     
     @moi.command()
@@ -48,13 +47,17 @@ class MoI(commands.Cog):
         role_weeklytop = discord.utils.get(ctx.guild.roles, name="Recruiter of the Week")
 
         for member in guild.members:
-            try:
-                await member.remove_roles(role_weeklytop)
-            except discord.Forbidden:
-                pass
+            if role_weeklytop in member.roles:
+                try:
+                    await member.remove_roles(role_weeklytop)
+                except discord.Forbidden:
+                    await ctx.send("I can't do that")
+                    pass
         try:
             await user.add_roles(role_weeklytop)
+            await ctx.send("Role succesfully swapped to new Weekly Top Recruiter")
         except discord.Forbidden:
+            await ctx.send("I can't do that")
             pass
 
     @moi.command()
@@ -118,10 +121,11 @@ class MoI(commands.Cog):
         role_250tg = discord.utils.get(ctx.guild.roles, name="250 Telegrams Sent Monthly!")
 
         for member in guild.members:
-            try:
-                await member.remove_roles(role_2000tg)
-                await member.remove_roles(role_1000tg)
-                await member.remove_roles(role_500tg)
-                await member.remove_roles(role_250tg)
-            except discord.Forbidden:
-                pass
+            if role_2000tg or role_1000tg or role_500tg or role_250tg in member.roles:
+                try:
+                    await member.remove_roles(role_2000tg)
+                    await member.remove_roles(role_1000tg)
+                    await member.remove_roles(role_500tg)
+                    await member.remove_roles(role_250tg)
+                except discord.Forbidden:
+                    pass
