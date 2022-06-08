@@ -69,6 +69,7 @@ class MoI(commands.Cog):
 
         try:
             await user.add_roles(role_2000tg)
+            await ctx.send("2000 TG role given")
         except discord.Forbidden:
             pass
 
@@ -81,6 +82,7 @@ class MoI(commands.Cog):
 
         try:
             await user.add_roles(role_1000tg)
+            await ctx.send("1000 TG role given")
         except discord.Forbidden:
             pass
 
@@ -93,6 +95,7 @@ class MoI(commands.Cog):
 
         try:
             await user.add_roles(role_500tg)
+            await ctx.send("500 TG role given")
         except discord.Forbidden:
             pass
 
@@ -105,6 +108,7 @@ class MoI(commands.Cog):
 
         try:
             await user.add_roles(role_250tg)
+            await ctx.send("250 TG role given")
         except discord.Forbidden:
             pass
 
@@ -127,5 +131,7 @@ class MoI(commands.Cog):
                     await member.remove_roles(role_1000tg)
                     await member.remove_roles(role_500tg)
                     await member.remove_roles(role_250tg)
+                    await ctx.send("All Monthly roles reset")
                 except discord.Forbidden:
+                    await ctx.send("Error resetting roles")
                     pass
