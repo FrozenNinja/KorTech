@@ -25,12 +25,13 @@ class MoI(commands.Cog):
         role_monthlytop = discord.utils.get(ctx.guild.roles, name="Recruiter of the Month")
 
         for member in guild.members:
-            try:
-                await member.remove_roles(role_monthlytop)
-                await ctx.send("removed")
-            except discord.Forbidden:
-                await ctx.send("Forbidden")
-                pass
+            if role_monthlytop in member.roles:
+			    try:
+                    await member.remove_roles(role_monthlytop)
+                    await ctx.send("removed")
+                except discord.Forbidden:
+                    await ctx.send("Forbidden")
+                    pass
         try:
             await user.add_roles(role_monthlytop)
             await ctx.send("role added")
