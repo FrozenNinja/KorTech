@@ -25,8 +25,8 @@ class MoI(commands.Cog):
 
     @moi.command()
     async def topmonth(
-        self, ctx: commands.Context, user: discord.Member = None, guild: discord.Guild
-    ) -> None:
+        self, ctx: commands.Context, guild: discord.Guild, user: discord.Member = None
+        ) -> None:
         """Gives Recruiter of the Month role and takes it from previous"""
         for member in guild.members:
             try:
@@ -40,7 +40,7 @@ class MoI(commands.Cog):
     
     @moi.command()
     async def topweek(
-        self, ctx: commands.Context, user: discord.Member = None, guild: discord.Guild
+        self, ctx: commands.Context, guild: discord.Guild, user: discord.Member = None
     ) -> None:
         """Gives Recruiter of the Week role and takes it from previous"""
         for member in guild.members:
