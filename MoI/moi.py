@@ -125,7 +125,7 @@ class MoI(commands.Cog):
         role_250tg = discord.utils.get(ctx.guild.roles, name="250 Telegrams Sent Monthly!")
 
         if date.today().day !=9:
-            ctx.send("Sketchy date thing works")
+            await ctx.send("Sketchy date thing works")
             return
         else:
             for member in guild.members:
