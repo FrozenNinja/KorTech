@@ -1,4 +1,4 @@
-"""KorTechPrime"""
+"""MoI"""
 
 import discord
 from redbot.core import commands
