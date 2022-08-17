@@ -25,8 +25,6 @@ class ExecutionCog(commands.Cog):
                 await ctx.send("*" + author.mention + " summons **MechaKorTech** to blast " + user.mention + " into smithereens!" + "*")
         elif author.id == 313367342966898689: #Hakke
             await ctx.send("*" + author.mention + " hugs " + user.mention + " and smothers them to death" + "*")
-        elif author.id == 700757718473900052: #Thed
-            await ctx.send("*" + author.mention + " lights a match and watches " + user.mention + " burn at the stake. May the fire cleanse you of all your sins and failures." + "*")
         elif author.id == 304481265233559554: #Mark
             await ctx.send("*" + user.mention + " has failed our Glorious Leader " + author.mention + " and has thus forfeit their life." + "*")
         elif author.id == 200525863060635649: #SM
@@ -39,8 +37,6 @@ class ExecutionCog(commands.Cog):
             await ctx.send("*" + author.mention + " crushes " + user.mention + " beneath the treads of his tank for failing the Mother Islands" + "*")
         elif author.id == 505759332856496128: #FE
             await ctx.send("*" + author.mention + " calls on the mighty eagle battalion to dive from the sky delivering poop, crushing " + user.mention + " to death" + "*")
-        elif author.id == 198544671469731840: #Wisch
-            await ctx.send("*" + author.mention + " sics an army of cats on " + user.mention + " who is promptly mauled to death!" + "*")
         elif author.id == 356510817094598658: #ENE
             await ctx.send("*" + author.mention + " assembles an army of snapping turtles, slowly enclosing " + user.mention + "  until they are reduced to a pile of bones" + "*")
         elif author.id == 418631163310112768: #Astro
