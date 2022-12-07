@@ -12,4 +12,4 @@ class Question(commands.Cog):
             await ctx.send(i)
             time.sleep(1)
             i = i - 1
-        await ctx.send("Answer Window closed")
+        await ctx.send("Answer Window closed!")
