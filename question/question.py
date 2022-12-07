@@ -9,7 +9,7 @@ class Question(commands.Cog):
         """Counts down from 7"""
         i = 7
         while(i > 0):
-		    await ctx.send(i)
+            await ctx.send(i)
             time.sleep(1)
             i = i - 1
         await ctx.send("Answer Window closed")
