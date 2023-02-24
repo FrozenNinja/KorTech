@@ -33,7 +33,7 @@ class ExecutionCog(commands.Cog):
             await ctx.send("*" + author.mention + " needs to let Kort know what he wants as a command" + "*")
         elif author.id == 185944398217871360: #HN
             await ctx.send("*" + author.mention + " purges the heresy of " + user.mention + " with cleansing flame." + "*")
-        elif author.id == 679023417315426344: #WH
+        elif author.id == 630608474023264267: #WH
             await ctx.send("*" + author.mention + " quickly unholsters his DL-44 and shoots first, killing " + user.mention + " instantly" + "*")
         elif author.id == 143549673947398145: #Control
             await ctx.send("*" + author.mention + " crushes " + user.mention + " beneath the treads of his tank for failing the Mother Islands" + "*")
