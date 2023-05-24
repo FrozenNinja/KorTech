@@ -3,5 +3,5 @@
 from .moi import MoI
 
 
-def setup(bot):
-    bot.add_cog(MoI(bot))
+async def setup(bot):
+    await bot.add_cog(MoI(bot))
