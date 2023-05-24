@@ -3,5 +3,5 @@
 from .tilapia import Tilapia
 
 
-def setup(bot):
-    bot.add_cog(Tilapia(bot))
+async def setup(bot):
+    await bot.add_cog(Tilapia(bot))

@@ -1,5 +1,5 @@
 from .logsfrom import LogsFrom
 
 
-def setup(bot):
-    bot.add_cog(LogsFrom())
+async def setup(bot):
+    await bot.add_cog(LogsFrom())

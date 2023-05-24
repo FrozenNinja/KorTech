@@ -3,5 +3,5 @@
 from .kortechprime import KorTechPrime
 
 
-def setup(bot):
-    bot.add_cog(KorTechPrime(bot))
+async def setup(bot):
+    await bot.add_cog(KorTechPrime(bot))

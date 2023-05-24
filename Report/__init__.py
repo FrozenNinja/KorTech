@@ -3,5 +3,5 @@
 from .report import Report
 
 
-def setup(bot):
-    bot.add_cog(Report(bot))
+async def setup(bot):
+    await bot.add_cog(Report(bot))
