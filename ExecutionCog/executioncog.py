@@ -29,8 +29,8 @@ class ExecutionCog(commands.Cog):
             await ctx.send("*" + author.mention + " hugs " + user.mention + " and smothers them to death" + "*")
         elif author.id == 304481265233559554: #Mark
             await ctx.send("*" + user.mention + " has failed our CE Emeritus " + author.mention + " and has thus forfeit their life." + "*")
-        elif author.id == 200525863060635649: #SM
-            await ctx.send("*" + author.mention + " needs to let Kort know what he wants as a command" + "*")
+        elif author.id == 177403864369070080: #Asche
+            await ctx.send("*" + author.mention + " waves a dismissive hand and a bolt of lightning splits the sky, striking " + user.mention + " and reducing them to dust" + "*")
         elif author.id == 346447222222618624: #Pantso
             await ctx.send("*" + author.mention + " banishes " + user.mention + " to the Tasteless Isles, cursed forever to wear ugly sweaters, eat cold soggy tacos, and watch only Jersey Shore re-runs." + "*")
         elif author.id == 630608474023264267: #WH
