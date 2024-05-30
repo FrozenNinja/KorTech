@@ -1,4 +1,4 @@
-from .ping import ping
+from .ping import Ping
 
 
 async def setup(bot):
