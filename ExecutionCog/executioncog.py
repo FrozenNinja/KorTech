@@ -11,7 +11,7 @@ class ExecutionCog(commands.Cog):
         #Text
         if user.id == 351596701913448449: #KorTech
             await ctx.send("Attempting to kill me with my own power? Foolish mortal.\n" + "*" + "Electrocutes " + author.mention + " until they turn into ash." + "*")
-        elif user.id == 304481265233559554: #MarkProtect
+        elif user.id == 177403864369070080: #CEProtect
             await ctx.send("*" + user.mention + " laughs at " + author.mention + " for even trying to execute the CE" + "*")
         elif author.id == 277453509018779648: #Hame
             if user.id == 116329127732051974:
@@ -28,7 +28,7 @@ class ExecutionCog(commands.Cog):
         elif author.id == 313367342966898689: #Hakke
             await ctx.send("*" + author.mention + " hugs " + user.mention + " and smothers them to death" + "*")
         elif author.id == 304481265233559554: #Mark
-            await ctx.send("*" + user.mention + " has failed our Glorious Leader " + author.mention + " and has thus forfeit their life." + "*")
+            await ctx.send("*" + user.mention + " has failed our CE Emeritus " + author.mention + " and has thus forfeit their life." + "*")
         elif author.id == 200525863060635649: #SM
             await ctx.send("*" + author.mention + " needs to let Kort know what he wants as a command" + "*")
         elif author.id == 346447222222618624: #Pantso
