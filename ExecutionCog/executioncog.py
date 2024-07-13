@@ -36,7 +36,7 @@ class ExecutionCog(commands.Cog):
         elif author.id == 630608474023264267: #WH
             await ctx.send("*" + author.mention + " quickly unholsters his DL-44 and shoots first, killing " + user.mention + " instantly" + "*")
         elif author.id == 627094307706372097: #Val
-            await ctx.send("*" + author.mention + " lifts up his radiant sword. " + "*" + " **" + "\"AND IT SHALL BE RETURNED!\"" + "** " + "*" + "With an elegant strike, " + user.mention + " is lying on the ground, the ether of whom absorbed back to it's rightful place" + "*")
+            await ctx.send("*" + author.mention + " lifts up his radiant sword. " + "*" + " **" + "\"AND IT SHALL BE RETURNED!\"" + "** " + "*" + "With an elegant strike, " + user.mention + " is lying on the ground, the ether of whom absorbed back to its rightful place" + "*")
         elif author.id == 505759332856496128: #FE
             await ctx.send("*" + author.mention + " calls on the mighty eagle battalion to dive from the sky delivering poop, crushing " + user.mention + " to death" + "*")
         elif author.id == 418631163310112768: #Astro
