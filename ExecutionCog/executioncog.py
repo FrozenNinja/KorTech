@@ -20,6 +20,8 @@ class ExecutionCog(commands.Cog):
                 await ctx.send("*" + author.mention + " executes " + user.mention + " with Nagant M1895 Revolver" + "*")
         elif user.id == 116329127732051974: #KortProtect
             await ctx.send("*" + user.mention + " laughs at " + author.mention + "*" + " You can't turn my own bot against me. Fool!")
+        elif user.id == 177403864369070080: #AscheProtect
+            await ctx.send("Nobody can kill the mad mage Aschente!")
         elif author.id == 116329127732051974: #Kort
             if user.id == 177403864369070080:
                 await ctx.send("*" + author.mention + " summons **MechaKorTech**!\n" + user.mention + " summons\n**MechaAschDroid**!\nThey start to battle and destroy everything around them!" + "*")
@@ -33,15 +35,11 @@ class ExecutionCog(commands.Cog):
             await ctx.send("*" + author.mention + " waves a dismissive hand and a bolt of lightning splits the sky, striking " + user.mention + " and reducing them to dust" + "*")
         elif author.id == 346447222222618624: #Pantso
             await ctx.send("*" + author.mention + " banishes " + user.mention + " to the Tasteless Isles, cursed forever to wear ugly sweaters, eat cold soggy tacos, and watch only Jersey Shore re-runs." + "*")
-        elif author.id == 630608474023264267: #WH
-            await ctx.send("*" + author.mention + " quickly unholsters his DL-44 and shoots first, killing " + user.mention + " instantly" + "*")
-        elif author.id == 627094307706372097: #Val
-            await ctx.send("*" + author.mention + " lifts up his radiant sword. " + "*" + " **" + "\"AND IT SHALL BE RETURNED!\"" + "** " + "*" + "With an elegant strike, " + user.mention + " is lying on the ground, the ether of whom absorbed back to its rightful place" + "*")
+        elif author.id == 1360073071452754093: #Margaux
+            await ctx.send("*" + "The Emperor gives a disapproving glare at " + user.mention + " and waves his hand, soldiers carry the traitor off to be executed" + "*")
         elif author.id == 505759332856496128: #FE
             await ctx.send("*" + author.mention + " calls on the mighty eagle battalion to dive from the sky delivering poop, crushing " + user.mention + " to death" + "*")
         elif author.id == 418631163310112768: #Astro
             await ctx.send("*" + user.mention + " has been strapped to " + author.mention + "'s rocketship! They are blasting off into space, never to be seen again!" + "*")
-        elif author.id == 373240532509392906: #Onfande
-            await ctx.send("*" + user.mention + " has instantly been evaporated by a beam of plasma striking their exact location!" + "*")
         else:
             await ctx.send("You aren't Häme!")
