@@ -42,4 +42,4 @@ class ExecutionCog(commands.Cog):
         elif author.id == 418631163310112768: #Astro
             await ctx.send("*" + user.mention + " has been strapped to " + author.mention + "'s rocketship! They are blasting off into space, never to be seen again!" + "*")
         else:
-            await ctx.send("You aren't Häme!")
+            await ctx.send("You aren't Häme! (Or a member of Command)")
