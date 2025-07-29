@@ -36,7 +36,7 @@ class ExecutionCog(commands.Cog):
         elif author.id == 346447222222618624: #Pantso
             await ctx.send("*" + author.mention + " banishes " + user.mention + " to the Tasteless Isles, cursed forever to wear ugly sweaters, eat cold soggy tacos, and watch only Jersey Shore re-runs." + "*")
         elif author.id == 1360073071452754093: #Margaux
-            await ctx.send("*" + "The Emperor gives a disapproving glare at " + user.mention + " and waves his hand, soldiers carry the traitor off to be executed" + "*")
+            await ctx.send("*" + "The Emperor gives a disapproving glare at " + user.mention + " and waves his hand. Soldiers carry the traitor off to be executed" + "*")
         elif author.id == 505759332856496128: #FE
             await ctx.send("*" + author.mention + " calls on the mighty eagle battalion to dive from the sky delivering poop, crushing " + user.mention + " to death" + "*")
         elif author.id == 418631163310112768: #Astro
