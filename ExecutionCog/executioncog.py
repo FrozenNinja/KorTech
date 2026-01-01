@@ -41,5 +41,7 @@ class ExecutionCog(commands.Cog):
             await ctx.send("*" + author.mention + " calls on the mighty eagle battalion to dive from the sky delivering poop, crushing " + user.mention + " to death" + "*")
         elif author.id == 418631163310112768: #Astro
             await ctx.send("*" + user.mention + " has been strapped to " + author.mention + "'s rocketship! They are blasting off into space, never to be seen again!" + "*")
+        elif author.id == 286367887168634882: #URI
+            await ctx.send("*" + user.mention + " turns to realize they are being watched by " + author.mention + "who shakes her head in disappointment before squeezing the trigger of her spraybottle, spraying them several times" + "*")
         else:
             await ctx.send("You aren't Häme! (Or a member of Command)")
